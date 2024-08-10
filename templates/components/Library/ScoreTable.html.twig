@@ -54,10 +54,17 @@
                 {% endfor %}
             </div>
             <div class="data__table__cell action__cell flex-col flex-1 justify-end">
-                <div class="action cursor-pointer">{{ svg.getSvg('ellipsis-horizontal', 'h-5 w-5') }}</div>
-                {# <span class="action">{{ 'main.action.view.label' | trans }}</span>
-                <span class="action">{{ 'main.action.edit.label' | trans }}</span>
-                <span class="action">{{ 'main.action.delete.label' | trans }}</span> #}
+                <div class="action relative">
+                    <label for="action-{{ score.id }}" class="cursor-pointer">
+                        {{ svg.getSvg('ellipsis-horizontal', 'h-5 w-5') }}
+                    </label>
+                    <input type="checkbox" class="peer hidden" id="action-{{ score.id }}"/>
+                    <div class="hidden z-[100] peer-checked:block absolute top-full right-0 bg-white p-2 border border-gray-100 rounded-sm">
+                        <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.view.label' | trans }}</a>
+                        <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.edit.label' | trans }}</a>
+                        <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.delete.label' | trans }}</a>
+                    </div>
+                </div>
             </div>
         </div>
     {% endfor %}

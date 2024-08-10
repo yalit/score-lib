@@ -17,13 +17,14 @@ class ScoreTable
 {
     use DefaultActionTrait;
 
-    #[LiveProp]
+    #[LiveProp(url: true)]
+    /** @var array<?string> $orderByDirections */
     public array $orderByDirections = [
         'title' => 'DESC',
-        'ref' => null
+        'ref' => 'NONE'
     ];
 
-    #[LiveProp]
+    #[LiveProp(url: true)]
     public string $orderBy = 'title';
 
     public function __construct(private readonly LibrarySearcher $librarySearcher)
