@@ -31,7 +31,8 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
 
             $score = $this->getScore(
                 'Score ' . $i,
-                null,
+                '',
+                $this->getScoreReference(chr(rand(65,90)).(string)rand(100,999)),
                 [$this->getScoreReference(chr(rand(65,90)).(string)rand(100,999))],
                 [
                     $this->getScoreArtist(
@@ -60,7 +61,8 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
 
     private function getScore(
         string  $title,
-        ?string $description = '',
+        string $description,
+        ScoreReference $mainReference,
         array   $refs = [],
         array   $artists = [],
         array   $categories = [],
@@ -70,6 +72,7 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
         $score = new Score();
         $score->setTitle($title);
         $score->setDescription($description);
+        $score->setMainReference($mainReference);
         foreach ($refs as $ref) {
             $score->addRef($ref);
         }

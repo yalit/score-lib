@@ -60,8 +60,10 @@ entity:
         label: "Titre"
       description:
         label: "Description"
+      mainReference:
+        label: "Référence"
       refs:
-        label: "Références"
+        label: "Références (autres)"
       artists:
         label: "Artistes"
       categories:
@@ -96,3 +98,6 @@ index:
           label: 'Catégorie(s)'
         artists:
           label: 'Artiste(s)'
+library:
+  index:
+    title: "Liste des partitions"

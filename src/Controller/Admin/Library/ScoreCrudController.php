@@ -9,6 +9,7 @@ use App\Library\Form\ScoreFileType;
 use App\Library\Form\ScoreReferenceType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -35,6 +36,7 @@ class ScoreCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'entity.score.fields.title.label'),
             TextField::new('description', 'entity.score.fields.description.label'),
+            AssociationField::new('mainReference', 'entity.score.fields.mainReference.label'),
             CollectionField::new('refs', 'entity.score.fields.refs.label')
                 ->allowAdd()
                 ->allowDelete()

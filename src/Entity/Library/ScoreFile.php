@@ -7,7 +7,6 @@ use App\Repository\Library\ScoreFileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreFileRepository::class)]
 class ScoreFile
@@ -16,13 +15,11 @@ class ScoreFile
     #[ORM\GeneratedValue('CUSTOM')]
     #[CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-    #[Groups([Score::GROUP_READ])]
     private ?string $id = null;
 
     private ?UploadedFile $file = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([Score::GROUP_READ])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -35,7 +32,6 @@ class ScoreFile
     private ?int $size = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups([Score::GROUP_READ])]
     private ?string $extension = null;
 
     #[ORM\ManyToOne(inversedBy: 'files')]

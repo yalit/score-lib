@@ -15,12 +15,18 @@
 <div class="data__table" {{ attributes }}>
     <div class="data__table__header flex items-center">
         <div class="data__table__header_cell w-3/12 lg:w-2/12 flex items-center justify-between">
-            <span>{{ 'index.scores.table.header.name.label' | trans }}</span>
-            <span class="mr-4 cursor-pointer" data-action="click->live#action" data-live-action-param="changeOrderBy" data-live-by-param="title">{{ _self.getCaret(this.direction('title')) }}</span>
+            <span>{{ 'entity.score.fields.title.label' | trans }}</span>
+            <span class="mr-4 cursor-pointer" data-action="click->live#action" data-live-action-param="changeOrderBy"
+                  data-live-by-param="title">{{ _self.getCaret(this.direction('title')) }}</span>
         </div>
-        <div class="data__table__header_cell w-2/12">{{ 'index.scores.table.header.references.label' | trans }}</div>
-        <div class="data__table__header_cell w-3/12">{{ 'index.scores.table.header.categories.label' | trans }}</div>
-        <div class="data__table__header_cell w-3/12">{{ 'index.scores.table.header.artists.label' | trans }}</div>
+        <div class="data__table__header_cell w-2/12 flex items-center justify-between">
+            <span>{{ 'entity.score.fields.mainReference.label' | trans }}</span>
+            <span class="mr-4 cursor-pointer" data-action="click->live#action" data-live-action-param="changeOrderBy"
+                  data-live-by-param="ref">{{ _self.getCaret(this.direction('ref')) }}</span>
+        </div>
+        <div class="data__table__header_cell w-3/12">{{ 'entity.score.fields.categories.label' | trans }}</div>
+        <div class="data__table__header_cell w-3/12">{{ 'entity.score.fields.artists.label' | trans }}</div>
+        <div class="data__table__header_cell w-2/12">{{ 'entity.score.fields.refs.label' | trans }}</div>
         <div class="data__table__header_cell flex-1"></div>
     </div>
 
@@ -31,11 +37,7 @@
         {% endif %}
         <div class={{ "data__table__line #{c}" }}>
             <div class="data__table__cell w-3/12 lg:w-2/12">{{ score.title }}</div>
-            <div class="data__table__cell w-2/12">
-                {% for ref in score.refs %}
-                    <span class="bubble">{{ ref.value }}</span>
-                {% endfor %}
-            </div>
+            <div class="data__table__cell w-2/12">{{ score.mainReference }}</div>
             <div class="data__table__cell w-3/12 ">
                 {% for category in score.categories %}
                     <span class="bubble">{{ category.value }}</span>
@@ -44,6 +46,11 @@
             <div class="data__table__cell w-3/12">
                 {% for artist in score.artists %}
                     <span class="bubble">{{ artist.artist.name }}</span>
+                {% endfor %}
+            </div>
+            <div class="data__table__cell w-2/12">
+                {% for ref in score.refs %}
+                    <span class="bubble">{{ ref.value }}</span>
                 {% endfor %}
             </div>
             <div class="data__table__cell action__cell flex-col flex-1 justify-end">

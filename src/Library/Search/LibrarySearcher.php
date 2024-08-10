@@ -3,6 +3,7 @@
 namespace App\Library\Search;
 
 use App\Entity\Library\Score;
+use App\Library\Search\Enum\SearchByOrder;
 use App\Repository\Library\ScoreRepository;
 
 readonly class LibrarySearcher
@@ -14,6 +15,6 @@ readonly class LibrarySearcher
     /** @return Score[] */
     public function search(SearchOrderBy $orderBy): array
     {
-        return $this->scoreRepository->findBy([], [$orderBy->getValue()->value => $orderBy->getOrder()->value]);
+        return $this->scoreRepository->findFilteredAndOrderedScores([], $orderBy->getValue()->value, $orderBy->getOrder() == SearchByOrder::ASCENDING);
     }
 }

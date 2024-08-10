@@ -54,6 +54,10 @@ class Score
     #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist'], orphanRemoval: true)]
     private Collection $artists;
 
+    #[ORM\OneToOne(targetEntity: ScoreReference::class, inversedBy: 'mainScore', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ScoreReference $mainReference = null;
+
     public function __construct()
     {
         $this->refs = new ArrayCollection();
@@ -197,6 +201,21 @@ class Score
             if ($artist->getScore() === $this) {
                 $artist->setScore(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getMainReference(): ?ScoreReference
+    {
+        return $this->mainReference;
+    }
+
+    public function setMainReference(ScoreReference $mainReference): static
+    {
+        $this->mainReference = $mainReference;
+        if ($mainReference->getMainScore() !== $this) {
+            $mainReference->setMainScore($this);
         }
 
         return $this;

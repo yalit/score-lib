@@ -20,6 +20,7 @@ class ScoreTable
     #[LiveProp]
     public array $orderByDirections = [
         'title' => 'DESC',
+        'ref' => null
     ];
 
     #[LiveProp]

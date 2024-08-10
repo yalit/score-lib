@@ -24,4 +24,26 @@ class ScoreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    public function findFilteredAndOrderedScores(array $filters = [], string $orderBy = 'createdAt', bool $ascending = false): array
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if (str_contains($orderBy, '.')) {
+            $parts = explode('.', $orderBy);
+            $joinTable = $parts[0];
+            $joinColumn = $parts[1];
+
+            $qb->join(sprintf('s.%s', $joinTable), $joinTable)
+                ->orderBy(sprintf('%s.%s', $joinTable, $joinColumn), $ascending ? 'ASC' : 'DESC');
+            ;
+        } else {
+            $qb->orderBy(sprintf('s.%s', $orderBy), $ascending ? 'ASC' : 'DESC');
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }
