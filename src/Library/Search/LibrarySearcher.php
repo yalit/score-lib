@@ -13,9 +13,9 @@ readonly class LibrarySearcher
     }
 
     /** @return Score[] */
-    public function search(SearchOrderBy $orderBy): array
+    public function search(SearchOrderBy $orderBy, int $page, int $scorePerPage): array
     {
-        return $this->scoreRepository->findFilteredAndOrderedScores([], $orderBy->getValue()->value, $orderBy->getOrder() == SearchByOrder::ASCENDING);
+        return $this->scoreRepository->findFilteredAndOrderedScores([], $orderBy->getValue()->value, $orderBy->getOrder() == SearchByOrder::ASCENDING, $page, $scorePerPage);
     }
 
     public function getScoreById(?string $deletionRequestedId): ?Score
@@ -29,5 +29,11 @@ readonly class LibrarySearcher
         if ($score) {
             $this->scoreRepository->delete($score);
         }
+    }
+
+    /** @return Score[] */
+    public function findAll(): array
+    {
+        return $this->scoreRepository->findAll();
     }
 }

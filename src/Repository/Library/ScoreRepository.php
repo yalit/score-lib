@@ -26,7 +26,7 @@ class ScoreRepository extends ServiceEntityRepository
     }
 
 
-    public function findFilteredAndOrderedScores(array $filters = [], string $orderBy = 'createdAt', bool $ascending = false): array
+    public function findFilteredAndOrderedScores(array $filters = [], string $orderBy = 'createdAt', bool $ascending = false, int $page = 1, int $scorePerPage = 10): array
     {
         $qb = $this->createQueryBuilder('s');
 
@@ -43,6 +43,8 @@ class ScoreRepository extends ServiceEntityRepository
         }
 
         return $qb
+            ->setFirstResult(($page - 1) * $scorePerPage)
+            ->setMaxResults($scorePerPage)
             ->getQuery()
             ->getResult();
     }

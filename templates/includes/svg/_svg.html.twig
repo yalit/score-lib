@@ -9,12 +9,20 @@
         {% set svg = _self.getCaretDown() %}
     {% elseif svgName == 'caret-up' %}
         {% set svg = _self.getCaretUp() %}
-    {% elseif svgName == 'caret-updown' %}
+    {% elseif svgName == 'caret-up-down' %}
         {% set svg = _self.getCaretUpDown() %}
     {% elseif svgName == 'ellipsis-horizontal' %}
         {% set svg = _self.getHorizontalEllipsis() %}
     {% elseif svgName == 'exclamation-triangle' %}
         {% set svg = _self.getExclamationTriangle() %}
+    {% elseif svgName == 'chevron-left' %}
+        {% set svg = _self.getChevronLeft() %}
+    {% elseif svgName == 'chevron-right' %}
+        {% set svg = _self.getChevronRight() %}
+    {% elseif svgName == 'chevron-double-left' %}
+        {% set svg = _self.getDoubleChevronLeft() %}
+    {% elseif svgName == 'chevron-double-right' %}
+        {% set svg = _self.getDoubleChevronRight() %}
     {% endif %}
 
     {% if svg != '' %}
@@ -54,5 +62,23 @@
 {% endmacro %}
 
 {% macro getExclamationTriangle() %}
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"></path>
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"></path>
 {% endmacro %}
+
+{% macro getChevronLeft() %}
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+{% endmacro %}
+
+{% macro getDoubleChevronLeft() %}
+    <path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"></path>
+{% endmacro %}
+
+{% macro getChevronRight() %}
+    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+{% endmacro %}
+
+{% macro getDoubleChevronRight() %}
+    <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"></path>
+{% endmacro %}
+

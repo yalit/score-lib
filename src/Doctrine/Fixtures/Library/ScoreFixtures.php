@@ -15,7 +15,7 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $typeRandom = rand(0,2);
             $firstArtistType = match($typeRandom) {
                 0 => ArtistType::COMPOSER,

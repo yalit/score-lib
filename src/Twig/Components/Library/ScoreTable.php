@@ -39,13 +39,24 @@ class ScoreTable
     #[LiveProp]
     public ?string $deletionRequestedId = null;
 
+    #[LiveProp(url: true)]
+    public int $currentPage = 1;
+
+    #[LiveProp(url: true)]
+    public int $maxPerPage = 10;
+
     public function __construct(private readonly LibrarySearcher $librarySearcher)
     {
     }
 
     public function getScores(): array
     {
-        return $this->librarySearcher->search(SearchOrderByFactory::create($this->orderBy, $this->orderByDirections[$this->orderBy]));
+        return $this->librarySearcher->search(SearchOrderByFactory::create($this->orderBy, $this->orderByDirections[$this->orderBy]), $this->currentPage, $this->maxPerPage);
+    }
+
+    public function getTotalPages(): int
+    {
+        return ceil(count($this->librarySearcher->findAll())/ $this->maxPerPage);
     }
 
     public function getDirection(string $orderBy): ?string
@@ -73,6 +84,12 @@ class ScoreTable
     {
         $this->actionMenuDisplayed = !$this->actionMenuDisplayed;
         $this->actionMenuId = $id;
+    }
+
+    #[LiveAction]
+    public function goToPage(#[LiveArg] int $page): void
+    {
+        $this->currentPage = $page;
     }
 
     #[LiveAction]
