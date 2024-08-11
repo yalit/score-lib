@@ -27,6 +27,18 @@ class ScoreTable
     #[LiveProp(url: true)]
     public string $orderBy = 'title';
 
+    #[LiveProp]
+    public bool $actionMenuDisplayed = false;
+
+    #[LiveProp]
+    public ?string $actionMenuId = null;
+
+    #[LiveProp]
+    public bool $deletionRequested = false;
+
+    #[LiveProp]
+    public ?string $deletionRequestedId = null;
+
     public function __construct(private readonly LibrarySearcher $librarySearcher)
     {
     }
@@ -54,5 +66,44 @@ class ScoreTable
 
         $this->orderBy = $orderBy;
         $this->orderByDirections[$orderBy] = $this->orderByDirections[$orderBy] === 'ASC' ? 'DESC' : 'ASC';
+    }
+
+    #[LiveAction]
+    public function toggleActionMenu(#[LiveArg] string $id): void
+    {
+        $this->actionMenuDisplayed = !$this->actionMenuDisplayed;
+        $this->actionMenuId = $id;
+    }
+
+    #[LiveAction]
+    public function requestDeletion(#[LiveArg('id')] string $id): void
+    {
+        $this->deletionRequested = true;
+        $this->deletionRequestedId = $id;
+        $this->actionMenuDisplayed = false;
+    }
+
+    #[LiveAction]
+    public function confirmDeletion(#[LiveArg('id')] string $id): void
+    {
+        $this->librarySearcher->deleteScore($id);
+        $this->deletionRequested = false;
+        $this->deletionRequestedId = null;
+    }
+
+    #[LiveAction]
+    public function cancelDeletionRequest(): void
+    {
+        $this->deletionRequested = false;
+        $this->deletionRequestedId = null;
+    }
+
+    public function getDeletionRequestedScore(): ?Score
+    {
+        if ($this->deletionRequestedId === null) {
+            return null;
+        }
+
+        return $this->librarySearcher->getScoreById($this->deletionRequestedId);
     }
 }

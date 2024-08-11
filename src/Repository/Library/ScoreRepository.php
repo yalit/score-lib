@@ -46,4 +46,14 @@ class ScoreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function delete(Score $score): void
+    {
+        $this->getEntityManager()->remove($score);
+        try {
+            $this->getEntityManager()->flush();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
 }

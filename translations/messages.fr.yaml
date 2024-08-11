@@ -101,3 +101,8 @@ index:
 library:
   index:
     title: "Liste des partitions"
+    deleteModal:
+      title:
+        label: 'Suppression de la partition'
+      content:
+        text: 'Voulez-vous vraiment supprimer la partition "{title}" ?'

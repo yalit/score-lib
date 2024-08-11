@@ -17,4 +17,17 @@ readonly class LibrarySearcher
     {
         return $this->scoreRepository->findFilteredAndOrderedScores([], $orderBy->getValue()->value, $orderBy->getOrder() == SearchByOrder::ASCENDING);
     }
+
+    public function getScoreById(?string $deletionRequestedId): ?Score
+    {
+        return $this->scoreRepository->find($deletionRequestedId);
+    }
+
+    public function deleteScore(string $id): void
+    {
+        $score = $this->scoreRepository->find($id);
+        if ($score) {
+            $this->scoreRepository->delete($score);
+        }
+    }
 }

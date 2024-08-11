@@ -12,6 +12,26 @@
     {% endif %}
 {% endmacro %}
 
+{% macro getModalTitle() %}
+    <div class="title__title text-red-800 flex items-end gap-5 w-full leading-none">
+        <div>{{ svg.getSvg('exclamation-triangle', 'h-5 w-5') }}</div>
+        <div>{{ 'library.index.deleteModal.title.label' | trans }}</div>
+    </div>
+{% endmacro %}
+
+{% macro getModalContent(score) %}
+    <div class="w-full h-full flex justify-center items-center p-5">
+        {{ 'library.index.deleteModal.content.text' | trans({'{title}': score.title}) }}
+    </div>
+{% endmacro %}
+
+{% macro getModalFooter(score) %}
+    <div class="flex justify-end items-center gap-4">
+        <button class="button secondary" data-action="live#action" data-live-action-param="cancelDeletionRequest">{{ 'main.action.cancel.label' | trans }}</button>
+        <button class="button danger" data-action="live#action" data-live-action-param="confirmDeletion" data-live-id-param="{{ score.id }}">{{ 'main.action.delete.label' | trans }}</button>
+    </div>
+{% endmacro %}
+
 <div class="data__table" {{ attributes }}>
     <div class="data__table__header flex items-center">
         <div class="data__table__header_cell w-3/12 lg:w-2/12 flex items-center justify-between">
@@ -55,17 +75,33 @@
             </div>
             <div class="data__table__cell action__cell flex-col flex-1 justify-end">
                 <div class="action relative">
-                    <label for="action-{{ score.id }}" class="cursor-pointer">
+                    <div data-action="click->live#action" data-live-action-param="toggleActionMenu" data-live-id-param="{{ score.id }}" class="cursor-pointer">
                         {{ svg.getSvg('ellipsis-horizontal', 'h-5 w-5') }}
-                    </label>
-                    <input type="checkbox" class="peer hidden" id="action-{{ score.id }}"/>
-                    <div class="hidden z-[100] peer-checked:block absolute top-full right-0 bg-white p-2 border border-gray-100 rounded-sm">
+                    </div>
+                    <div class="{% if not(actionMenuDisplayed and actionMenuId == score.id) %}hidden{% endif %} z-[100] peer-checked:block absolute top-full right-0 bg-white p-2 border border-gray-100 rounded-sm">
                         <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.view.label' | trans }}</a>
                         <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.edit.label' | trans }}</a>
-                        <a href="{{ path('app_index') }}" class="action cursor-pointer">{{ 'main.action.delete.label' | trans }}</a>
+                        <span data-action="click->live#action" data-live-action-param="requestDeletion" data-live-id-param="{{ score.id }}" class="action cursor-pointer">{{ 'main.action.delete.label' | trans }}</span>
                     </div>
                 </div>
             </div>
         </div>
     {% endfor %}
+
+    {% if deletionRequested %}
+        <div class="modal fixed inset-0 w-screen h-screen">
+            <div class="modal__container relative w-full h-full">
+                <div class="modal__back absolute inset-0 w-full h-full bg-gray-500 opacity-50"></div>
+                <div class="modal__container absolute inset-0 w-full h-full flex justify-center items-center">
+                    {{ include('includes/_card.html.twig', {
+                        'card_class': "min-w-[50%]",
+                        'card_title': _self.getModalTitle(),
+                        'card_content': _self.getModalContent(this.deletionRequestedScore),
+                        'card_footer': _self.getModalFooter(this.deletionRequestedScore)
+                    }) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
+

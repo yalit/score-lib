@@ -30,19 +30,19 @@ class Score
     /**
      * @var Collection<int, ScoreReference>
      */
-    #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
     private Collection $refs;
 
     /**
      * @var Collection<int, ScoreCategory>
      */
-    #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist', "remove"])]
     private Collection $categories;
 
     /**
      * @var Collection<int, ScoreFile>
      */
-    #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
     private Collection $files;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
@@ -51,10 +51,10 @@ class Score
     /**
      * @var Collection<int, ScoreArtist>
      */
-    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
     private Collection $artists;
 
-    #[ORM\OneToOne(targetEntity: ScoreReference::class, inversedBy: 'mainScore', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?ScoreReference $mainReference = null;
 
@@ -211,12 +211,9 @@ class Score
         return $this->mainReference;
     }
 
-    public function setMainReference(ScoreReference $mainReference): static
+    public function setMainReference(?ScoreReference $mainReference): static
     {
         $this->mainReference = $mainReference;
-        if ($mainReference->getMainScore() !== $this) {
-            $mainReference->setMainScore($this);
-        }
 
         return $this;
     }

@@ -22,9 +22,6 @@ class ScoreReference
     #[ORM\JoinColumn(nullable: true)]
     private ?Score $score = null;
 
-    #[ORM\OneToOne(targetEntity: Score::class, inversedBy: 'mainReference')]
-    private ?Score $mainScore = null;
-
     public function getId(): ?string
     {
         return $this->id;
@@ -54,15 +51,5 @@ class ScoreReference
     {
         $this->score = $score;
         return $this;
-    }
-
-    public function getMainScore(): ?Score
-    {
-        return $this->mainScore;
-    }
-
-    public function setMainScore(?Score $mainScore): void
-    {
-        $this->mainScore = $mainScore;
     }
 }
