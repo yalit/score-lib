@@ -4,18 +4,16 @@
 {% import 'includes/_card.html.twig' as card %}
 
 {% macro getLatestScores(scores) %}
-    {{ include('index/latestScoresTable.html.twig', {'scores': scores}) }}
+    {{ include('index/latestScoresTable.html.twig', {scores: scores}) }}
 {% endmacro %}
 
 {% block body %}
-    <div class="w-full p-8"> 
-        {{ include('index/dasboardCards.html.twig') }}
+    {{ include('index/dashboardCards.html.twig') }}
 
-        {{ include('includes/_card.html.twig', {
-            'card_class': "mt-6",
-            'card_title': card.getTitle("index.scores.table.title.label"),
-            'card_content': _self.getLatestScores(latest_scores)
-        }) }}
-    </div>
+    {{ include('includes/_card.html.twig', {
+        card_class: 'mt-6',
+        card_title: card.getTitle('index.scores.table.title.label'),
+        card_content: _self.getLatestScores(latest_scores)
+    }) }}
 
 {% endblock %}

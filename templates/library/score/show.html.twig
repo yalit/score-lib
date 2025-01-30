@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% import 'includes/_card.html.twig' as card %}
+
+{% block title %}{{ 'entity.score.label.singular'|trans }} - {{ score.title }}{% endblock %}
+
+{% macro getCardContent(score) %}
+    {{ include('library/score/showCardContent.html.twig', {score: score}) }}
+{% endmacro %}
+
+{% block body %}
+    {{ include('includes/_card.html.twig', {
+        card_title: card.getTitle(score.title),
+        card_content: _self.getCardContent(score)
+    }) }}
+{% endblock %}

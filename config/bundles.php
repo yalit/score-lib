@@ -20,4 +20,5 @@ return [
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
+    Yalit\TwigHeroiconBundle\TwigHeroiconBundle::class => ['all' => true],
 ];

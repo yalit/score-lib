@@ -4,106 +4,107 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    @apply bg-gray-200;
-    font-family: Satoshi, sans-serif;
+html,
+body {
+  @apply bg-gray-200;
+  font-family: Satoshi, sans-serif;
 }
 
 .notification {
-    &.error {
-        @apply text-red-900 bg-red-200 border rounded border-red-600;
-    }
+  &.error {
+    @apply text-red-900 bg-red-200 border rounded border-red-600;
+  }
 }
 
 nav {
-    .nav__menu__item {
-        @apply flex gap-1;
+  .nav__menu__item {
+    @apply flex gap-1;
 
-        span {
-            @apply hover:pl-2;
-        }
+    span {
+      @apply hover:pl-2;
     }
+  }
 }
 
 .card {
-    @apply flex flex-col gap-4 bg-white shadow p-6 relative rounded-sm;
+  @apply flex flex-col gap-4 bg-white shadow p-6 relative rounded-sm;
 
-    .card__title {
-        @apply flex justify-between items-center w-full gap-6;
-        .title__title {
-            @apply font-bold text-xl;
-        }
-
-        .title__subtitle {
-            @apply text-gray-600 text-lg;
-        }
+  .card__title {
+    @apply flex justify-between items-center w-full gap-6;
+    .title__title {
+      @apply font-bold text-xl;
     }
 
-    .card__content {
-        @apply flex-1;
+    .title__subtitle {
+      @apply text-gray-600 text-lg;
+    }
+  }
+
+  .card__content {
+    @apply flex-1;
+  }
+
+  .card__footer {
+  }
+
+  .dashboard__card__action {
+    @apply w-full h-full flex flex-col justify-end items-center gap-2 cursor-pointer;
+    &.add {
+      @apply text-green-700;
     }
 
-    .card__footer {
-
+    span {
+      @apply font-bold;
     }
-
-    .dashboard__card__action {
-        @apply w-full h-full flex flex-col justify-between items-center gap-2 cursor-pointer;
-        &.add {
-            @apply text-green-700;
-        }
-
-        span {
-            @apply font-bold;
-        }
-    }
+  }
 }
 
 .button {
-    @apply text-white rounded-sm py-2 px-4 cursor-pointer;
-    &.primary {
-        @apply bg-blue-500;
-    }
+  @apply text-white rounded-sm py-2 px-4 cursor-pointer;
+  &.primary {
+    @apply bg-blue-500;
+  }
 
-    &.secondary {
-        @apply bg-gray-500;
-    }
+  &.secondary {
+    @apply bg-gray-500;
+  }
 
-    &.danger {
-        @apply bg-red-500;
-    }
+  &.danger {
+    @apply bg-red-500;
+  }
 }
 
 .data__table {
-    .data__table__header {
-        @apply border-b border-gray-200;
+  .data__table__header {
+    @apply border-b border-gray-200;
 
-        .data__table__header_cell {
-            @apply p-2 font-bold text-gray-600;
-        }
+    .data__table__header_cell {
+      @apply p-2 font-bold text-gray-600;
+    }
+  }
+
+  .data__table__line {
+    @apply text-sm py-3 flex border-t border-gray-200;
+
+    &.even {
+      @apply bg-gray-50;
     }
 
-    .data__table__line {
-        @apply text-sm py-3 flex border-t border-gray-200;
+    .data__table__cell {
+      @apply px-2 flex items-center gap-2 flex-wrap;
 
-        &.even {
-            @apply bg-gray-50;
+      &.action__cell {
+        @apply items-end;
+        & > span,
+        & > a,
+        & > button {
+          @apply cursor-pointer;
         }
-
-        .data__table__cell {
-            @apply px-2 flex items-center gap-2 flex-wrap;
-
-            &.action__cell {
-                @apply items-end;
-                &>span, &>a, &>button {
-                    @apply cursor-pointer;
-                }
-            }
-        }
+      }
     }
-
+  }
 }
 
 .bubble {
-    @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;
+  @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;
 }

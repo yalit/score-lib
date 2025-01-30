@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% import "includes/_card.html.twig" as card %}
+
+{% block title %}New Score{% endblock %}
+
+{% macro getCardContent(form) %}
+    {{ include('library/score/_form.html.twig', {'form': form}) }}
+{% endmacro %}
+
+{% block body %}
+    {{ include('includes/_card.html.twig', {
+        'card_title': card.getTitle('library.new.title'),
+        'card_content': _self.getCardContent(form)
+    })}}
+{% endblock %}

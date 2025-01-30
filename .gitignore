@@ -30,3 +30,7 @@ yarn-error.log
 ###> Application ###
 /public/uploads/score/*
 ###< Application ###
+
+###> Custom bundles ###
+/bundles/
+###< Custom bundles ###

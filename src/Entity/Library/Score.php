@@ -3,12 +3,13 @@
 namespace App\Entity\Library;
 
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Entity\Library\Enum\ArtistType;
 use App\Repository\Library\ScoreRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
 class Score
@@ -30,19 +31,19 @@ class Score
     /**
      * @var Collection<int, ScoreReference>
      */
-    #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $refs;
 
     /**
      * @var Collection<int, ScoreCategory>
      */
-    #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist', "remove"])]
+    #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist', 'remove'])]
     private Collection $categories;
 
     /**
      * @var Collection<int, ScoreFile>
      */
-    #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $files;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
@@ -51,7 +52,7 @@ class Score
     /**
      * @var Collection<int, ScoreArtist>
      */
-    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $artists;
 
     #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
@@ -101,7 +102,7 @@ class Score
         return $this->refs;
     }
 
-    public function addRef(ScoreReference $ref):  void
+    public function addRef(ScoreReference $ref): void
     {
         if (!$this->refs->contains($ref)) {
             $this->refs->add($ref);
@@ -109,7 +110,7 @@ class Score
         }
     }
 
-    public function removeRef(ScoreReference $ref):  void
+    public function removeRef(ScoreReference $ref): void
     {
         if ($this->refs->removeElement($ref)) {
             // set the owning side to null (unless already changed)
@@ -118,7 +119,7 @@ class Score
             }
         }
     }
-    
+
     /**
      * @return Collection<int, ScoreCategory>
      */
@@ -182,6 +183,30 @@ class Score
     public function getArtists(): Collection
     {
         return $this->artists;
+    }
+
+    /**
+     * @return Collection<int, ScoreArtist>
+     */
+    public function getComposers(): Collection
+    {
+        return $this->artists->filter(fn(ScoreArtist $artist) => $artist->getType() == ArtistType::COMPOSER);
+    }
+
+    /**
+     * @return Collection<int, ScoreArtist>
+     */
+    public function getLyricists(): Collection
+    {
+        return $this->artists->filter(fn(ScoreArtist $artist) => $artist->getType() == ArtistType::LYRICIST);
+    }
+
+    /**
+     * @return Collection<int, ScoreArtist>
+     */
+    public function getOtherArtists(): Collection
+    {
+        return $this->artists->filter(fn(ScoreArtist $artist) => $artist->getType() == ArtistType::OTHER);
     }
 
     public function addArtist(ScoreArtist $artist): static

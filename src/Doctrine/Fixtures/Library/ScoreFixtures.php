@@ -2,8 +2,8 @@
 
 namespace DataFixtures\Library;
 
-use App\Entity\Library\Artist;
 use App\Entity\Library\Enum\ArtistType;
+use App\Entity\Library\Artist;
 use App\Entity\Library\Score;
 use App\Entity\Library\ScoreArtist;
 use App\Entity\Library\ScoreReference;
@@ -16,14 +16,14 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         for ($i = 1; $i <= 100; $i++) {
-            $typeRandom = rand(0,2);
-            $firstArtistType = match($typeRandom) {
+            $typeRandom = rand(0, 2);
+            $firstArtistType = match ($typeRandom) {
                 0 => ArtistType::COMPOSER,
                 1 => ArtistType::LYRICIST,
                 default => ArtistType::OTHER,
             };
 
-            $secondArtistType = match(($typeRandom + 1) % 3) {
+            $secondArtistType = match (($typeRandom + 1) % 3) {
                 0 => ArtistType::COMPOSER,
                 1 => ArtistType::LYRICIST,
                 default => ArtistType::OTHER,
@@ -31,20 +31,20 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
 
             $score = $this->getScore(
                 'Score ' . $i,
-                '',
-                $this->getScoreReference(chr(rand(65,90)).(string)rand(100,999)),
-                [$this->getScoreReference(chr(rand(65,90)).(string)rand(100,999))],
+                'A description for Score ' . $i,
+                $this->getScoreReference(chr(rand(65, 90)) . (string) rand(100, 999)),
+                [$this->getScoreReference(chr(rand(65, 90)) . (string) rand(100, 999))],
                 [
                     $this->getScoreArtist(
-                        $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1,10))),
+                        $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1, 10))),
                         $firstArtistType
                     ),
                     $this->getScoreArtist(
-                        $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1,10))),
+                        $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1, 10))),
                         $secondArtistType
                     )
                 ],
-                [$this->getReference(sprintf(ScoreCategoryFixtures::SCORE_CATEGORY_REFERENCE, rand(1,10)))]
+                [$this->getReference(sprintf(ScoreCategoryFixtures::SCORE_CATEGORY_REFERENCE, rand(1, 10)))]
             );
             $manager->persist($score);
         }
@@ -60,15 +60,14 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
     }
 
     private function getScore(
-        string  $title,
+        string $title,
         string $description,
         ScoreReference $mainReference,
-        array   $refs = [],
-        array   $artists = [],
-        array   $categories = [],
-        array   $files = [],
-    ): Score
-    {
+        array $refs = [],
+        array $artists = [],
+        array $categories = [],
+        array $files = [],
+    ): Score {
         $score = new Score();
         $score->setTitle($title);
         $score->setDescription($description);

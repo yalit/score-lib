@@ -74,35 +74,37 @@ entity:
 index:
   cards:
     newscores:
-        title: "Nouvelles partitions"
+      title: "Nouvelles partitions"
     libraryscores:
-        title: "Partitions de la bibliothèque"
-        icon:
-          action:
-            label: "Nouvelle partition"
+      title: "Partitions de la bibliothèque"
+      icon:
+        action:
+          label: "Nouvelle partition"
     setlists:
-        title: "Listes de morceaux"
-        icon:
-          action:
-            label: "Nouvelle liste"
+      title: "Listes de morceaux"
+      icon:
+        action:
+          label: "Nouvelle liste"
   scores:
     table:
       title:
-        label: 'Dernières partitions'
+        label: "Dernières partitions"
       header:
         name:
-          label: 'Titre'
+          label: "Titre"
         references:
-          label: 'Référence(s)'
+          label: "Référence(s)"
         categories:
-          label: 'Catégorie(s)'
+          label: "Catégorie(s)"
         artists:
-          label: 'Artiste(s)'
+          label: "Artiste(s)"
 library:
   index:
     title: "Liste des partitions"
     deleteModal:
       title:
-        label: 'Suppression de la partition'
+        label: "Suppression de la partition"
       content:
         text: 'Voulez-vous vraiment supprimer la partition "{title}" ?'
+  new:
+    title: "Nouvelle partition"

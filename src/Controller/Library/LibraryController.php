@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Score;
+namespace App\Controller\Library;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

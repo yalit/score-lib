@@ -6,7 +6,7 @@ use App\Entity\Security\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture
+class SecurityUserFixtures extends Fixture
 {
     public const ADMIN_NAME = 'admin';
     public const USER_NAME = 'user';
@@ -20,7 +20,7 @@ class UserFixtures extends Fixture
     /**
      * @inheritDoc
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $admin = UserFactory::createAdmin(self::ADMIN_NAME, sprintf(self::USER_EMAIL, self::ADMIN_NAME), self::PASSWORD);
         $manager->persist($admin);

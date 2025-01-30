@@ -38,23 +38,15 @@ class ScoreCrudController extends AbstractCrudController
             TextField::new('description', 'entity.score.fields.description.label'),
             AssociationField::new('mainReference', 'entity.score.fields.mainReference.label'),
             CollectionField::new('refs', 'entity.score.fields.refs.label')
-                ->allowAdd()
-                ->allowDelete()
                 ->setEntryType(ScoreReferenceType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('artists', 'entity.score.fields.artists.label')
-                ->allowAdd()
-                ->allowDelete()
                 ->setEntryType(ScoreArtistFormType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('categories', 'entity.score.fields.categories.label')
-                ->allowAdd()
-                ->allowDelete()
                 ->setEntryType(ScoreCategoryType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('files', 'entity.score.fields.files.label')
-                ->allowAdd()
-                ->allowDelete()
                 ->setEntryType(ScoreFileType::class)
                 ->setFormTypeOption('by_reference', false)
         ];

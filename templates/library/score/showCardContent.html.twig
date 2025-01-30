@@ -1,0 +1,23 @@
+{# @var score \App\Entity\Library\Score #}
+
+{% if score.composers|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.artist.type.composer'|trans }}(s)</span> : {{ score.composers|map(sa => sa.artist.name)|join(', ') }}</p>
+{% endif %}
+
+{% if score.lyricists|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.artist.type.lyricist'|trans }}(s)</span> : {{ score.lyricists|map(sa => sa.artist.name)|join(', ') }}</p>
+{% endif %}
+
+{% if score.otherArtists|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.artist.type.other'|trans }}(s)</span> : {{ score.otherArtists|map(sa => sa.artist.name)|join(', ') }}</p>
+{% endif %}
+
+{% if score.categories|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.score.fields.categories.label'|trans }}</span> : {{ score.categories|map(sc => sc.value)|join(' / ') }}</p>
+{% endif %}
+
+{% if score.description != '' %}
+    <div class="">
+        <span class="font-bold">Description</span> : {{ score.description }}
+    </div>
+{% endif %}
