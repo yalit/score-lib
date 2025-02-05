@@ -80,7 +80,7 @@ db-create: db-drop ## Create the database
 	${CONSOLE} doctrine:database:create --env=dev
 
 db-drop: ## Drop the database
-	${CONSOLE} doctrine:database:drop --force --env=dev
+	${CONSOLE} doctrine:database:drop --force --env=dev --if-exists
 
 fixtures: db-create migrate reset-cache ## Load fixtures into the database
 	${CONSOLE} doctrine:fixtures:load --no-interaction --env=dev
