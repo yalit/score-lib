@@ -11,7 +11,7 @@
     </a>
 {% endmacro %}
 
-<div class="main__cards w-full grid grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:gap-7.5">
+<div class="main__cards w-full grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-7.5">
     {{ include('includes/_card.html.twig', {card_title: _self.getCardTitle('index.cards.newscores.title', '10')}) }}
     {{ include('includes/_card.html.twig', {card_title: _self.getCardTitle('index.cards.libraryscores.title', '275'), card_content: _self.getCardIconContent(heroicon('document-plus', '', '', 'h-10 w-10'), 'index.cards.libraryscores.icon.action.label', path('app_library_score_new'))}) }}
     {{ include('includes/_card.html.twig', {card_title: _self.getCardTitle('index.cards.setlists.title', '25'), card_content: _self.getCardIconContent(heroicon('folder-plus', '', '', 'h-10 w-10'), 'index.cards.setlists.icon.action.label', path('app_index'))}) }}

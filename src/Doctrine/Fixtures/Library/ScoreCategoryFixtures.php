@@ -13,7 +13,7 @@ class ScoreCategoryFixtures extends Fixture
     /**
      * @inheritDoc
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 10; $i++) {
             $scoreCategory = new ScoreCategory();

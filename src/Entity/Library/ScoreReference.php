@@ -5,6 +5,8 @@ namespace App\Entity\Library;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Repository\Library\ScoreReferenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: ScoreReferenceRepository::class)]
 class ScoreReference
@@ -16,6 +18,8 @@ class ScoreReference
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
+    #[NotNull]
     private ?string $value = null;
 
     #[ORM\ManyToOne(inversedBy: 'refs')]

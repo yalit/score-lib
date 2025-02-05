@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Form;
+namespace App\Form\Library;
 
 use App\Entity\Library\Artist;
 use App\Entity\Library\Enum\ArtistType;

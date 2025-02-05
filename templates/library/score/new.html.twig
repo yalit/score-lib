@@ -5,12 +5,15 @@
 {% block title %}New Score{% endblock %}
 
 {% macro getCardContent(form) %}
-    {{ include('library/score/_form.html.twig', {'form': form}) }}
+    {{ component('Library:ScoreForm', {'form': form}) }}
 {% endmacro %}
 
 {% block body %}
-    {{ include('includes/_card.html.twig', {
-        'card_title': card.getTitle('library.new.title'),
-        'card_content': _self.getCardContent(form)
-    })}}
+    <div class="flex justify-center">
+        {{ include('includes/_card.html.twig', {
+            'card_title': card.getTitle('library.new.title'),
+            'card_content': _self.getCardContent(form),
+            'card_class': "w-full md:w-auto md:min-w-[50%]"
+        })}}
+    </div>
 {% endblock %}

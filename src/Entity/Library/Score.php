@@ -41,6 +41,12 @@ class Score
     private Collection $categories;
 
     /**
+     * @var Collection<int, ScoreArtist>
+     */
+    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $artists;
+
+    /**
      * @var Collection<int, ScoreFile>
      */
     #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -48,16 +54,6 @@ class Score
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
     private DateTimeImmutable $createdAt;
-
-    /**
-     * @var Collection<int, ScoreArtist>
-     */
-    #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $artists;
-
-    #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ScoreReference $mainReference = null;
 
     public function __construct()
     {
@@ -227,18 +223,6 @@ class Score
                 $artist->setScore(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getMainReference(): ?ScoreReference
-    {
-        return $this->mainReference;
-    }
-
-    public function setMainReference(?ScoreReference $mainReference): static
-    {
-        $this->mainReference = $mainReference;
 
         return $this;
     }

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Library\Form;
+namespace App\Form\Library;
 
 use App\Entity\Library\ScoreReference;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ScoreReferenceType extends AbstractType
+class ScoreReferenceFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('type')
             ->add('value')
         ;
     }

@@ -3,7 +3,6 @@
 namespace DataFixtures\Library;
 
 use App\Entity\Library\Artist;
-use App\Entity\Library\Enum\ArtistType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -11,7 +10,7 @@ class ArtistFixtures extends Fixture
 {
     public const ARTIST_REFERENCE = 'score-artist_%s';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 10; $i++) {
             $artist = new Artist();

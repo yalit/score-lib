@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Form;
+namespace App\Form\Library;
 
 use App\Entity\Library\ScoreFile;
 use Symfony\Component\Form\AbstractType;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ScoreFileType extends AbstractType
+class ScoreFileFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

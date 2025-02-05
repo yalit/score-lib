@@ -3,7 +3,7 @@
 namespace App\Controller\Library;
 
 use App\Entity\Library\Score;
-use App\Form\Library\ScoreType;
+use App\Form\Library\ScoreFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ class ScoreController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $score = new Score();
-        $form = $this->createForm(ScoreType::class, $score);
+        $form = $this->createForm(ScoreFormType::class, $score);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,10 +44,11 @@ class ScoreController extends AbstractController
     #[Route('/{id}/edit', name: 'app_library_score_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Score $score, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ScoreType::class, $score);
+        $form = $this->createForm(ScoreFormType::class, $score);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($score);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_library_score_show', ['id' => $score->getId()], Response::HTTP_SEE_OTHER);

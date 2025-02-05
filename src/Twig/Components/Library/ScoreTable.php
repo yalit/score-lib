@@ -5,7 +5,6 @@ namespace App\Twig\Components\Library;
 use App\Entity\Library\Score;
 use App\Library\Search\Factory\SearchOrderByFactory;
 use App\Library\Search\LibrarySearcher;
-use App\Repository\Library\ScoreRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;

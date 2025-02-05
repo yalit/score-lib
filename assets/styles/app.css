@@ -108,3 +108,24 @@ nav {
 .bubble {
   @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;
 }
+
+form {
+  @apply w-full;
+  label {
+    @apply block font-semibold text-lg mt-3;
+  }
+  input {
+    &[type="text"] {
+      @apply p-2 border-b border-gray-200 outline-none w-full;
+    }
+  }
+  textarea {
+      @apply p-2 border-b border-gray-200 !outline-none w-full;
+  }
+  .ts-control {
+    @apply shadow-none border-none border-b border-gray-200 outline-none w-full;
+    &.focus {
+      box-shadow: none !important;
+    }
+  }
+}

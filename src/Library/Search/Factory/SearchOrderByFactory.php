@@ -12,7 +12,6 @@ class SearchOrderByFactory
     {
         $value = match ($orderBy) {
             'title' => LibrarySearchOrderByValue::TITLE,
-            'ref' => LibrarySearchOrderByValue::REF,
             default => LibrarySearchOrderByValue::CREATED_AT,
         };
 

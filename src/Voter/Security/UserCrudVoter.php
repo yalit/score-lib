@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Voter;
+namespace App\Voter\Security;
 
 use App\Entity\Security\Enum\UserRole;
 use App\Entity\Security\User;

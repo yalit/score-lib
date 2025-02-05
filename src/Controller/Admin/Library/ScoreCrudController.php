@@ -3,10 +3,10 @@
 namespace App\Controller\Admin\Library;
 
 use App\Entity\Library\Score;
+use App\Form\Library\ScoreCategoryFormType;
+use App\Form\Library\ScoreFileFormType;
+use App\Form\Library\ScoreReferenceFormType;
 use App\Library\Form\ScoreArtistFormType;
-use App\Library\Form\ScoreCategoryType;
-use App\Library\Form\ScoreFileType;
-use App\Library\Form\ScoreReferenceType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -38,16 +38,16 @@ class ScoreCrudController extends AbstractCrudController
             TextField::new('description', 'entity.score.fields.description.label'),
             AssociationField::new('mainReference', 'entity.score.fields.mainReference.label'),
             CollectionField::new('refs', 'entity.score.fields.refs.label')
-                ->setEntryType(ScoreReferenceType::class)
+                ->setEntryType(ScoreReferenceFormType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('artists', 'entity.score.fields.artists.label')
                 ->setEntryType(ScoreArtistFormType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('categories', 'entity.score.fields.categories.label')
-                ->setEntryType(ScoreCategoryType::class)
+                ->setEntryType(ScoreCategoryFormType::class)
                 ->setFormTypeOption('by_reference', false),
             CollectionField::new('files', 'entity.score.fields.files.label')
-                ->setEntryType(ScoreFileType::class)
+                ->setEntryType(ScoreFileFormType::class)
                 ->setFormTypeOption('by_reference', false)
         ];
     }

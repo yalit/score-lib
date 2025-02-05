@@ -5,7 +5,7 @@
 {% block title %}{{ 'entity.score.label.singular'|trans }} - {{ score.title }}{% endblock %}
 
 {% macro getCardContent(score) %}
-    {{ include('library/score/showCardContent.html.twig', {score: score}) }}
+    {{ include('library/score/displayScore.html.twig', {score: score}) }}
 {% endmacro %}
 
 {% block body %}

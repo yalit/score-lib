@@ -1,5 +1,9 @@
 {# @var score \App\Entity\Library\Score #}
 
+{% if score.refs|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.score.fields.refs.label'|trans }}(s)</span> : {{ score.refs|map(sa => sa.value)|join(', ') }}</p>
+{% endif %}
+
 {% if score.composers|length > 0 %}
     <p><span class="font-bold">{{ 'entity.artist.type.composer'|trans }}(s)</span> : {{ score.composers|map(sa => sa.artist.name)|join(', ') }}</p>
 {% endif %}
