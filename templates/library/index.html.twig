@@ -2,8 +2,8 @@
 
 {% import 'includes/_card.html.twig' as card %}
 
-{% macro getContent() %}
-    {{ component('Library:ScoreTable') }}
+{% macro getContent(data) %}
+    {{ component('Library:LibraryTable', {scores: data}) }}
 {% endmacro %}
 
 {% block title %}Library{% endblock %}
@@ -12,6 +12,6 @@
     {{ include('includes/_card.html.twig', {
         'card_class': "mt-6",
         'card_title': card.getTitle("library.index.title"),
-        'card_content': _self.getContent()
+        'card_content': _self.getContent(scores)
     }) }}
 {% endblock %}

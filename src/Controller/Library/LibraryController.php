@@ -2,6 +2,7 @@
 
 namespace App\Controller\Library;
 
+use App\Repository\Library\ScoreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,8 +11,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class LibraryController extends AbstractController
 {
     #[Route('', name: 'app_library_index')]
-    public function index(): Response
+    public function index(ScoreRepository $scoreRepository): Response
     {
-        return $this->render('library/index.html.twig');
+        return $this->render('library/index.html.twig', [
+            'scores' => $scoreRepository->findAll(),
+        ]);
     }
 }

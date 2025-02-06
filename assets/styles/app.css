@@ -86,7 +86,7 @@ nav {
   .data__table__line {
     @apply text-sm py-3 flex border-t border-gray-200;
 
-    &.even {
+    &.odd {
       @apply bg-gray-50;
     }
 
