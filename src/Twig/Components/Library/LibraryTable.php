@@ -14,7 +14,7 @@ class LibraryTable
 {
     use DefaultActionTrait;
 
-    public const MAX_PER_PAGE = 10;
+    public const MAX_PER_PAGE = 30;
 
     #[LiveProp(url: true)]
     public int $maxPerPage = self::MAX_PER_PAGE;
@@ -69,7 +69,7 @@ class LibraryTable
     private function sortScores(): void
     {
         $titleCmp = function (Score $a, $b): int {
-            if ($a->getTitle() < $b->getTitle()) {
+            if (strtolower($a->getTitle()) < strtolower($b->getTitle())) {
                 return $this->direction === "ASC" ? -1 : 1;
             } else {
                 return $this->direction === "ASC" ? 1 : -1;

@@ -13,23 +13,23 @@
 {% endmacro %}
 
 <div class="data__table" {{ attributes }}>
-    <div class="data__table__header hidden sm:flex sm:items-center">
-        <div class="data__table__header_cell w-3/12 lg:w-2/12 flex items-center justify-between">
+    <div class="data__table__header">
+        <div class="data__table__header_cell w-3/12 flex items-center justify-between">
             <span>{{ 'entity.score.fields.title.label'|trans }}</span>
             <span class="mr-4 cursor-pointer" data-action="click->live#action" data-live-action-param="changeDirection"
                   data-live-by-param="title">{{ _self.getCaret(this.direction('title')) }}</span>
         </div>
+        <div class="data__table__header_cell w-3/12">{{ 'entity.score.fields.refs.label'|trans }}</div>
         <div class="data__table__header_cell w-3/12">{{ 'entity.score.fields.categories.label'|trans }}</div>
         <div class="data__table__header_cell w-3/12">{{ 'entity.score.fields.artists.label'|trans }}</div>
-        <div class="data__table__header_cell w-2/12">{{ 'entity.score.fields.refs.label'|trans }}</div>
-        <div class="data__table__header_cell flex-1"></div>
+        <div class="data__table__header_cell w-[60px]"></div>
     </div>
 
     {% for key, score in this.pageScores %}
         {{ component('Library:LibraryTableRow', {score: score, key: score.id, evenOrOdd: key % 2 == 0 ? "even" : "odd"}) }}
     {% endfor %}
 
-    <div class="data__table__line flex justify-center items-center gap-2">
+    <div class="data__table__line flex !justify-center">
         {% if page > 1 %}
             <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
                   data-live-page-param="{{ 1 }}">{{ heroicon('chevron-double-left', '', '', 'h-4 w-4') }}</span>

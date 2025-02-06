@@ -76,7 +76,7 @@ nav {
 
 .data__table {
   .data__table__header {
-    @apply border-b border-gray-200;
+    @apply border-b border-gray-200 hidden lg:flex items-center;
 
     .data__table__header_cell {
       @apply p-2 font-bold text-gray-600;
@@ -84,23 +84,25 @@ nav {
   }
 
   .data__table__line {
-    @apply text-sm py-3 flex border-t border-gray-200;
+    @apply text-sm py-3 flex justify-between gap-2 border-t border-gray-200;
 
     &.odd {
       @apply bg-gray-50;
     }
 
-    .data__table__cell {
-      @apply px-2 flex items-center gap-2 flex-wrap;
+    .data__table__line-content {
+      @apply flex-1 lg:flex items-center;
 
-      &.action__cell {
-        @apply items-end;
-        & > span,
-        & > a,
-        & > button {
-          @apply cursor-pointer;
+      .data__table__line__item {
+        @apply grid grid-cols-[80px,1fr] gap-2 lg:block lg:w-3/12 mb-1;
+        .data__table__line__item-label {
+          @apply lg:hidden font-semibold;
         }
       }
+    }
+
+    .data__table__line-actions {
+      @apply w-[60px] text-center;
     }
   }
 }

@@ -1,3 +1,40 @@
 <div class="data__table__line {{ this.evenOrOdd }}" {{ attributes }}>
-    {{ this.score.title }}
+    <div class="data__table__line-content">
+        <div class="data__table__line__item title">
+            <div class="data__table__line__item-label">{{ 'entity.score.fields.title.label' | trans }}</div>
+            <div class="data__table__line__item-value">{{ score.title }}</div>
+        </div>    
+
+        <div class="data__table__line__item references">
+            <div class="data__table__line__item-label">{{ 'entity.score.fields.refs.label' | trans }}</div>
+            <div class="data__table__line__item-value">
+                {% for scoreReference in score.refs %}
+                    {% if loop.index != 1 %}, {% endif %}
+                    <span class="">{{ scoreReference.value }}</span>
+                {% endfor %}
+            </div>
+        </div>    
+
+        <div class="data__table__line__item categories">
+            <div class="data__table__line__item-label">{{ 'entity.score.fields.categories.label' | trans }}</div>
+            <div class="data__table__line__item-value">
+                {% for category in score.categories %}
+                    {% if loop.index != 1 %}, {% endif %}
+                    <span class="">{{ category.value }}</span>
+                {% endfor %}
+            </div>
+        </div>    
+
+        <div class="data__table__line__item artists">
+            <div class="data__table__line__item-label">{{ 'entity.score.fields.artists.label' | trans }}</div>
+            <div class="data__table__line__item-value">
+                {% for scoreArtist in score.artists %}
+                    {% if loop.index != 1 %}, {% endif %}
+                    <span class="">{{ scoreArtist.artist.name }} - {{ scoreArtist.type.value | trans }}</span>
+                {% endfor %}
+            </div>
+        </div>    
+
+    </div>
+    <div class="data__table__line-actions">Actions</div>
 </div>
