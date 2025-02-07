@@ -25,14 +25,14 @@ class Score
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 1028, nullable: true)]
-    private ?string $description = null;
+    #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
+    private ScoreReference $reference;
 
     /**
      * @var Collection<int, ScoreReference>
      */
     #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $refs;
+    private Collection $otherReferences;
 
     /**
      * @var Collection<int, ScoreCategory>
@@ -57,7 +57,7 @@ class Score
 
     public function __construct()
     {
-        $this->refs = new ArrayCollection();
+        $this->otherReferences = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->files = new ArrayCollection();
 
@@ -80,35 +80,35 @@ class Score
         $this->title = $title;
     }
 
-    public function getDescription(): ?string
+    public function setReference(ScoreReference $scoreReference): void
     {
-        return $this->description;
+        $this->reference = $scoreReference;
     }
 
-    public function setDescription(?string $description): void
+    public function getReference(): ScoreReference
     {
-        $this->description = $description;
+        return $this->reference;
     }
 
     /**
      * @return Collection<int, ScoreReference>
      */
-    public function getRefs(): Collection
+    public function getotherReferences(): Collection
     {
-        return $this->refs;
+        return $this->otherReferences;
     }
 
-    public function addRef(ScoreReference $ref): void
+    public function addOtherReference(ScoreReference $ref): void
     {
-        if (!$this->refs->contains($ref)) {
-            $this->refs->add($ref);
+        if (!$this->otherReferences->contains($ref)) {
+            $this->otherReferences->add($ref);
             $ref->setScore($this);
         }
     }
 
-    public function removeRef(ScoreReference $ref): void
+    public function removeOtherReference(ScoreReference $ref): void
     {
-        if ($this->refs->removeElement($ref)) {
+        if ($this->otherReferences->removeElement($ref)) {
             // set the owning side to null (unless already changed)
             if ($ref->getScore() === $this) {
                 $ref->setScore(null);

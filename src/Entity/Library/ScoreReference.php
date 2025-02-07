@@ -22,7 +22,10 @@ class ScoreReference
     #[NotNull]
     private ?string $value = null;
 
-    #[ORM\ManyToOne(inversedBy: 'refs')]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $information = null;
+
+    #[ORM\ManyToOne(inversedBy: 'otherReferences')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Score $score = null;
 
@@ -44,6 +47,16 @@ class ScoreReference
     public function setValue(string $value): void
     {
         $this->value = $value;
+    }
+
+    public function getInformation(): ?string
+    {
+        return $this->information;
+    }
+
+    public function setInformation(?string $information): void
+    {
+        $this->information = $information;
     }
 
     public function getScore(): ?Score

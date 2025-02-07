@@ -35,8 +35,8 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
 
             $score = $this->getScore(
                 'Score ' . $i,
-                'A description for Score ' . $i,
-                [ScoreReferenceFactory::create(chr(rand(65, 90)) . (string) rand(100, 999))],
+                ScoreReferenceFactory::create(chr(rand(65, 90)) . (string) rand(100, 999)),
+                [ScoreReferenceFactory::create(chr(rand(65, 90)) . (string) rand(100, 999), sprintf("Information for Score %d", $i))],
                 [
                     ScoreArtistFactory::create($firstArtistType, $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1, 10)), Artist::class)),
                     ScoreArtistFactory::create($secondArtistType, $this->getReference(sprintf(ArtistFixtures::ARTIST_REFERENCE, rand(1, 10)), Artist::class)),
@@ -57,7 +57,7 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
      */
     private function getScore(
         string $title,
-        string $description,
+        ScoreReference $reference,
         array $refs = [],
         array $artists = [],
         array $categories = [],
@@ -65,9 +65,9 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
     ): Score {
         $score = new Score();
         $score->setTitle($title);
-        $score->setDescription($description);
+        $score->setReference($reference);
         foreach ($refs as $ref) {
-            $score->addRef($ref);
+            $score->addOtherReference($ref);
         }
 
         foreach ($artists as $artist) {
@@ -96,3 +96,4 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 }
+

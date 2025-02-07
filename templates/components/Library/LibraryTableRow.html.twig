@@ -8,20 +8,14 @@
         <div class="data__table__line__item references">
             <div class="data__table__line__item-label">{{ 'entity.score.fields.refs.label' | trans }}</div>
             <div class="data__table__line__item-value">
-                {% for scoreReference in this.score.refs %}
-                    {% if loop.index != 1 %}, {% endif %}
-                    <span class="">{{ scoreReference.value | trim }}</span>
-                {% endfor %}
+                {{ this.score.otherReferences | join(', ') }}
             </div>
         </div>    
 
         <div class="data__table__line__item categories">
             <div class="data__table__line__item-label">{{ 'entity.score.fields.categories.label' | trans }}</div>
             <div class="data__table__line__item-value">
-                {% for category in this.score.categories %}
-                    {% if loop.index != 1 %}, {% endif %}
-                    <span class="">{{ category.value }}</span>
-                {% endfor %}
+                {{ this.score.categories | join(', ') }}
             </div>
         </div>    
 

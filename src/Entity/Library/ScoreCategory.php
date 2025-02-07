@@ -20,9 +20,6 @@ class ScoreCategory
     #[ORM\Column(length: 255)]
     private ?string $value = null;
 
-    #[ORM\Column(length: 1028, nullable: true)]
-    private ?string $description = null;
-
     /**
      * @var Collection<int, Score>
      */
@@ -52,16 +49,6 @@ class ScoreCategory
     public function setValue(string $value): void
     {
         $this->value = $value;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
     }
 
     /**

@@ -1,6 +1,6 @@
 {# @var score \App\Entity\Library\Score #}
 
-{% if score.refs|length > 0 %}
+{% if score.otherReferences|length > 0 %}
     <p><span class="font-bold">{{ 'entity.score.fields.refs.label'|trans }}(s)</span> : {{ score.refs|map(sa => sa.value)|join(', ') }}</p>
 {% endif %}
 
@@ -20,8 +20,3 @@
     <p><span class="font-bold">{{ 'entity.score.fields.categories.label'|trans }}</span> : {{ score.categories|map(sc => sc.value)|join(' / ') }}</p>
 {% endif %}
 
-{% if score.description != '' %}
-    <div class="">
-        <span class="font-bold">Description</span> : {{ score.description }}
-    </div>
-{% endif %}

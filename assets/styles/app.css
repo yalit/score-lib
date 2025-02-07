@@ -113,21 +113,45 @@ nav {
 
 form {
   @apply w-full;
+  
   label {
     @apply block font-semibold text-lg mt-3;
   }
+
   input {
     &[type="text"] {
-      @apply p-2 border-b border-gray-200 outline-none w-full;
+      @apply p-1 border-b border-gray-200 outline-none w-full leading-normal;
+    }
+    &.tomselected {
+      @apply hidden;
     }
   }
+
   textarea {
       @apply p-2 border-b border-gray-200 !outline-none w-full;
   }
+
   .ts-control {
-    @apply shadow-none border-none border-b border-gray-200 outline-none w-full;
-    &.focus {
-      box-shadow: none !important;
+    @apply flex items-center gap-1 flex-wrap;
+
+    input {
+      @apply w-full;
     }
+
+    .item {
+      @apply flex items-center gap-1 text-sm ml-1;
+
+      a.remove {
+        @apply text-red-800 font-semibold text-base;
+      }
+    }
+  }
+
+  .ts-dropdown-content {
+      @apply p-3 border border-gray-200 border-t-0 max-h-[200px] overflow-x-hidden overflow-y-auto scroll-smooth;
+      
+      .option {
+        @apply text-sm cursor-pointer leading-tight p-1.5;
+      }
   }
 }
