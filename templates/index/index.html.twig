@@ -4,7 +4,7 @@
 {% import 'includes/_card.html.twig' as card %}
 
 {% macro getLatestScores(scores) %}
-    {{ include('index/latestScoresTable.html.twig', {scores: scores}) }}
+    {{ component("Library:LibraryTable", {scores: scores}) }}
 {% endmacro %}
 
 {% block body %}

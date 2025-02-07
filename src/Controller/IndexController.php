@@ -13,7 +13,7 @@ class IndexController extends AbstractController
     public function index(ScoreRepository $scoreRepository): Response
     {
         return $this->render('index/index.html.twig', [
-            'latest_scores' => $scoreRepository->getLatestScores(),
+            'latest_scores' => $scoreRepository->getLatestScores(10),
         ]);
     }
 }

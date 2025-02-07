@@ -29,36 +29,38 @@
         {{ component('Library:LibraryTableRow', {score: score, key: score.id, evenOrOdd: key % 2 == 0 ? "even" : "odd"}) }}
     {% endfor %}
 
-    <div class="data__table__line flex !justify-center">
-        {% if page > 1 %}
-            <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
-                  data-live-page-param="{{ 1 }}">{{ heroicon('chevron-double-left', '', '', 'h-4 w-4') }}</span>
-            <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
-                  data-live-page-param="{{ page - 1 }}">{{ heroicon('chevron-left', '', '', 'h-4 w-4') }}</span>
-        {% endif %}
-        {% if page - 3 > 1 %}
-            <span>{{ heroicon('ellipsis-horizontal', '', '', 'h-3 w-3') }}</span>
-        {% endif %}
-
-        {% for p in page - 3..page + 3 %}
-            {% if p == page %}
-                <span>( <span class="font-semibold underline">{{ page }}</span>/{{ this.totalPages }} )</span>
-            {% elseif p > 0 and p <= this.totalPages %}
-                <span class="cursor-pointer {% if p == page %}font-bold underline{% endif %}"
-                      data-action="click->live#action" data-live-action-param="goToPage"
-                      data-live-page-param="{{ p }}">{{ p }}</span>
+    {% if this.totalPages > this.maxPerPage %}
+        <div class="data__table__line flex !justify-center">
+            {% if page > 1 %}
+                <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
+                      data-live-page-param="{{ 1 }}">{{ heroicon('chevron-double-left', '', '', 'h-4 w-4') }}</span>
+                <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
+                      data-live-page-param="{{ page - 1 }}">{{ heroicon('chevron-left', '', '', 'h-4 w-4') }}</span>
             {% endif %}
-        {% endfor %}
+            {% if page - 3 > 1 %}
+                <span>{{ heroicon('ellipsis-horizontal', '', '', 'h-3 w-3') }}</span>
+            {% endif %}
 
-        {% if page + 3 < this.totalPages %}
-            <span>{{ heroicon('ellipsis-horizontal', '', '', 'h-3 w-3') }}</span>
-        {% endif %}
+            {% for p in page - 3..page + 3 %}
+                {% if p == page %}
+                    <span>( <span class="font-semibold underline">{{ page }}</span>/{{ this.totalPages }} )</span>
+                {% elseif p > 0 and p <= this.totalPages %}
+                    <span class="cursor-pointer {% if p == page %}font-bold underline{% endif %}"
+                          data-action="click->live#action" data-live-action-param="goToPage"
+                          data-live-page-param="{{ p }}">{{ p }}</span>
+                {% endif %}
+            {% endfor %}
 
-        {% if page < this.totalPages %}
-            <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
-                  data-live-page-param="{{ page + 1 }}">{{ svg.getSvg('chevron-right', 'h-4 w-4') }}</span>
-            <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
-                  data-live-page-param="{{ this.totalPages }}">{{ svg.getSvg('chevron-double-right', 'h-4 w-4') }}</span>
-        {% endif %}
-    </div>
+            {% if page + 3 < this.totalPages %}
+                <span>{{ heroicon('ellipsis-horizontal', '', '', 'h-3 w-3') }}</span>
+            {% endif %}
+
+            {% if page < this.totalPages %}
+                <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
+                      data-live-page-param="{{ page + 1 }}">{{ svg.getSvg('chevron-right', 'h-4 w-4') }}</span>
+                <span class="cursor-pointer" data-action="click->live#action" data-live-action-param="goToPage"
+                      data-live-page-param="{{ this.totalPages }}">{{ svg.getSvg('chevron-double-right', 'h-4 w-4') }}</span>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
