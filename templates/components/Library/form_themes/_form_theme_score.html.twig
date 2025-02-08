@@ -1,0 +1,15 @@
+{% block _score_form_references_entry_row %}
+    <li class="relative flex gap-2 items-center w-full py-2">
+        {{ form_widget(form.value, { label: false , attr: { class: 'flex-1' } }) }}
+        {{ form_widget(form.information, { label: false , attr: { class: 'flex-1' } }) }}
+        {{ form_widget(button_delete, { label: 'x', attr: { class: 'w-content font-semibold text-red-600' } }) }}
+    </li>
+{% endblock %}
+
+{% block _score_form_artists_entry_row %}
+    <li class="relative flex gap-2 items-end w-full py-2">
+        {{ form_widget(form.artist, { label: false , attr: { class: 'flex-1' } }) }}
+        {{ form_widget(form.type, { label: false , attr: { class: 'flex-1' } }) }}
+        {{ form_widget(button_delete, { label: 'x', attr: { class: 'w-content font-semibold text-red-600' } }) }}
+    </li>
+{% endblock %}

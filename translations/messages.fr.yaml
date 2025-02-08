@@ -58,10 +58,10 @@ entity:
     fields:
       title:
         label: "Titre"
-      description:
-        label: "Description"
+      reference:
+        label: "Référence"
       refs:
-        label: "Références"
+        label: "Autres références"
       artists:
         label: "Artistes"
       categories:

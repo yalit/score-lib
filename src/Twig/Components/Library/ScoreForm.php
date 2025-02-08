@@ -4,7 +4,6 @@ namespace App\Twig\Components\Library;
 
 use App\Entity\Library\Score;
 use App\Form\Library\ScoreFormType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -27,12 +26,5 @@ final class ScoreForm extends AbstractController
             ScoreFormType::class,
             $this->score
         );
-    }
-
-    public function save(EntityManagerInterface $entityManager): void
-    {
-        $this->submitForm();
-        $data = $this->getForm()->getData();
-        dd($data);
     }
 }

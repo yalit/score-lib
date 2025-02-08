@@ -1,5 +1,33 @@
+{% form_theme form 'components/Library/form_themes/_form_theme_score.html.twig' %}
+
+{# TODO : add translation #}
 <div{{ attributes }}>
     {{ form_start(form) }}
     <button type="submit">Save</button>
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.reference) }}
+    {{ form_row(form.categories)}}
+
+    
+    <div class="flex justify-between items-center pt-3 pr-5">
+        {{ form_label(form.otherReferences, null, {label_attr: {class: 'm-0'}}) }}
+        {{ form_widget(form.otherReferences.vars.button_add, { label: '+ Add', attr: { class: '' } }) }}
+    </div>
+
+    {% for key, referenceForm in form.otherReferences %}
+       {{ form_row(referenceForm, {label: false}) }} 
+    {% endfor %}
+
+    <div class="flex justify-between items-center pt-3 pr-5">
+        {{ form_label(form.artists, null, {label_attr: {class: 'm-0'}}) }}
+        {{ form_widget(form.artists.vars.button_add, { label: '+ Add', attr: { class: '' } }) }}
+    </div>
+
+    {% for key, scoreArtistForm in form.artists %}
+       {{ form_row(scoreArtistForm, {label: false}) }} 
+    {% endfor %}
+
+    <div class="hidden">{{ form_rest(form) }}</div>
     {{ form_end(form)}}
 </div>

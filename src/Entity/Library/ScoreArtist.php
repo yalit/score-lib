@@ -19,7 +19,7 @@ class ScoreArtist
     #[ORM\JoinColumn(nullable: false)]
     private ?Score $score = null;
 
-    #[ORM\ManyToOne(inversedBy: 'scores')]
+    #[ORM\ManyToOne(inversedBy: 'scores', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Artist $artist = null;
 

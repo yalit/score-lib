@@ -114,16 +114,17 @@ nav {
 form {
   @apply w-full;
   
+  .tomselected {
+    @apply hidden;
+  }
+
   label {
     @apply block font-semibold text-lg mt-3;
   }
 
   input {
     &[type="text"] {
-      @apply p-1 border-b border-gray-200 outline-none w-full leading-normal;
-    }
-    &.tomselected {
-      @apply hidden;
+      @apply p-1 border-b border-gray-200 outline-none w-full leading-normal box-border;
     }
   }
 
@@ -131,27 +132,47 @@ form {
       @apply p-2 border-b border-gray-200 !outline-none w-full;
   }
 
-  .ts-control {
-    @apply flex items-center gap-1 flex-wrap;
+  select {
+    @apply bg-transparent border-b border-gray-200 !outline-none w-full h-[1.5rem];
 
-    input {
-      @apply w-full;
-    }
-
-    .item {
-      @apply flex items-center gap-1 text-sm ml-1;
-
-      a.remove {
-        @apply text-red-800 font-semibold text-base;
-      }
+    option {
+      @apply leading-normal;
     }
   }
 
-  .ts-dropdown-content {
-      @apply p-3 border border-gray-200 border-t-0 max-h-[200px] overflow-x-hidden overflow-y-auto scroll-smooth;
-      
-      .option {
-        @apply text-sm cursor-pointer leading-tight p-1.5;
+  .ts-wrapper {
+    @apply relative;
+
+    .ts-control {
+      @apply min-h-[1.9rem] relative flex items-center gap-1 flex-wrap;
+
+      input {
+        @apply absolute inset-y-0 left-0 w-full;
+        caret-color: transparent;
       }
+
+      .clear-button {
+        @apply absolute content-center justify-center right-1 cursor-pointer;
+      }
+
+      .item {
+        @apply flex items-center gap-1 text-sm ml-1 z-10;
+
+        a.remove {
+          @apply text-red-800 font-semibold text-base;
+        }
+      }
+    }
+
+    .ts-dropdown {
+      @apply absolute top-full bg-white z-20;
+      .ts-dropdown-content {
+          @apply p-3 border border-gray-200 border-t-0 max-h-[200px] overflow-x-hidden overflow-y-auto scroll-smooth;
+          
+          .option, .no-results, .create {
+            @apply text-sm cursor-pointer leading-tight p-1.5;
+          }
+      }
+    }
   }
 }
