@@ -21,3 +21,10 @@
     <p><span class="font-bold">{{ 'entity.score.fields.categories.label'|trans }}</span> : {{ score.categories|map(sc => sc.value)|join(' / ') }}</p>
 {% endif %}
 
+{% if score.files|length > 0 %}
+    <p><span class="font-bold">{{ 'entity.score.fields.files.label'|trans }}</span> :
+        {% for file in score.files %}
+        <div class="downloadable__file"><a href="{{ path("app_library_scorefile_download", {score: score.id, scoreFile: file.id}) }}">{{ file.name }}</a></div>
+        {% endfor %}
+    </p>
+{% endif %}

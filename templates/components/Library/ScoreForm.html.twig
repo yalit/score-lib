@@ -3,7 +3,7 @@
 {# TODO : add translation #}
 <div{{ attributes }}>
     {{ form_start(form) }}
-    <button type="submit">Save</button>
+    <button type="submit" data-action='live#action:prevent' data-live-action-param="files|save">Save</button>
 
     {{ form_row(form.title) }}
     {{ form_row(form.reference) }}
@@ -27,6 +27,8 @@
     {% for key, scoreArtistForm in form.artists %}
        {{ form_row(scoreArtistForm, {label: false}) }} 
     {% endfor %}
+
+    {{ form_row(form.files) }}
 
     <div class="hidden">{{ form_rest(form) }}</div>
     {{ form_end(form)}}

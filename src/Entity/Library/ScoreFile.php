@@ -34,7 +34,7 @@ class ScoreFile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $extension = null;
 
-    #[ORM\ManyToOne(inversedBy: 'files')]
+    #[ORM\ManyToOne(targetEntity: Score::class, inversedBy: 'files')]
     private ?Score $score = null;
 
     public function __toString(): string

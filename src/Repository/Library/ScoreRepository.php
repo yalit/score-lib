@@ -49,6 +49,12 @@ class ScoreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function save(Score $score): void
+    {
+        $this->getEntityManager()->persist($score);
+        $this->getEntityManager()->flush();
+    }
+
     public function delete(Score $score): void
     {
         $this->getEntityManager()->remove($score);

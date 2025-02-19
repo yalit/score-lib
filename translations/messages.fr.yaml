@@ -106,3 +106,5 @@ library:
         text: 'Voulez-vous vraiment supprimer la partition "{title}" ?'
   new:
     title: "Nouvelle partition"
+  edit:
+    title: "Modification de la partition"

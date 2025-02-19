@@ -8,6 +8,7 @@ use App\Form\Library\DataTransformer\TextToScoreCategoriesDataTransformer;
 use App\Form\Library\DataTransformer\TextToScoreReferenceDataTransformer;
 use App\Form\Library\Field\ScoreCategoryAutoCompleteField;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +19,6 @@ class ScoreFormType extends AbstractType
     public function __construct(
         private readonly TextToScoreCategoriesDataTransformer $textToScoreCategoriesDataTransformer,
         private readonly TextToScoreReferenceDataTransformer $textToScoreReferenceDataTransformer,
-        private readonly TextToArtistDataTransformer $textToArtistDataTransformer
     ) {}
 
 
@@ -39,12 +39,10 @@ class ScoreFormType extends AbstractType
                 'entry_type' => ScoreArtistFormType::class,
                 'block_name' => 'artists'
             ])
-        //     ->add('files', CollectionType::class,  [
-        //         'entry_type' => ScoreFileType::class,
-        //         'by_reference' => false,
-        //         'allow_add' => true, 
-        //         'allow_delete' => true
-        //     ])
+            ->add('files', FileType::class, [
+                'required' => false,
+                'multiple' => true,
+            ])
         ;
         $builder->get('reference')->addModelTransformer($this->textToScoreReferenceDataTransformer);
         $builder->get('categories')->addModelTransformer($this->textToScoreCategoriesDataTransformer);
