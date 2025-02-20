@@ -3,6 +3,6 @@ import Home from "./scripts/pages/Home";
 import App from "./scripts/components/App";
 
 // Render your React component instead
-const root = createRoot(document.getElementById('home')!);
+const root = createRoot(document.getElementById('app')!);
 root.render(<App><Home /></App>);
 

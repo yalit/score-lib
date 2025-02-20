@@ -4,7 +4,7 @@ import SearchBar from "./Searchbar";
 
 export default function Layout({children}: PropsWithChildren) {
     return (
-        <>
+        <div className="w-full min-h-screen flex flex-col md:flex-row gap-0">
             <Sidebar />
             <div className="content flex-1 min-h-screen">
                 <SearchBar/>
@@ -12,6 +12,6 @@ export default function Layout({children}: PropsWithChildren) {
                     { children }
                 </main>
             </div>
-        </>
+        </div>
     )
 }
