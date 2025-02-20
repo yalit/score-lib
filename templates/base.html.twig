@@ -6,7 +6,7 @@
         <title>
             {% block title %}Welcome!{% endblock %}
         </title>
-        {% block stylesheets %}{{ encore_entry_link_tags("app") }}{% endblock %}
+        {% block stylesheets %}{% endblock %}
     </head>
     <body class="page-{% block pageName %}{% endblock %} w-full min-h-screen flex flex-col md:flex-row gap-0">
         {% block sidebar %}{{ include("main/sidebar.html.twig") }}{% endblock %}
@@ -16,6 +16,6 @@
                 {% block body %}{% endblock %}
             </div>
         </div>
-        {% block javascripts %}{{ encore_entry_script_tags("app") }}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
