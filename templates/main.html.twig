@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -8,11 +8,14 @@
             {{ encore_entry_link_tags('main') }}
         {% endblock %}
 
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+
         {% block javascripts %}
+            <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
             {{ encore_entry_script_tags('main') }}
         {% endblock %}
-    </head>
-    <body class="page-{% block pageName %}{% endblock %}">
-        {% block body %}{% endblock %}
     </body>
 </html>
