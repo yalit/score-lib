@@ -1,0 +1,5 @@
+api_platform:
+    version: 1.0.0
+    defaults:
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
