@@ -1,0 +1,29 @@
+.card {
+    @apply flex flex-col gap-4 bg-white shadow p-6 relative rounded-sm;
+
+    .card__title {
+        @apply flex justify-between items-center w-full gap-6 font-bold text-xl;
+
+        .title__subtitle {
+            @apply text-gray-600 text-lg;
+        }
+    }
+
+    .card__content {
+        @apply flex-1;
+    }
+
+    .card__footer {
+    }
+
+    .dashboard__card__action {
+        @apply w-full h-full flex flex-col justify-end items-center gap-2 cursor-pointer;
+        &.add {
+            @apply text-green-700;
+        }
+
+        span {
+            @apply font-bold;
+        }
+    }
+}

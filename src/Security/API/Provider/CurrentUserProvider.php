@@ -2,6 +2,7 @@
 
 namespace App\Security\API\Provider;
 
+use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Security\API\CurrentUser;

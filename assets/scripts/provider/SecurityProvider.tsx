@@ -1,8 +1,8 @@
 import {PropsWithChildren, useEffect} from "react";
 import {useQuery, UseQueryResult} from "react-query";
-import {fetchCurrentUser} from "../../repository/security.repository";
-import {useSetUser} from "../../context/security/security.hooks";
-import User from "../../model/user.interface";
+import User from "../model/user.interface";
+import {fetchCurrentUser} from "../repository/security.repository";
+import {useSetUser} from "../context/security/security.hooks";
 
 export default function SecurityProvider({children}: PropsWithChildren){
     const currentUserQuery: UseQueryResult<User | null> = useQuery({
