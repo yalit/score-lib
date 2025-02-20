@@ -3,7 +3,7 @@ nav {
         @apply flex gap-1;
 
         span {
-            @apply hover:pl-2;
+            @apply pr-2 hover:pl-2 hover:pr-0;
         }
     }
 }

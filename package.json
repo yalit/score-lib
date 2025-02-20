@@ -33,6 +33,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@heroicons/react": "^2.2.0",
         "heroicons": "^2.1.5",
         "i18next": "^24.2.2",
         "js-yaml-loader": "^1.2.2",
