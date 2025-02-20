@@ -1,6 +1,12 @@
-export type UserRole = "ROLE_ADMIN" | "ROLE_USER"
+import { z } from "zod";
 
-export default interface User {
-    name: string;
-    roles: UserRole[];
-}
+const UserRoles = z.enum(["ROLE_ADMIN", "ROLE_USER"])
+export type UserRole = z.infer<typeof UserRoles>
+
+export const userSchema = z.object({
+    name: z.string(),
+    roles: z.array(UserRoles),
+})
+
+type User = z.infer<typeof userSchema>
+export default User

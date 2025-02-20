@@ -6,7 +6,7 @@ type Security = {
 }
 
 export type SecurityActions = {
-    setUser: (user: User) => void,
+    setUser: (user: User | null) => void,
 }
 
 export const useSecurityStore = create<Security & SecurityActions>((set, get) => ({

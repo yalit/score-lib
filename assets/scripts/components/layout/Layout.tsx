@@ -2,7 +2,7 @@ import {PropsWithChildren} from "react";
 import Sidebar from "./Sidebar";
 import SearchBar from "./Searchbar";
 
-export default function App({children}: PropsWithChildren) {
+export default function Layout({children}: PropsWithChildren) {
     return (
         <>
             <Sidebar />

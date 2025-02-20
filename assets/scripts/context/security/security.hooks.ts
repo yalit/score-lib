@@ -1,7 +1,7 @@
 import {useSecurityStore} from "./securityContext";
 import User, {UserRole} from "../../model/user.interface";
 
-export function useUser(): User|null {
+const useUser = (): User|null => {
     return useSecurityStore((state) => state.user)
 }
 
@@ -22,4 +22,8 @@ export function useSecurity(): SecurityHooks {
     const isLogged = () => null !== useUser()
 
     return {isGranted, isLogged, user: useUser()}
+}
+
+export const useSetUser = () => {
+    return useSecurityStore((state) => state.setUser)
 }
