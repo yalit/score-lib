@@ -3,6 +3,9 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@babel/preset-react": "^7.24.7",
+        "@hotwired/stimulus": "^3.0.0",
+        "@hotwired/turbo": "^7.1.1 || ^8.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.0.0",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
@@ -12,9 +15,6 @@
         "postcss": "^8.4.40",
         "postcss-loader": "^7.3.4",
         "prop-types": "^15.8.1",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-query": "^3.39.3",
         "regenerator-runtime": "^0.13.9",
         "tailwindcss": "^3.4.7",
         "ts-loader": "^9.5.1",
@@ -22,9 +22,7 @@
         "typescript": "^5.5.4",
         "webpack": "^5.94.0",
         "webpack-cli": "^4.10.0",
-        "webpack-notifier": "^1.15.0",
-        "yup": "^1.4.0",
-        "zustand": "^4.5.4"
+        "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -35,6 +33,15 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "heroicons": "^2.1.5"
+        "heroicons": "^2.1.5",
+        "i18next": "^24.2.2",
+        "js-yaml-loader": "^1.2.2",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-i18next": "^15.4.1",
+        "react-query": "^3.39.3",
+        "tom-select": "^2.2.2",
+        "yup": "^1.4.0",
+        "zustand": "^4.5.4"
     }
 }
