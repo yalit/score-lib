@@ -9,26 +9,3 @@
     {{ parent() }}
     {{ encore_entry_script_tags('home') }}
 {% endblock %}
-
-{# templates/login/index.html.twig #}
-{#
-
-{% extends 'base.html.twig' %}
-
-{% import 'includes/_card.html.twig' as card %}
-
-{% macro getLatestScores(scores) %}
-    {{ component("Library:LibraryTable", {scores: scores}) }}
-{% endmacro %}
-
-{% block body %}
-    {{ include('index/dashboardCards.html.twig') }}
-
-    {{ include('includes/_card.html.twig', {
-        card_class: 'mt-6',
-        card_title: card.getTitle('index.scores.table.title.label'),
-        card_content: _self.getLatestScores(latest_scores)
-    }) }}
-
-{% endblock %}
-#}

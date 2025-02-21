@@ -22,6 +22,7 @@ Encore
      */
     .addEntry("main", "./assets/main.ts")
     .addEntry("home", "./assets/home.tsx")
+    .addEntry("library", "./assets/library.tsx")
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

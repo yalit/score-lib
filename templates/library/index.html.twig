@@ -1,13 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'main.html.twig' %}
 
-{% import 'includes/_card.html.twig' as card %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('library') }}
+{% endblock %}
 
-{% macro getContent(data) %}
-    {{ component('Library:LibraryTable', {scores: data}) }}
-{% endmacro %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('library') }}
+{% endblock %}
 
-{% block title %}Library{% endblock %}
+{% block title %}{{ 'library.index.title' | trans }}{% endblock %}
 
+{#
 {% block body %}
     {{ include('includes/_card.html.twig', {
         'card_class': "mt-6",
@@ -15,3 +20,4 @@
         'card_content': _self.getContent(scores)
     }) }}
 {% endblock %}
+#}
