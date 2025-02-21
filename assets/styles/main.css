@@ -10,7 +10,6 @@ body {
   font-family: Satoshi, sans-serif;
 }
 
-/*
 .notification {
   &.error {
     @apply text-red-900 bg-red-200 border rounded border-red-600;
@@ -32,39 +31,8 @@ body {
     @apply bg-red-500;
   }
 }
+/*
 
-.data__table {
-  .data__table__header {
-    @apply border-b border-gray-200 hidden lg:flex items-center;
-
-    .data__table__header_cell {
-      @apply p-2 font-bold text-gray-600;
-    }
-  }
-
-  .data__table__line {
-    @apply text-sm py-3 flex justify-between gap-2 border-t border-gray-200;
-
-    &.odd {
-      @apply bg-gray-50;
-    }
-
-    .data__table__line-content {
-      @apply flex-1 lg:flex items-center;
-
-      .data__table__line__item {
-        @apply grid grid-cols-[80px,1fr] gap-2 lg:block lg:w-3/12 mb-1;
-        .data__table__line__item-label {
-          @apply lg:hidden font-semibold;
-        }
-      }
-    }
-
-    .data__table__line-actions {
-      @apply flex items-center justify-center w-[60px] relative;
-    }
-  }
-}
 
 .bubble {
   @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;

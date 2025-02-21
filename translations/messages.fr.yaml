@@ -61,7 +61,7 @@ entity:
       reference:
         label: "Référence"
       refs:
-        label: "Autres références"
+        label: "Références"
       artists:
         label: "Artistes"
       categories:

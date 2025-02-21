@@ -7,6 +7,7 @@ use App\Repository\Library\ScoreCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreCategoryRepository::class)]
 class ScoreCategory
@@ -18,6 +19,7 @@ class ScoreCategory
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([Score::SCORE_READ])]
     private ?string $value = null;
 
     /**

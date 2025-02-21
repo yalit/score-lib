@@ -1,6 +1,6 @@
 import {useQuery, UseQueryResult} from "react-query";
 import {fetchLibraryStat} from "../../repository/library.repository";
-import {LibraryStat} from "../../model/libraryStat.interface";
+import {LibraryStat} from "../../model/library/libraryStat.interface";
 
 export function useLibraryStat(): LibraryStat {
     const lbStatQuery: UseQueryResult<LibraryStat> = useQuery({
