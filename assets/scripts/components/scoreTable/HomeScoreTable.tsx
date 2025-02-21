@@ -4,7 +4,7 @@ import Card from "../card/Card";
 import CardContent from "../card/CardContent";
 
 export function HomeScoreTable() {
-    const scores = useLastScores()
+    const {scores} = useLastScores()
 
     return (
         <Card className="mt-5">

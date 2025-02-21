@@ -25,7 +25,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
             provider: LastScoresProvider::class,
         ),
         new GetCollection(
-            order: ['createdAt' => 'DESC'],
             normalizationContext: ["groups" => [Score::SCORE_READ]],
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
