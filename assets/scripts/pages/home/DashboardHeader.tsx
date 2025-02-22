@@ -11,7 +11,7 @@ export default function DashboardHeader() {
     const {nbScores} = useLibraryStat()
 
     return (
-        <div className="main__cards w-full grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 2xl:gap-7.5 lg:max-w-[50vw]">
+        <div className="main__cards w-full grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-7.5">
             <ActionCard title={trans('index.cards.newscores.title')} subtitle={'0'}/>
             <ActionCard title={trans('index.cards.libraryscores.title')} subtitle={String(nbScores)}
                         Icon={<DocumentPlusIcon className="h-10 w-10"/>}
