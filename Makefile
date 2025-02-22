@@ -38,6 +38,10 @@ bash-php: ## Access the PHP container
 execute: ## Execute a command in the PHP container
 	${DOCKER_EXEC} $(filter-out $@,$(MAKECMDGOALS))
 
+purge: ## Purge cache and logs
+	rm -rf var/cache/* var/logs/*
+
+
 ## —— Composer ————————————————————————————————————————————————————————————
 install: ## Install the project dependencies
 	${COMPOSER} install
@@ -75,6 +79,10 @@ front-build-prod: front-dump-routes ## Build the assets in prod mode
 
 front-dump-routes: ## Dump the routes
 	${CONSOLE} fos:js-routing:dump --format=json --target=public/routes/fos_js_routes.json
+
+assets-symlink: purge ## Install the assets with symlinks in the public folder
+	${CONSOLE} assets:install public/ --symlink
+
 ## —— Doctrine ————————————————————————————————————————————————————————————
 db-create: db-drop ## Create the database
 	${CONSOLE} doctrine:database:create --env=dev
