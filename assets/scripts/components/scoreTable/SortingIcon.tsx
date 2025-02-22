@@ -3,23 +3,17 @@ import {useEffect, useState} from "react";
 import {ChevronDownIcon, ChevronUpDownIcon, ChevronUpIcon} from "@heroicons/react/24/outline";
 
 interface SortingIconProps {
-    sort: (direction: Direction) => void
+    sort: (direction: Direction) => void,
+    direction: Direction | NoDirection,
 }
 
-export default function SortingIcon ({sort}: SortingIconProps) {
-    const [direction, setDirection] = useState<Direction | NoDirection>('');
-
+export default function SortingIcon ({sort, direction}: SortingIconProps) {
     const chevronClassName = "h-4 w-4 bold";
 
     const toggleDirection = () => {
         const newDirection = direction === '' ? 'asc' : (direction === 'asc' ? 'desc' : 'asc');
-        setDirection(newDirection);
+        sort(newDirection)
     }
-
-    useEffect(() => {
-        if (direction === '') return
-        sort(direction)
-    }, [direction])
 
     const icons = {
         '': <ChevronUpDownIcon className={chevronClassName} onClick={toggleDirection} />,

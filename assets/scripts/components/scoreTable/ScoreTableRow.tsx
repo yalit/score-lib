@@ -42,27 +42,34 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
     return (
         <div className={rowClass}>
             <div className="data__table__line-content">
-                <div className="data__table__line__item title">
+                <div className="data__table__line__item title medium">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.title.label')}</div>
                     <div className="data__table__line__item-value underline"><a
                         href="{{ path('app_library_score_show', {id: score.id}) }}">{score.title}</a></div>
                 </div>
 
-                <div className="data__table__line__item references">
+                <div className="data__table__line__item reference medium">
+                    <div className="data__table__line__item-label">{trans('entity.score.fields.reference.label')}</div>
+                    <div className="data__table__line__item-value">
+                        { score.reference.value }
+                    </div>
+                </div>
+
+                <div className="data__table__line__item references large">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.refs.label')}</div>
                     <div className="data__table__line__item-value">
                         {score.reference.value} {score.otherReferences.map((ref: ScoreReference) => <div key={score.id + ref.value}>{displayReference(ref)}</div>)}
                     </div>
                 </div>
 
-                <div className="data__table__line__item categories">
+                <div className="data__table__line__item categories medium">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.categories.label')}</div>
                     <div className="data__table__line__item-value">
                         {score.categories.map(cat => cat.value).join(', ')}
                     </div>
                 </div>
 
-                <div className="data__table__line__item artists">
+                <div className="data__table__line__item artists large">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.artists.label')}</div>
                     <div className="data__table__line__item-value">
                         {score.artists.map((scoreArtist: ScoreArtist) => <div key={score.id + scoreArtist.artist.name + scoreArtist.type}
@@ -71,6 +78,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 </div>
 
             </div>
+
             <div className="data__table__line-actions">
                 <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800">
                     <Bars3BottomRightIcon className="w-6 h-6" />

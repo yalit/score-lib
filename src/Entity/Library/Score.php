@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
 use App\Library\API\Provider\LastScoresProvider;
@@ -27,6 +28,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new GetCollection(
             normalizationContext: ["groups" => [Score::SCORE_READ]],
+            parameters: [
+                'order[:property]' => new QueryParameter(filter: 'score.order_filter')
+            ]
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Delete()
