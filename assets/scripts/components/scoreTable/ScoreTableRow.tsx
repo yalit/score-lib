@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {classnames} from "../../libraries/general";
 import {ScoreReference} from "../../model/library/scoreReference.interface";
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import Modal from "../modal/Modal";
 import Card from "../card/Card";
 import CardTitle from "../card/CardTitle";
@@ -77,7 +77,9 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <input type="checkbox" id={score.id + "-action-toggle"} className="peer hidden"/>
                 <div
                     className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-3 p-5 bg-white">
+                    {/*TODO : add the page for the score display*/}
                     <a href="{{ path('app_library_score_show', {id: this.score.id}) }}">{t('main.action.show.label')}</a>
+                    {/*TODO : add the page for the score edit*/}
                     <a href="{{ path('app_library_score_edit', {id: this.score.id}) }}">{t('main.action.edit.label')}</a>
                     <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer" onClick={toggleDeleteModal}>{t('main.action.delete.label')}</label>
                 </div>
@@ -99,7 +101,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                     <CardFooter>
                         <div className="flex justify-end items-center gap-4">
                             <button className="button secondary" onClick={toggleDeleteModal}>{t('main.action.cancel.label')}</button>
-                            <button className="button danger" onClick={console.log}>{t('main.action.delete.label')}</button> {/*TODO : add a deletion api request */}
+                            <button className="button danger" onClick={() => deleteScore(score)}>{t('main.action.delete.label')}</button> {/*TODO : add a deletion api request */}
                         </div>
                     </CardFooter>
                 </Card>

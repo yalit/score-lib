@@ -3,9 +3,11 @@ import {fetchLastScores} from "../../repository/library.repository";
 import {Score} from "../../model/library/score.interface";
 import {ScoreCollectionOutput} from "../../repository/collectionOutput.interface";
 
+export const lastScoresQueryKey = "lastScores";
+
 export function useLastScores(): {nbItems: number, scores: Score[]} {
     const query: UseQueryResult<ScoreCollectionOutput> = useQuery({
-        queryKey: "lastScores",
+        queryKey: lastScoresQueryKey,
         queryFn: fetchLastScores
     })
 

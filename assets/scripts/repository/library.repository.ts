@@ -16,3 +16,9 @@ export function fetchLastScores(): Promise<ScoreCollectionOutput> {
         .then(response => response.json())
         .then(output => scoreCollectionOutputSchema.parseAsync(output))
 }
+
+export function deleteScore(score: Score): Promise<Response> {
+    return fetch(`/api/scores/${score.id}`, {
+        method: "DELETE"
+    })
+}

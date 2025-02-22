@@ -3,6 +3,7 @@
 namespace App\Entity\Library;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
@@ -28,6 +29,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
             normalizationContext: ["groups" => [Score::SCORE_READ]],
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
+        new Delete()
     ]
 )]
 class Score

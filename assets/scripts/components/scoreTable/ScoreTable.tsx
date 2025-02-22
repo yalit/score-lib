@@ -6,10 +6,11 @@ import '../../../styles/scoreTable.css'
 import ScoreTableRow from "./ScoreTableRow";
 
 interface ScoreTableProps {
-    scores: Score[]
+    scores: Score[],
+    deleteScore: (score: Score) => void,
 }
 
-export default function ScoreTable({scores}: ScoreTableProps) {
+export default function ScoreTable({scores, deleteScore}: ScoreTableProps) {
 
     const sortColumn = (field: string, direction: Direction) => {
         console.log(field, direction);
@@ -20,7 +21,7 @@ export default function ScoreTable({scores}: ScoreTableProps) {
             <ScoreTableHeader sortColumn={sortColumn}/>
             {scores.map((score: Score, idx: number) => (
                 <ScoreTableRow key={score.id} score={score} index={idx}
-                               deleteScore={(score) => console.log("Deleting", score)}></ScoreTableRow>
+                               deleteScore={deleteScore}></ScoreTableRow>
             ))}
         </div>
     )
