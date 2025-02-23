@@ -8,8 +8,8 @@ interface ScoreTableHeaderProps {
     sortColumn?: (field: string, direction: Direction) => void;
 }
 
-type SortColumn = {[k in AllowedScoreOrderBy]: Direction|NoDirection}
-const initialSortColumn: SortColumn = {title: '', reference: '', "": ''}
+type SortColumn = {[k in Partial<AllowedScoreOrderBy>]: Direction|NoDirection}
+const initialSortColumn: SortColumn = {title: '', reference: '', "": ""}
 
 export function ScoreTableHeader({sortColumn}: ScoreTableHeaderProps) {
     const {trans} = useTranslator();

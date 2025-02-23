@@ -1,5 +1,4 @@
 import {Score} from "../../model/library/score.interface";
-import {useTranslation} from "react-i18next";
 import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {classnames} from "../../libraries/general";
 import {ScoreReference} from "../../model/library/scoreReference.interface";

@@ -1,5 +1,4 @@
 import {Direction, NoDirection} from "../../model/generics.interface";
-import {useEffect, useState} from "react";
 import {ChevronDownIcon, ChevronUpDownIcon, ChevronUpIcon} from "@heroicons/react/24/outline";
 
 interface SortingIconProps {

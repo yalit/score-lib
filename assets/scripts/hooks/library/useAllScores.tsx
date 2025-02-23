@@ -1,41 +1,37 @@
 import {Score} from "../../model/library/score.interface";
-import {Direction, NoDirection, OrderBy} from "../../model/generics.interface";
 import {useQuery} from "react-query";
-import {
-    AllowedScoreOrderBy,
-    DEFAULT_NB_SCORES_PER_QUERY, fetchScores,
-    FetchScoresParameters
-} from "../../repository/library.repository";
-import {Dispatch, SetStateAction, useState} from "react";
+import {DEFAULT_NB_SCORES_PER_QUERY, fetchScores, FetchScoresParameters,} from "../../repository/library.repository";
+import {useState} from "react";
 
+const initialScoreFetchData: FetchScoresParameters = {
+    page: 1,
+    nbPerPage: DEFAULT_NB_SCORES_PER_QUERY,
+    order: {direction: "", by: ""}
+}
 
 interface AllScoresOutput {
     nbAllItems: number,
     scores: Score[],
     fetchData: {
-        page: {value: number, set: Dispatch<SetStateAction<number>>},
-        nbPerPage: {value: number, set: Dispatch<SetStateAction<number>>},
-        order: {value: OrderBy<AllowedScoreOrderBy>, set: Dispatch<SetStateAction<OrderBy<AllowedScoreOrderBy>>>},
+        values: FetchScoresParameters,
+        set: (value: Partial<FetchScoresParameters>) => void
     }
 }
 
 export function useAllScores(): AllScoresOutput {
-    const [page, setPage] = useState<number>(1);
-    const [order, setOrder] = useState<OrderBy<AllowedScoreOrderBy>>({direction: "", by: ""});
-    const [nbPerPage, setNbPerPage] = useState<number>(DEFAULT_NB_SCORES_PER_QUERY);
+    const [fetchData, setFetchData] = useState<FetchScoresParameters>(initialScoreFetchData);
 
     const query = useQuery({
-        queryKey: ["allScores", {page, order, nbPerPage}],
-        queryFn: async () => fetchScores({page, order, nbPerPage}),
+        queryKey: ["allScores", fetchData],
+        queryFn: async () => fetchScores(fetchData),
     })
 
     return {
         nbAllItems: query.data?.nbItems ?? -1,
         scores: query.data?.data ?? [],
         fetchData: {
-            page: {value: page, set: setPage},
-            nbPerPage: {value: nbPerPage, set: setNbPerPage},
-            order: {value: order, set: setOrder}
+            values: fetchData,
+            set: (value) => setFetchData({...fetchData, ...value})
         }
     }
 }

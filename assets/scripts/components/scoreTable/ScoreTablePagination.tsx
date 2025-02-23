@@ -11,16 +11,19 @@ interface ScoreTablePaginationProps {
     totalItems: number;
     itemsPerPage: number;
     moveToPage: (page: number) => void;
+    changeNbPerPage?: (nbPerPage: number) => void;
 }
 
-export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage}: ScoreTablePaginationProps) {
+const POSSIBLE_NB_PER_PAGE = [10,20, 30, 50, 100]
+
+export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage, changeNbPerPage}: ScoreTablePaginationProps) {
     const totalPages = Math.ceil(totalItems / itemsPerPage)
     let pageNumbers = [...Array(Math.min(page + 4, totalPages+1)).keys()].filter(n => n >= page-3)
 
     return (
-        <>
+        <div className="w-full relative flex items-center">
             {(totalItems > itemsPerPage) && (
-                <div className="data__table__line flex justify-center">
+                <div className="data__table__line flex justify-center relative flex-1">
                     { page > 1 && (
                         <>
                             <span className="cursor-pointer" onClick={() => moveToPage(1)}><ChevronDoubleLeftIcon className="h-4 w-4" /></span>
@@ -32,7 +35,7 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                     )}
 
                     <span className="flex gap-1">
-                        { pageNumbers.map((pageNumber, index) => (
+                        { pageNumbers.map((pageNumber) => (
                             <>
                                 {pageNumber === page ?
                                     <span>( <span className="font-semibold underline">{page}</span>/{totalPages} )</span>
@@ -53,6 +56,17 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                     )}
                 </div>
             )}
-        </>
+
+            {(changeNbPerPage && totalPages > 1) && (
+                <div className="w-max">
+                    Nb. Per Page &nbsp;
+                    <select className="px-2 outline-none focus:outline-none bg-white focus:bg-white" value={itemsPerPage}>
+                        {POSSIBLE_NB_PER_PAGE.map((nbPerPage: number, index: number) => (
+                            <option key={index} value={nbPerPage} onClick={() => changeNbPerPage(nbPerPage)}>{nbPerPage}</option>
+                        ))}
+                    </select>
+                </div>
+            )}
+        </div>
     )
 }

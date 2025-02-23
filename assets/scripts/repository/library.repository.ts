@@ -1,6 +1,5 @@
 import {LibraryStat, libraryStatSchema} from "../model/library/libraryStat.interface";
-import {Score, scoreSchema} from "../model/library/score.interface";
-import {z} from "zod";
+import {Score } from "../model/library/score.interface";
 import {ScoreCollectionOutput, scoreCollectionOutputSchema} from "./collectionOutput.interface";
 import {OrderBy} from "../model/generics.interface";
 import {buildUrl} from "../libraries/general";
@@ -12,8 +11,6 @@ export function fetchLibraryStat(): Promise<LibraryStat> {
         .then(response => response.json())
         .then(libraryStatSchema.parseAsync)
 }
-
-const scoreListSchema = z.array(scoreSchema)
 
 export function fetchLastScores(): Promise<ScoreCollectionOutput> {
     return fetch('/api/scores/lasts')
