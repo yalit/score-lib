@@ -8,7 +8,6 @@ export function useTranslator(): {trans: (s: string, params?:{[k:string]: string
             const paramKey = `{{${k}}}`
             translationParams[paramKey] = params[k]
         })
-        console.log(translationParams)
         return translator.trans(s, translationParams) as string
     }
 

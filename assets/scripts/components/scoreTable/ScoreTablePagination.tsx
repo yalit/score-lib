@@ -38,9 +38,9 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                         { pageNumbers.map((pageNumber) => (
                             <>
                                 {pageNumber === page ?
-                                    <span>( <span className="font-semibold underline">{page}</span>/{totalPages} )</span>
+                                    <span key={pageNumber}>( <span className="font-semibold underline">{page}</span>/{totalPages} )</span>
                                     : (
-                                        <span className={classnames("cursor-pointer", pageNumber == page && "font-bold underline")} onClick={() => moveToPage(pageNumber)}>{pageNumber}</span>
+                                        <span key={pageNumber} className={classnames("cursor-pointer", pageNumber == page && "font-bold underline")} onClick={() => moveToPage(pageNumber)}>{pageNumber}</span>
                                     )}
                             </>
                         ))}

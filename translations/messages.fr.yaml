@@ -31,6 +31,8 @@ main:
       label: "Enregistrer"
     cancel:
       label: "Annuler"
+    loading:
+      label: "Chargement"
 
 entity:
   artist:
@@ -61,7 +63,7 @@ entity:
       reference:
         label: "Référence"
       refs:
-        label: "Références"
+        label: "Autres Références"
       artists:
         label: "Artistes"
       categories:

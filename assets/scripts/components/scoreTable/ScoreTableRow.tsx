@@ -10,6 +10,7 @@ import {Bars3BottomRightIcon, ExclamationTriangleIcon} from "@heroicons/react/24
 import CardContent from "../card/CardContent";
 import CardFooter from "../card/CardFooter";
 import {useTranslator} from "../../hooks/useTranslator";
+import useRouter from "../../hooks/useRouter";
 
 interface ScoreTableRowProps {
     score: Score,
@@ -20,6 +21,7 @@ interface ScoreTableRowProps {
 export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRowProps) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const {trans} = useTranslator();
+    const {generate} = useRouter()
 
     const rowClass = classnames(
         "data__table__line",
@@ -86,7 +88,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <div
                     className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-3 p-5 bg-white">
                     {/*TODO : add the page for the score display*/}
-                    <a href="{{ path('app_library_score_show', {id: this.score.id}) }}">{trans('main.action.show.label')}</a>
+                    <a href={generate('app_library_score_show', {id: score.id})}>{trans('main.action.show.label')}</a>
                     {/*TODO : add the page for the score edit*/}
                     <a href="{{ path('app_library_score_edit', {id: this.score.id}) }}">{trans('main.action.edit.label')}</a>
                     <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer" onClick={toggleDeleteModal}>{trans('main.action.delete.label')}</label>

@@ -1,8 +1,9 @@
 import {LibraryStat, libraryStatSchema} from "../model/library/libraryStat.interface";
-import {Score } from "../model/library/score.interface";
+import {Score, scoreSchema} from "../model/library/score.interface";
 import {ScoreCollectionOutput, scoreCollectionOutputSchema} from "./collectionOutput.interface";
 import {OrderBy} from "../model/generics.interface";
 import {buildUrl} from "../libraries/general";
+import {NotFoundError} from "../error/NotFoundError";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20
 
@@ -53,4 +54,17 @@ export function deleteScore(score: Score): Promise<Response> {
     return fetch(`/api/scores/${score.id}`, {
         method: "DELETE"
     })
+}
+
+export function fetchScore(scoreId: string): Promise<Score> {
+    if (scoreId === '') throw new Error('ScoreId is not filled')
+
+    return fetch('/api/scores/' + scoreId)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching score')
+            }
+            return response.json()
+        })
+        .then(scoreSchema.parseAsync)
 }
