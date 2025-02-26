@@ -7,7 +7,7 @@ export interface ScorePathInformation {
 
 const pathPrefix = '/library/score/'
 const scoreActions = ['display', 'new', 'edit'] as const
-type ScoreAction = typeof scoreActions[number]
+export type ScoreAction = typeof scoreActions[number]
 
 const isScoreAction = (x: any): x is ScoreAction => {
     return scoreActions.includes(x)

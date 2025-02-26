@@ -15,3 +15,4 @@ export const scoreSchema = z.object({
 })
 
 export type Score = z.infer<typeof scoreSchema>;
+
