@@ -1,9 +1,12 @@
 import {LibraryStat, libraryStatSchema} from "../model/library/libraryStat.interface";
 import {Score, scoreSchema} from "../model/library/score.interface";
-import {ScoreCollectionOutput, scoreCollectionOutputSchema} from "./collectionOutput.interface";
+import {
+    ScoreCategoryCollectionOutput, scoreCategoryCollectionOutputSchema,
+    ScoreCollectionOutput,
+    scoreCollectionOutputSchema
+} from "./collectionOutput.interface";
 import {OrderBy} from "../model/generics.interface";
 import {buildUrl} from "../libraries/general";
-import {NotFoundError} from "../error/NotFoundError";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20
 
@@ -67,4 +70,12 @@ export function fetchScore(scoreId: string): Promise<Score> {
             return response.json()
         })
         .then(scoreSchema.parseAsync)
+}
+
+export function fetchCategories(v: string = ''): Promise<ScoreCategoryCollectionOutput> {
+    const url = '/api/score_categories' + (v !== '' && `?value=${v}`)
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(output => scoreCategoryCollectionOutputSchema.parseAsync(output))
 }

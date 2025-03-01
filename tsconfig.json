@@ -11,7 +11,11 @@
     "lib": [
       "es6",
       "dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/": ["./*"]
+    }
   },
   "exclude": [
     "node_modules"

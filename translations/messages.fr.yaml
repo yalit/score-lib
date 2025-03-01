@@ -64,10 +64,16 @@ entity:
         label: "Référence"
       refs:
         label: "Autres Références"
+        value:
+          label: Reference
+        information:
+          label: Information
       artists:
         label: "Artistes"
       categories:
         label: "Catégories"
+        value:
+          label: "Catégorie"
       files:
         label: "Fichiers"
 
