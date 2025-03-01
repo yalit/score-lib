@@ -35,13 +35,24 @@ export default function MultipleSelector<T extends object>({
     );
   };
 
+  const alreadySelected = (item: T): boolean =>
+    selectedValues.filter((p) => idValue(p) === idValue(item)).length > 0;
+
+  const selectValue = (item: T): void => {
+    if (alreadySelected(item)) {
+      return;
+    }
+
+    setSelectedValues(selectedValues.concat([item]));
+  };
+
   useEffect(() => {
     setValue(selectedValues);
   }, [selectedValues]);
 
   return (
-    <Command>
-      <div className="min-h-10 text-base px-3 md:text-sm flex items-center gap-2">
+    <Command className="relative">
+      <div className="min-h-10 text-base px-3 md:text-sm flex flex-wrap items-center gap-2">
         {values.map((v: T) => (
           <Badge key={idValue(v)}>
             <span>{displayValue(v)}</span>
@@ -53,14 +64,23 @@ export default function MultipleSelector<T extends object>({
         ))}
         <CommandPrimitive.Input
           className="flex h-10 flex-1 w-full border-b bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-          onFocus={() => setOpen(!open)}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
         />
       </div>
       {open && (
-        <CommandList>
+        <CommandList className="">
           <CommandEmpty>No results found.</CommandEmpty>
           {possibleValues.map((p: T) => (
-            <CommandItem>
+            <CommandItem
+              key={idValue(p)}
+              onSelect={() => selectValue(p)}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              disabled={alreadySelected(p)}
+            >
               <span>{displayValue(p)}</span>
             </CommandItem>
           ))}
