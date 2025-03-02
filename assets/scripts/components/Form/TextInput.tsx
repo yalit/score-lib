@@ -25,7 +25,7 @@ export default function TextInput({control, name, label, description, classname}
                     </FormControl>
                     {description && (
                         <FormDescription>
-                            This is your public display name.
+                            {description}
                         </FormDescription>
                     )}
                     <FormMessage />

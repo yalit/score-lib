@@ -36,6 +36,9 @@ main:
 
 entity:
   artist:
+    fields:
+      name:
+        label: "Nom"
     type:
       composer: "Compositeur"
       lyricist: "Parolier"
@@ -70,6 +73,8 @@ entity:
           label: Information
       artists:
         label: "Artistes"
+        type:
+          label: "Type"
       categories:
         label: "Catégories"
         value:

@@ -3,7 +3,7 @@ import { useTranslator } from "../../../hooks/useTranslator";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import TextInput from "../../../components/Form/TextInput";
-import { Form, FormField, FormItem } from "../../../shadcdn/components/ui/form";
+import { Form, FormItem } from "../../../shadcdn/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Card,
@@ -13,11 +13,11 @@ import {
 } from "../../../shadcdn/components/ui/card";
 import { Label } from "../../../shadcdn/components/ui/label";
 import { Button } from "../../../shadcdn/components/ui/button";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { MinusSquareIcon } from "lucide-react";
-import MultipleSelector from "../../../shadcdn/components/ui/multipleSelector";
 import { ScoreCategory } from "../../../model/library/scoreCategory.interface";
 import { useCategories } from "../../../hooks/library/useCategories";
+import { MultipleSelectorField } from "../../../components/Form/MultipleSelectorField";
 
 //TODO : complete form using the following as base : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
 
@@ -51,15 +51,15 @@ export default function ScoreForm({ score = null }: { score?: Score | null }) {
     name: "otherReferences",
   } as const);
   const {
-    fields: otherArtists,
-    append: appendArtis,
-    remove: removeArtis,
+    fields: artists,
+    append: appendArtist,
+    remove: removeArtist,
   } = useFieldArray({
     control: form.control,
     name: "artists",
   } as const);
 
-  const { categories: possibleCategories, fetchData } = useCategories();
+  const { categories: possibleCategories } = useCategories();
 
   const onSubmit: SubmitHandler<FormScore> = (data, e) =>
     console.log("Submit", data, e);
@@ -104,7 +104,7 @@ export default function ScoreForm({ score = null }: { score?: Score | null }) {
                 size="sm"
                 onClick={() => appendReference({ value: "", information: "" })}
               >
-                <PlusCircleIcon />
+                <PlusIcon />
               </Button>
             </FormItem>
 
@@ -137,22 +137,54 @@ export default function ScoreForm({ score = null }: { score?: Score | null }) {
               </div>
             ))}
 
-            <FormItem>
-              <Label>{trans("entity.score.fields.categories.label")}</Label>
-              <FormField
-                control={form.control}
-                name="categories"
-                render={({ field }) => (
-                  <MultipleSelector<ScoreCategory>
-                    values={field.value}
-                    setValue={field.onChange}
-                    displayValue={(v) => v.value}
-                    idValue={(v) => v.value}
-                    possibleValues={possibleCategories}
-                  />
-                )}
-              />
+            <MultipleSelectorField<ScoreCategory> label={trans("entity.score.fields.categories.label")} control={form.control} name="categories"
+                            selectables={possibleCategories}
+                            getId={(v: ScoreCategory) => v.id ?? ""}
+                            getDisplay={(v: ScoreCategory) => v.value}
+            />
+
+            <FormItem className="flex gap-2 items-center">
+              <Label>{trans("entity.score.fields.artists.label")}</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => appendArtist({ artist: {id: null, name: ""}, type: "" })}
+              >
+                <PlusIcon />
+              </Button>
             </FormItem>
+
+            {artists.map((scoreArtist, idx: number) => (
+              <div
+                key={`score_artist_${scoreArtist.id}`}
+                className="flex gap-5 items-center"
+              >
+                {/*TODO : replace by a Select with the artists */}
+                <TextInput
+                  classname="flex gap-2 items-center flex-1"
+                  control={form.control}
+                  name={`artists.${idx}.artist`}
+                  label={trans("entity.artist.fields.name.label")}
+                />
+                {/*TODO : replace by a Select with the possibilities */}
+                <TextInput
+                  classname="flex gap-2 items-center flex-1"
+                  control={form.control}
+                  name={`artists.${idx}.type`}
+                  label={trans("entity.score.fields.artists.type.label")}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-[80px] text-red-800 font-semibold"
+                  onClick={() => removeArtist(idx)}
+                >
+                  <MinusSquareIcon />
+                </Button>
+              </div>
+            ))}
 
             <Button type="submit" className="mt-4">
               {trans("main.action.save.label")}

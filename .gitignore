@@ -34,3 +34,7 @@ yarn-error.log
 ###> Custom bundles ###
 /bundles/
 ###< Custom bundles ###
+
+###> IDE ###
+.idea/
+###< IDE ###

@@ -1,10 +1,8 @@
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandItem,
   CommandList,
-  CommandShortcut,
 } from "./command";
 
 import { Command as CommandPrimitive } from "cmdk";
@@ -12,14 +10,14 @@ import { useEffect, useState } from "react";
 import { Badge } from "./badge";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-type MultipleSelectorProps<T extends object> = {
+type MultipleSelectorProps<T> = {
   values: T[];
   setValue: (value: T[]) => void;
   displayValue: (v: T) => string;
   idValue: (v: T) => string;
   possibleValues: T[];
 };
-export default function MultipleSelector<T extends object>({
+export default function MultipleSelector<T>({
   values,
   setValue,
   displayValue,
@@ -51,41 +49,43 @@ export default function MultipleSelector<T extends object>({
   }, [selectedValues]);
 
   return (
-    <Command className="relative">
-      <div className="min-h-10 text-base px-3 md:text-sm flex flex-wrap items-center gap-2">
-        {values.map((v: T) => (
-          <Badge key={idValue(v)}>
-            <span>{displayValue(v)}</span>
-            <XMarkIcon
-              className="h-4 w-4 cursor-pointer"
-              onClick={() => removeValue(idValue(v))}
+    <div className="relative">
+        <Command>
+        <div className="min-h-10 text-base px-3 md:text-sm flex flex-wrap items-center gap-2">
+            {values.map((v: T) => (
+            <Badge key={idValue(v)}>
+                <span>{displayValue(v)}</span>
+                <XMarkIcon
+                className="h-4 w-4 cursor-pointer"
+                onClick={() => removeValue(idValue(v))}
+                />
+            </Badge>
+            ))}
+            <CommandPrimitive.Input
+            className="flex h-10 flex-1 w-full border-b bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
             />
-          </Badge>
-        ))}
-        <CommandPrimitive.Input
-          className="flex h-10 flex-1 w-full border-b bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-          onFocus={() => setOpen(true)}
-          onBlur={() => setOpen(false)}
-        />
-      </div>
-      {open && (
-        <CommandList className="">
-          <CommandEmpty>No results found.</CommandEmpty>
-          {possibleValues.map((p: T) => (
-            <CommandItem
-              key={idValue(p)}
-              onSelect={() => selectValue(p)}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-              disabled={alreadySelected(p)}
-            >
-              <span>{displayValue(p)}</span>
-            </CommandItem>
-          ))}
-        </CommandList>
-      )}
-    </Command>
+        </div>
+        {open && (
+            <CommandList className="absolute z-[1000] top-full inset-x-0 bg-white rounded-b-md">
+            <CommandEmpty>No results found.</CommandEmpty>
+            {possibleValues.map((p: T) => (
+                <CommandItem
+                key={idValue(p)}
+                onSelect={() => selectValue(p)}
+                onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+                disabled={alreadySelected(p)}
+                >
+                <span>{displayValue(p)}</span>
+                </CommandItem>
+            ))}
+            </CommandList>
+        )}
+        </Command>
+    </div>
   );
 }

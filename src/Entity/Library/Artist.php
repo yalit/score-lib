@@ -17,6 +17,7 @@ class Artist
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    #[Groups([Score::SCORE_READ])]
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
