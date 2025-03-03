@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
@@ -33,12 +35,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
+        new Post(
+            denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
+        ),
+        new Patch(
+            denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
+        ),
         new Delete()
     ]
 )]
 class Score
 {
     public const SCORE_READ = 'score:read';
+    public const SCORE_WRITE = 'score:write';
 
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
@@ -48,32 +57,32 @@ class Score
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private ?string $title = null;
 
     #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private ScoreReference $reference;
 
     /**
      * @var Collection<int, ScoreReference>
      */
     #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private Collection $otherReferences;
 
     /**
      * @var Collection<int, ScoreCategory>
      */
     #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist', 'remove'])]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private Collection $categories;
 
     /**
      * @var Collection<int, ScoreArtist>
      */
     #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private Collection $artists;
 
     /**

@@ -37,11 +37,10 @@ class ScoreCategory
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-    #[Groups([Score::SCORE_READ, self::CATEGORY_READ])]
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([Score::SCORE_READ, self::CATEGORY_READ])]
+    #[Groups([Score::SCORE_READ, self::CATEGORY_READ, Score::SCORE_WRITE])]
     private ?string $value = null;
 
     /**

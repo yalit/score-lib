@@ -22,11 +22,11 @@ class ScoreArtist
 
     #[ORM\ManyToOne(targetEntity: Artist::class, cascade: ['persist'], inversedBy: 'scores')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups([Score::SCORE_READ])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
     private ?Artist $artist = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, enumType: ArtistType::class)]
-    #[Groups([Score::SCORE_READ])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
     private ArtistType $type;
 
     public function __toString(): string
