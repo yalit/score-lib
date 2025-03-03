@@ -1,5 +1,4 @@
 import ActionCard from "../../components/card/ActionCard";
-import {useTranslation} from "react-i18next";
 import {DocumentPlusIcon, FolderPlusIcon} from "@heroicons/react/24/outline";
 import useRouter from "../../hooks/useRouter";
 import {useLibraryStat} from "../../hooks/library/useLibraryStat";
