@@ -18,8 +18,9 @@ import {Artist} from "../../../model/library/scoreArtist.interface";
 import {useArtists} from "../../../hooks/library/useArtists";
 import {SelectableTextChoices} from "../../../components/Form/SelectableTextChoices";
 import {useArtistTypes} from "../../../hooks/library/useArtistTypes";
+import useSaveScore from "../../../hooks/library/useSaveScore";
 
-//TODO : complete form using the following as base : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
+// based on : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
 
 const scoreFormSchema = scoreSchema.merge(
     z.object({id: z.string().optional()}),
@@ -37,6 +38,7 @@ export const BlankScore: FormScore = {
 
 export default function ScoreForm({score = null}: { score?: Score | null }) {
     const {trans} = useTranslator();
+    const saveScore = useSaveScore();
     const form = useForm<FormScore>({
         defaultValues: score ?? BlankScore,
         resolver: zodResolver(scoreFormSchema),
@@ -63,8 +65,10 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
     const {artists: possibleArtists} = useArtists();
     const {types: artistTypes} = useArtistTypes();
 
-    const onSubmit: SubmitHandler<FormScore> = (data) =>
-        console.log("Submit", data);
+    const onSubmit: SubmitHandler<FormScore> = (score: Score) => {
+        console.log("Submit", score);
+        saveScore(score)
+    }
 
     return (
         <Card>
@@ -142,9 +146,9 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                         <MultipleSelectorField<ScoreCategory> label={trans("entity.score.fields.categories.label")}
                                                               control={form.control} name="categories"
                                                               selectables={possibleCategories}
-                                                              getId={(v: ScoreCategory) => v.id ?? ""}
+                                                              getId={(v: ScoreCategory) => v.value ?? ""}
                                                               getDisplay={(v: ScoreCategory) => v.value}
-                                                              getNew={(value: string) => ({id: null, value})}
+                                                              getNew={(value: string) => ({value})}
                         />
 
                         <FormItem className="flex gap-2 items-center">
@@ -153,7 +157,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                onClick={() => appendArtist({artist: {id: null, name: ""}, type: ""})}
+                                onClick={() => appendArtist({artist: {name: ""}, type: ""})}
                             >
                                 <PlusIcon/>
                             </Button>
@@ -176,10 +180,10 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                 <SelectableObject<Artist> control={form.control} name={`artists.${idx}.artist`}
                                                           classname="w-5/12"
                                                           label={trans('entity.artist.fields.name.label')}
-                                                          getId={(a: Artist) => a.id ?? ""}
+                                                          getId={(a: Artist) => a.name ?? ""}
                                                           getDisplay={(a: Artist) => a.name}
                                                           selectables={possibleArtists}
-                                                          getNew={(name: string) => ({id: null, name})}
+                                                          getNew={(name: string) => ({name})}
                                 />
 
                                 {/*TODO : translate */}

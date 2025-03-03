@@ -21,11 +21,11 @@ class ScoreReference
     #[ORM\Column(length: 255)]
     #[NotBlank]
     #[NotNull]
-    #[Groups([Score::SCORE_READ])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
     private ?string $value = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups([Score::SCORE_READ])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
     private ?string $information = null;
 
     #[ORM\ManyToOne(inversedBy: 'otherReferences')]

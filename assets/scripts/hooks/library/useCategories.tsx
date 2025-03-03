@@ -1,8 +1,7 @@
 import { useQuery, UseQueryResult } from "react-query";
-import { fetchCategories } from "../../repository/library.repository";
 import { useState } from "react";
 import { ScoreCategory } from "../../model/library/scoreCategory.interface";
-import { ScoreCategoryCollectionOutput } from "assets/scripts/repository/collectionOutput.interface";
+import {fetchCategories, ScoreCategoryCollectionOutput} from "../../repository/library/category.repository";
 
 interface AllCategoriesOutput {
   categories: ScoreCategory[];

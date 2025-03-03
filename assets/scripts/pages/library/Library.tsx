@@ -3,9 +3,9 @@ import {useAllScores} from "../../hooks/library/useAllScores";
 import ScoreTable from "../../components/scoreTable/ScoreTable";
 import Card from "../../components/card/Card";
 import CardContent from "../../components/card/CardContent";
-import {AllowedScoreOrderBy} from "../../repository/library.repository";
 import {Direction} from "../../model/generics.interface";
 import useDeleteScore from "../../hooks/library/useDeleteScore";
+import { AllowedScoreOrderBy } from "assets/scripts/repository/library/score.repository";
 
 export default function Library() {
     const {nbAllItems, scores, fetchData} = useAllScores()
