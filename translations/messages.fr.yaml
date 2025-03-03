@@ -31,9 +31,14 @@ main:
       label: "Enregistrer"
     cancel:
       label: "Annuler"
+    loading:
+      label: "Chargement"
 
 entity:
   artist:
+    fields:
+      name:
+        label: "Nom"
     type:
       composer: "Compositeur"
       lyricist: "Parolier"
@@ -61,11 +66,19 @@ entity:
       reference:
         label: "Référence"
       refs:
-        label: "Autres références"
+        label: "Autres Références"
+        value:
+          label: Reference
+        information:
+          label: Information
       artists:
         label: "Artistes"
+        type:
+          label: "Type"
       categories:
         label: "Catégories"
+        value:
+          label: "Catégorie"
       files:
         label: "Fichiers"
 
@@ -103,7 +116,7 @@ library:
       title:
         label: "Suppression de la partition"
       content:
-        text: 'Voulez-vous vraiment supprimer la partition "{title}" ?'
+        text: 'Voulez-vous vraiment supprimer la partition "{{title}}" ?'
   new:
     title: "Nouvelle partition"
   edit:

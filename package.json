@@ -18,20 +18,14 @@
         "postcss": "^8.4.40",
         "postcss-loader": "^7.3.4",
         "prop-types": "^15.8.1",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-query": "^3.39.3",
         "regenerator-runtime": "^0.13.9",
         "tailwindcss": "^3.4.7",
-        "tom-select": "^2.2.2",
         "ts-loader": "^9.5.1",
         "tsd": "^0.31.1",
         "typescript": "^5.5.4",
-        "webpack": "^5.74.0",
+        "webpack": "^5.94.0",
         "webpack-cli": "^4.10.0",
-        "webpack-notifier": "^1.15.0",
-        "yup": "^1.4.0",
-        "zustand": "^4.5.4"
+        "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -42,6 +36,28 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "heroicons": "^2.1.5"
+        "@heroicons/react": "^2.2.0",
+        "@hookform/resolvers": "^4.1.2",
+        "@radix-ui/react-dialog": "^1.1.6",
+        "@radix-ui/react-label": "^2.1.2",
+        "@radix-ui/react-select": "^2.1.6",
+        "@radix-ui/react-slot": "^1.1.2",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "cmdk": "^1.0.0",
+        "heroicons": "^2.1.5",
+        "js-yaml-loader": "^1.2.2",
+        "lucide-react": "^0.476.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-hook-form": "^7.54.2",
+        "react-i18next": "^15.4.1",
+        "react-query": "^3.39.3",
+        "tailwind-merge": "^3.0.2",
+        "tailwindcss-animate": "^1.0.7",
+        "tom-select": "^2.2.2",
+        "yup": "^1.4.0",
+        "zod": "^3.24.2",
+        "zustand": "^4.5.4"
     }
 }

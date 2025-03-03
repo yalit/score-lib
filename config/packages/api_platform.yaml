@@ -1,0 +1,19 @@
+api_platform:
+    version: 1.0.0
+    defaults:
+        pagination_client_items_per_page: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+    collection:
+        pagination:
+            items_per_page_parameter_name: nb
+
+services:
+    score.order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        arguments:
+            $properties: { title: ~, reference.value: ~ }
+            $orderParameterName: order
+        properties:
+            defaultDirection: 'asc'
+        tags: [ 'api_platform.filter' ]

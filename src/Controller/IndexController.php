@@ -9,11 +9,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', name: 'app_index')]
+    #[Route('/', name: 'app_index', options:['expose' => true])]
     public function index(ScoreRepository $scoreRepository): Response
     {
-        return $this->render('index/index.html.twig', [
-            'latest_scores' => $scoreRepository->getLatestScores(10),
-        ]);
+        return $this->render('index/index.html.twig');
     }
 }

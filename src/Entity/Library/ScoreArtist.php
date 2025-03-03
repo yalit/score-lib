@@ -6,6 +6,7 @@ use App\Entity\Library\Enum\ArtistType;
 use App\Repository\Score\ScoreArtistRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreArtistRepository::class)]
 class ScoreArtist
@@ -19,11 +20,13 @@ class ScoreArtist
     #[ORM\JoinColumn(nullable: false)]
     private ?Score $score = null;
 
-    #[ORM\ManyToOne(inversedBy: 'scores', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: Artist::class, cascade: ['persist'], inversedBy: 'scores')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups([Score::SCORE_READ])]
     private ?Artist $artist = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, enumType: ArtistType::class)]
+    #[Groups([Score::SCORE_READ])]
     private ArtistType $type;
 
     public function __toString(): string

@@ -1,0 +1,32 @@
+.data__table {
+    .data__table__header {
+        @apply border-b border-gray-200 hidden lg:grid lg:grid-cols-[16%_16%_20%_16%_1fr_60px] items-center;
+
+        .data__table__header_cell {
+            @apply py-2 font-bold text-gray-600;
+        }
+    }
+
+    .data__table__line {
+        @apply text-sm py-3 flex items-center border-t border-gray-200;
+
+        &.odd {
+            @apply bg-gray-50;
+        }
+
+        .data__table__line-content {
+            @apply flex-1 lg:grid lg:grid-cols-[calc((100%+60px)*16/100)_calc((100%+60px)*16/100)_calc((100%+60px)*20/100)_calc((100%+60px)*16/100)_1fr] items-center;
+
+            .data__table__line__item {
+                @apply grid grid-cols-[80px,1fr] gap-2 lg:block mb-1;
+                .data__table__line__item-label {
+                    @apply lg:hidden font-semibold;
+                }
+            }
+        }
+
+        .data__table__line-actions {
+            @apply flex items-center justify-center w-[60px] relative;
+        }
+    }
+}

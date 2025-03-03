@@ -5,8 +5,6 @@ namespace App\Entity\Security;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Security\Enum\UserRole;
 use App\Repository\Security\UserRepository;
-use App\Security\API\DTO\UserInformation;
-use App\Security\API\Provider\CurrentUserProvider;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;

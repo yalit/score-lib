@@ -2,23 +2,40 @@
 
 namespace App\Entity\Library;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
 use App\Repository\Library\ArtistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            paginationEnabled: false,
+            normalizationContext: ['groups'=> Score::SCORE_READ]
+        )
+    ]
+)]
+
 class Artist
 {
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    #[Groups([Score::SCORE_READ])]
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([Score::SCORE_READ])]
     private ?string $name = null;
 
     /**

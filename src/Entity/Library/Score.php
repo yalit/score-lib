@@ -2,54 +2,85 @@
 
 namespace App\Entity\Library;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
+use App\Library\API\Provider\LastScoresProvider;
 use App\Repository\Library\ScoreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/scores/lasts',
+            normalizationContext: ["groups" => [Score::SCORE_READ]],
+            provider: LastScoresProvider::class,
+        ),
+        new GetCollection(
+            normalizationContext: ["groups" => [Score::SCORE_READ]],
+            parameters: [
+                'order[:property]' => new QueryParameter(filter: 'score.order_filter')
+            ]
+        ),
+        new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
+        new Delete()
+    ]
+)]
 class Score
 {
-    public const GROUP_READ = 'score:read';
+    public const SCORE_READ = 'score:read';
 
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    #[Groups([self::SCORE_READ])]
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::SCORE_READ])]
     private ?string $title = null;
 
     #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
+    #[Groups([self::SCORE_READ])]
     private ScoreReference $reference;
 
     /**
      * @var Collection<int, ScoreReference>
      */
     #[ORM\OneToMany(targetEntity: ScoreReference::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups([self::SCORE_READ])]
     private Collection $otherReferences;
 
     /**
      * @var Collection<int, ScoreCategory>
      */
     #[ORM\ManyToMany(targetEntity: ScoreCategory::class, inversedBy: 'scores', cascade: ['persist', 'remove'])]
+    #[Groups([self::SCORE_READ])]
     private Collection $categories;
 
     /**
      * @var Collection<int, ScoreArtist>
      */
     #[ORM\OneToMany(targetEntity: ScoreArtist::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups([self::SCORE_READ])]
     private Collection $artists;
 
     /**
      * @var Collection<int, ScoreFile>
      */
     #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups([self::SCORE_READ])]
     private Collection $files;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]

@@ -1,0 +1,182 @@
+@import "./fonts/satoshi/css/satoshi.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+html,
+body {
+  @apply bg-gray-200;
+  font-family: Satoshi, sans-serif;
+}
+
+.notification {
+  &.error {
+    @apply text-red-900 bg-red-200 border rounded border-red-600;
+  }
+}
+
+.button {
+  @apply text-white rounded-sm py-2 px-4 cursor-pointer;
+  &.primary {
+    @apply bg-blue-500;
+  }
+
+  &.secondary {
+    @apply bg-gray-500;
+  }
+
+  &.danger {
+    @apply bg-red-500;
+  }
+}
+/*
+
+
+.bubble {
+  @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;
+}
+
+form {
+  @apply w-full;
+  
+  .tomselected {
+    @apply hidden;
+  }
+
+  label {
+    @apply block font-semibold text-lg mt-3;
+  }
+
+  input {
+    &[type="text"] {
+      @apply p-1 border-b border-gray-200 outline-none w-full leading-normal box-border;
+    }
+  }
+
+  textarea {
+      @apply p-2 border-b border-gray-200 !outline-none w-full;
+  }
+
+  select {
+    @apply bg-transparent border-b border-gray-200 !outline-none w-full h-[1.5rem];
+
+    option {
+      @apply leading-normal;
+    }
+  }
+
+  .ts-wrapper {
+    @apply relative;
+
+    .ts-control {
+      @apply min-h-[1.9rem] relative flex items-center gap-1 flex-wrap;
+
+      input {
+        @apply absolute inset-y-0 left-0 w-full;
+        caret-color: transparent;
+      }
+
+      .clear-button {
+        @apply absolute content-center justify-center right-1 cursor-pointer;
+      }
+
+      .item {
+        @apply flex items-center gap-1 text-sm ml-1 z-10;
+
+        a.remove {
+          @apply text-red-800 font-semibold text-base;
+        }
+      }
+    }
+
+    .ts-dropdown {
+      @apply absolute top-full bg-white z-20;
+      .ts-dropdown-content {
+          @apply p-3 border border-gray-200 border-t-0 max-h-[200px] overflow-x-hidden overflow-y-auto scroll-smooth;
+          
+          .option, .no-results, .create {
+            @apply text-sm cursor-pointer leading-tight p-1.5;
+          }
+      }
+    }
+  }
+}*/
+/*
+
+
+---break---*/
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

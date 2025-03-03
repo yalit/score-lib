@@ -13,6 +13,20 @@
             "src/ApiResource/.gitignore"
         ]
     },
+    "api-platform/symfony": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.0",
+            "ref": "e9952e9f393c2d048f10a78f272cd35e807d972b"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/ApiResource/.gitignore"
+        ]
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.12",
         "recipe": {
@@ -407,6 +421,18 @@
     },
     "twig/extra-bundle": {
         "version": "v3.10.0"
+    },
+    "willdurand/js-translation-bundle": {
+        "version": "7.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "02b720a49f6d36b44d557e0b18e48bf09e0a8e07"
+        },
+        "files": [
+            "config/routes/js_translation.yaml"
+        ]
     },
     "yalit/twig-heroicon-bundle": {
         "version": "dev-main"

@@ -1,0 +1,9 @@
+nav {
+    .nav__menu__item {
+        @apply flex gap-1;
+
+        span {
+            @apply pr-2 hover:pl-2 hover:pr-0;
+        }
+    }
+}
