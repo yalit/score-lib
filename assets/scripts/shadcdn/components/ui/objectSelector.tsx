@@ -1,4 +1,4 @@
-import {Command, CommandEmpty, CommandItem, CommandList} from "./command";
+import {Command, CommandItem, CommandList} from "./command";
 import {Badge} from "./badge";
 import {XMarkIcon} from "@heroicons/react/24/outline";
 import {Command as CommandPrimitive} from "cmdk";
@@ -73,7 +73,7 @@ export function ObjectSelector<T>({value, selectables, set, getId, getDisplay, g
                                 value={getDisplay(p)}
                             >
                                 {getId(p) === "" ? (
-                                    <div className="font-italic">Create a new ...<span className="font-semibold">{inputValue}</span></div>
+                                    <div className="font-italic">Add ...<span className="font-semibold">{inputValue}</span></div>
                                 ) : (
                                     <div>{getDisplay(p)}</div>
                                 )}
