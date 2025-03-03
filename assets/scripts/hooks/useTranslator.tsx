@@ -3,7 +3,7 @@ const translator = global.Translator
 export function useTranslator(): {trans: (s: string, params?:{[k:string]: string}) => string} {
     const trans = (s: string, params:{[k:string]: string} = {}): string => {
         let translationParams = {}
-        //TODO : fix the translation parameters
+
         Object.keys(params).forEach((k:string) => {
             const paramKey = `{{${k}}}`
             translationParams[paramKey] = params[k]
