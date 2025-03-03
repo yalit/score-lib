@@ -6,19 +6,15 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Repository\Library\ScoreCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Schema\Index;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreCategoryRepository::class)]
 #[ORM\Index(name: 'score_category_value', columns: ['value'])]
-#[ORM\UniqueConstraint(columns: ['value'])]
 #[ApiFilter(SearchFilter::class, properties: ['value' => 'partial'])]
 #[ApiResource(
     operations: [
@@ -28,7 +24,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
-#[UniqueEntity('value')]
 class ScoreCategory
 {
     public const CATEGORY_READ = 'scoreCategory:read';

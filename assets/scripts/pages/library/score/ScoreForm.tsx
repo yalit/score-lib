@@ -18,8 +18,9 @@ import {Artist} from "../../../model/library/scoreArtist.interface";
 import {useArtists} from "../../../hooks/library/useArtists";
 import {SelectableTextChoices} from "../../../components/Form/SelectableTextChoices";
 import {useArtistTypes} from "../../../hooks/library/useArtistTypes";
+import useSaveScore from "../../../hooks/library/useSaveScore";
 
-//TODO : complete form using the following as base : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
+// based on : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
 
 const scoreFormSchema = scoreSchema.merge(
     z.object({id: z.string().optional()}),
@@ -37,6 +38,7 @@ export const BlankScore: FormScore = {
 
 export default function ScoreForm({score = null}: { score?: Score | null }) {
     const {trans} = useTranslator();
+    const saveScore = useSaveScore();
     const form = useForm<FormScore>({
         defaultValues: score ?? BlankScore,
         resolver: zodResolver(scoreFormSchema),
@@ -63,8 +65,10 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
     const {artists: possibleArtists} = useArtists();
     const {types: artistTypes} = useArtistTypes();
 
-    const onSubmit: SubmitHandler<FormScore> = (data) =>
-        console.log("Submit", data);
+    const onSubmit: SubmitHandler<FormScore> = (score: Score) => {
+        console.log("Submit", score);
+        saveScore(score)
+    }
 
     return (
         <Card>

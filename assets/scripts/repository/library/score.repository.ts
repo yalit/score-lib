@@ -5,6 +5,8 @@ import {
 import {buildUrl} from "../../libraries/general";
 import {Score, scoreSchema} from "../../model/library/score.interface";
 import {z} from "zod";
+import { ScoreCategory, scoreCategorySchema } from "../../model/library/scoreCategory.interface";
+import { Artist, artistSchema, scoreArtistSchema } from "../../model/library/scoreArtist.interface";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
 
@@ -69,3 +71,54 @@ export async function fetchScore(scoreId: string): Promise<Score> {
     let result1: any = await response.json();
     return await scoreSchema.parseAsync(result1);
 }
+
+const saveScoreCategorySchema = scoreCategorySchema.transform((scoreCategory: ScoreCategory) => {
+    return scoreCategory['@id'] ?? scoreCategory
+})
+
+const saveArtistSchema = artistSchema.transform((artist: Artist) => artist['@id'] ?? artist)
+
+const saveScoreArtistSchema = scoreArtistSchema.merge(z.object({
+    artist: saveArtistSchema
+}))
+
+const saveScoreSchema = scoreSchema.merge(z.object({
+    id: z.string().optional(),
+    categories: z.array(saveScoreCategorySchema),
+    artists: z.array(saveScoreArtistSchema)
+}))
+
+export async function updateScore(score: Score): Promise<Score> {
+    const parameters = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/merge-patch+json"
+        },
+        body: JSON.stringify(saveScoreSchema.parse(score))
+    }
+
+    return saveScore(`/api/scores/${score.id}`, parameters)
+
+}
+
+export async function createScore(score: Score): Promise<Score> {
+    const parameters = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/ld+json"
+        },
+        body: JSON.stringify(saveScoreSchema.parse(score))
+    }
+
+    return saveScore(`/api/scores`, parameters)
+}
+
+async function saveScore(url: string, parameters): Promise<Score> {
+    let response = await fetch(url, parameters)
+
+    //TODO : handle error
+    
+    let output = await response.json()
+    return await scoreSchema.parseAsync(output)
+}
+

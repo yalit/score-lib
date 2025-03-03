@@ -36,9 +36,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Post(
+            normalizationContext: ["groups" => [Score::SCORE_READ]],
             denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
         ),
         new Patch(
+            normalizationContext: ["groups" => [Score::SCORE_READ]],
             denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
         ),
         new Delete()
