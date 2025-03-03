@@ -144,6 +144,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                                               selectables={possibleCategories}
                                                               getId={(v: ScoreCategory) => v.id ?? ""}
                                                               getDisplay={(v: ScoreCategory) => v.value}
+                                                              getNew={(value: string) => ({id: null, value})}
                         />
 
                         <FormItem className="flex gap-2 items-center">

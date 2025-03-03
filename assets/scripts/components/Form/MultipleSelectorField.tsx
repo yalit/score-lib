@@ -7,10 +7,11 @@ type MultipleSelectorFieldProps<T> = {
     label: string, 
     getId: (v: T) => string, 
     getDisplay: (v: T) => string, 
-    selectables: T[]
+    selectables: T[],
+    getNew: (inputValue: string) => T,
 }
 
-export function MultipleSelectorField<T>({control, name, label, getId, getDisplay, selectables}: MultipleSelectorFieldProps<T>) {
+export function MultipleSelectorField<T>({control, name, label, getId, getDisplay, selectables, getNew}: MultipleSelectorFieldProps<T>) {
 
     return (
             <FormItem>
@@ -24,7 +25,8 @@ export function MultipleSelectorField<T>({control, name, label, getId, getDispla
                     setValue={field.onChange}
                     displayValue={getDisplay}
                     idValue={getId}
-                    possibleValues={selectables}
+                    selectables={selectables}
+                    getNew={getNew}
                   />
                 )}
               />
