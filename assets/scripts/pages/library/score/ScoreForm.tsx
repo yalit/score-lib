@@ -146,7 +146,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                         <MultipleSelectorField<ScoreCategory> label={trans("entity.score.fields.categories.label")}
                                                               control={form.control} name="categories"
                                                               selectables={possibleCategories}
-                                                              getId={(v: ScoreCategory) => v.value ?? ""}
+                                                              getId={(v: ScoreCategory) => v['@id'] ?? ""}
                                                               getDisplay={(v: ScoreCategory) => v.value}
                                                               getNew={(value: string) => ({value})}
                         />
@@ -180,7 +180,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                 <SelectableObject<Artist> control={form.control} name={`artists.${idx}.artist`}
                                                           classname="w-5/12"
                                                           label={trans('entity.artist.fields.name.label')}
-                                                          getId={(a: Artist) => a.name ?? ""}
+                                                          getId={(a: Artist) => a['@id'] ?? ""}
                                                           getDisplay={(a: Artist) => a.name}
                                                           selectables={possibleArtists}
                                                           getNew={(name: string) => ({name})}

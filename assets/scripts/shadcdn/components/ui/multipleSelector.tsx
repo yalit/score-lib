@@ -1,5 +1,4 @@
 import {Command, CommandItem, CommandList,} from "./command";
-
 import {Command as CommandPrimitive} from "cmdk";
 import {useEffect, useState} from "react";
 import {Badge} from "./badge";
@@ -68,7 +67,7 @@ export default function MultipleSelector<T>({
             <Command>
                 <div className="min-h-10 text-base px-3 md:text-sm flex flex-wrap items-center gap-2">
                     {values.map((v: T) => (
-                        <Badge key={idValue(v)}>
+                        <Badge key={idValue(v)+String(Math.random())}>
                             <span>{displayValue(v)}</span>
                             <XMarkIcon
                                 className="h-4 w-4 cursor-pointer"
@@ -99,7 +98,7 @@ export default function MultipleSelector<T>({
                                 value={displayValue(p)}
                             >
                                 {idValue(p) === '' ? (
-                                    <div className="font-italic">Create ... <span
+                                    <div className="font-italic">Add ... <span
                                         className="font-semibold">{displayValue(p)}</span></div>
                                 ) : (
                                     <div>{displayValue(p)}</div>
