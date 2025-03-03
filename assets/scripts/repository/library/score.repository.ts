@@ -94,10 +94,9 @@ export async function updateScore(score: Score): Promise<Score> {
         headers: {
             "Content-Type": "application/merge-patch+json"
         },
-        body: JSON.stringify(saveScoreSchema.parse(score))
     }
 
-    return saveScore(`/api/scores/${score.id}`, parameters)
+    return saveScore(`/api/scores/${score.id}`, parameters, score)
 
 }
 
@@ -107,14 +106,16 @@ export async function createScore(score: Score): Promise<Score> {
         headers: {
             "Content-Type": "application/ld+json"
         },
-        body: JSON.stringify(saveScoreSchema.parse(score))
     }
 
-    return saveScore(`/api/scores`, parameters)
+    return saveScore(`/api/scores`, parameters, score)
 }
 
-async function saveScore(url: string, parameters): Promise<Score> {
-    let response = await fetch(url, parameters)
+async function saveScore(url: string, parameters, score: Score): Promise<Score> {
+    let response = await fetch(url, {
+        ...parameters,
+        body: JSON.stringify(saveScoreSchema.parse(score))
+    })
 
     //TODO : handle error
     
