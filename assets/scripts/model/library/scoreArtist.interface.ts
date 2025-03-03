@@ -1,6 +1,6 @@
 import {z} from "zod";
 
-const artistSchema = z.object({
+export const artistSchema = z.object({
     id: z.string().nullable(),
     name: z.string(),
 })

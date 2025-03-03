@@ -4,6 +4,7 @@ import {
 } from "../model/library/libraryStat.interface";
 import { Score, scoreSchema } from "../model/library/score.interface";
 import {
+  ArtistCollectionOutput, artistCollectionOutputSchema, ArtistTypeCollectionOutput, artistTypeCollectionOutputSchema,
   ScoreCategoryCollectionOutput,
   scoreCategoryCollectionOutputSchema,
   ScoreCollectionOutput,
@@ -89,4 +90,21 @@ export function fetchCategories(
   return fetch(url)
     .then((response) => response.json())
     .then((output) => scoreCategoryCollectionOutputSchema.parseAsync(output));
+}
+export function fetchArtists(
+    v: string = "",
+): Promise<ArtistCollectionOutput> {
+  const url = "/api/artists" + (v !== "" ? `?value=${v}` : "");
+
+  return fetch(url)
+      .then((response) => response.json())
+      .then((output) => artistCollectionOutputSchema.parseAsync(output));
+}
+
+export function fetchArtistTypes(): Promise<ArtistTypeCollectionOutput> {
+  const url = "/api/artist_types"
+
+  return fetch(url)
+      .then((response) => response.json())
+      .then((output) => artistTypeCollectionOutputSchema.parseAsync(output));
 }
