@@ -1,8 +1,8 @@
 import {Direction, NoDirection} from "../../model/generics.interface";
 import SortingIcon from "./SortingIcon";
 import {useTranslator} from "../../hooks/useTranslator";
-import {AllowedScoreOrderBy} from "../../repository/library.repository";
 import {useState} from "react";
+import { AllowedScoreOrderBy } from "assets/scripts/repository/library/score.repository";
 
 interface ScoreTableHeaderProps {
     sortColumn?: (field: string, direction: Direction) => void;

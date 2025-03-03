@@ -1,7 +1,6 @@
 import {useQuery, UseQueryResult} from "react-query";
-import {fetchLastScores} from "../../repository/library.repository";
 import {Score} from "../../model/library/score.interface";
-import {ScoreCollectionOutput} from "../../repository/collectionOutput.interface";
+import {fetchLastScores, ScoreCollectionOutput} from "../../repository/library/score.repository";
 
 export const lastScoresQueryKey = "lastScores";
 

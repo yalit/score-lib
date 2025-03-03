@@ -1,7 +1,7 @@
 import {Score} from "../../model/library/score.interface";
 import {useQuery, UseQueryResult} from "react-query";
-import {fetchScore} from "../../repository/library.repository";
 import {useRedirect} from "../useRedirect";
+import {fetchScore} from "../../repository/library/score.repository";
 
 export function useScore(scoreId: string): Score | null {
     const redirect = useRedirect();

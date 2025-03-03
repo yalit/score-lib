@@ -12,14 +12,3 @@ export function createCollectionOutputSchema<T extends z.ZodTypeAny>(schema: T) 
     ));
 }
 
-export const scoreCollectionOutputSchema = createCollectionOutputSchema(scoreSchema)
-export type ScoreCollectionOutput = z.infer<typeof scoreCollectionOutputSchema>
-
-export const scoreCategoryCollectionOutputSchema = createCollectionOutputSchema(scoreCategorySchema)
-export type ScoreCategoryCollectionOutput = z.infer<typeof scoreCategoryCollectionOutputSchema>
-
-export const artistCollectionOutputSchema = createCollectionOutputSchema(artistSchema)
-export type ArtistCollectionOutput = z.infer<typeof artistCollectionOutputSchema>
-
-export const artistTypeCollectionOutputSchema = createCollectionOutputSchema(z.object({type: z.string()}))
-export type ArtistTypeCollectionOutput = z.infer<typeof artistTypeCollectionOutputSchema>

@@ -4,8 +4,8 @@ import {Direction} from "../../model/generics.interface";
 
 import '../../../styles/scoreTable.css'
 import ScoreTableRow from "./ScoreTableRow";
-import {AllowedScoreOrderBy, DEFAULT_NB_SCORES_PER_QUERY} from "../../repository/library.repository";
 import {ScoreTablePagination} from "./ScoreTablePagination";
+import {AllowedScoreOrderBy, DEFAULT_NB_SCORES_PER_QUERY} from "../../repository/library/score.repository";
 
 interface ScoreTableProps {
     scores: Score[],

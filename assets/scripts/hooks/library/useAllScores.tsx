@@ -1,7 +1,11 @@
 import {Score} from "../../model/library/score.interface";
 import {useQuery} from "react-query";
-import {DEFAULT_NB_SCORES_PER_QUERY, fetchScores, FetchScoresParameters,} from "../../repository/library.repository";
 import {useState} from "react";
+import {
+    DEFAULT_NB_SCORES_PER_QUERY,
+    fetchScores,
+    FetchScoresParameters
+} from "../../repository/library/score.repository";
 
 const initialScoreFetchData: FetchScoresParameters = {
     page: 1,
