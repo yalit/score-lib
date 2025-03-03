@@ -41,7 +41,7 @@ export function ObjectSelector<T>({value, selectables, set, getId, getDisplay, g
         <div className="relative">
             <Command>
                 <div className="min-h-10 text-base px-3 md:text-sm flex flex-wrap items-center gap-2">
-                    {selected &&
+                    {selected && getDisplay(selected) !== "" &&
                         <Badge>
                             <span>{getDisplay(selected)}</span>
                             <XMarkIcon
