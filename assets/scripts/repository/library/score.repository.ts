@@ -7,6 +7,7 @@ import {Score, scoreSchema} from "../../model/library/score.interface";
 import {z} from "zod";
 import { ScoreCategory, scoreCategorySchema } from "../../model/library/scoreCategory.interface";
 import { Artist, artistSchema, scoreArtistSchema } from "../../model/library/scoreArtist.interface";
+import {FormScore} from "../../pages/library/score/ScoreForm";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
 
@@ -88,7 +89,18 @@ const saveScoreSchema = scoreSchema.merge(z.object({
     artists: z.array(saveScoreArtistSchema)
 }))
 
-export async function updateScore(score: Score): Promise<Score> {
+export async function createScore(score: FormScore): Promise<Score> {
+    const parameters = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/ld+json"
+        },
+    }
+
+    return saveScore(`/api/scores`, parameters, score)
+}
+
+export async function updateScore(score: FormScore): Promise<Score> {
     const parameters = {
         method: "PATCH",
         headers: {
@@ -100,18 +112,7 @@ export async function updateScore(score: Score): Promise<Score> {
 
 }
 
-export async function createScore(score: Score): Promise<Score> {
-    const parameters = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/ld+json"
-        },
-    }
-
-    return saveScore(`/api/scores`, parameters, score)
-}
-
-async function saveScore(url: string, parameters, score: Score): Promise<Score> {
+async function saveScore(url: string, parameters, score: FormScore): Promise<Score> {
     let response = await fetch(url, {
         ...parameters,
         body: JSON.stringify(saveScoreSchema.parse(score))
