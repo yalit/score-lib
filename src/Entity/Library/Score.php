@@ -8,11 +8,13 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\QueryParameter;
-use App\Controller\Library\API\APIScorePostController;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
+use App\Library\API\Processor\ScorePutProcessor;
 use App\Library\API\Provider\LastScoresProvider;
+use App\Library\API\Provider\ScorePutProvider;
 use App\Repository\Library\ScoreRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,13 +39,20 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Post(
-            inputFormats: ['multipart' => ['multipart/form-data']],
             normalizationContext: ["groups" => [Score::SCORE_READ]],
             denormalizationContext: ["groups" => [Score::SCORE_WRITE]],
         ),
-        new Patch(
+        new Post(
+            uriTemplate: '/scores/{id}/files',
+            inputFormats: ['multipart' => ['multipart/form-data']],
+            description: "Upload files to the score",
             normalizationContext: ["groups" => [Score::SCORE_READ]],
-            denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
+            denormalizationContext: ["groups" => [Score::SCORE_WRITE]],
+            deserialize: false,
+        ),
+        new Put(
+            normalizationContext: ["groups" => [Score::SCORE_READ]],
+            denormalizationContext: ["groups" => [Score::SCORE_WRITE]],
         ),
         new Delete()
     ]
@@ -93,11 +102,14 @@ class Score
      * @var Collection<int, ScoreFile>
      */
     #[ORM\OneToMany(targetEntity: ScoreFile::class, mappedBy: 'score', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
     private Collection $files;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
     private DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
+    private DateTimeImmutable $updatedAt;
 
     public function __construct()
     {
@@ -106,6 +118,7 @@ class Score
         $this->files = new ArrayCollection();
 
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
         $this->artists = new ArrayCollection();
     }
 
@@ -269,5 +282,15 @@ class Score
         }
 
         return $this;
+    }
+
+    public function getUpdatedAt(): DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

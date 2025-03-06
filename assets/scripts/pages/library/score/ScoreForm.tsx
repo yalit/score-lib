@@ -28,7 +28,7 @@ import {Badge} from "../../../shadcdn/components/ui/badge";
 const scoreFormSchema = scoreSchema.merge(
     z.object({
         id: z.string().optional(),
-        uploadedFiles: z.array(z.instanceof(File))
+        uploadedFiles: z.array(z.instanceof(File)).optional()
     }),
 );
 export type FormScore = z.infer<typeof scoreFormSchema>;
@@ -68,10 +68,13 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
         name: "artists",
     } as const);
 
-    const {fields: files} = useFieldArray({control: form.control, name: "files"} as const)
+    const {fields: scoreFiles, remove: removeFile} = useFieldArray({control: form.control, name: "files"} as const)
 
     const removeUploadedFile = (file: File) => {
-        form.setValue('uploadedFiles', form.getValues('uploadedFiles').filter(f => f!==file))
+        if (!form.getValues('uploadedFiles')) {
+            return
+        }
+        form.setValue('uploadedFiles', form.getValues('uploadedFiles')?.filter(f => f!==file))
     }
 
     const {categories: possibleCategories} = useCategories();
@@ -214,11 +217,11 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                    label={trans('entity.score.fields.files.label')}/>
 
                         <div className="flex gap-2 items-center">
-                            {form.getValues()['files'].map((file: ScoreFile) => (
-                                <Badge key={String(Math.random())}>{file.name}</Badge>
+                            {scoreFiles.map((file: ScoreFile, fileIndex: number) => (
+                                <Badge key={file["@id"]}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeFile(fileIndex)}/></Badge>
                             ))}
-                            {form.getValues()['uploadedFiles'].map((file: File) => (
-                                <Badge key={String(Math.random())}>{file.name} <XMarkIcon onClick={() => removeUploadedFile(file)}/></Badge>
+                            {form.getValues()['uploadedFiles']?.map((file: File) => (
+                                <Badge key={String(Math.random())}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeUploadedFile(file)}/></Badge>
                             ))}
                         </div>
                         <Button type="submit" className="mt-4">

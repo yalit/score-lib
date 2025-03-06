@@ -2,21 +2,16 @@
 
 namespace App\Library\API\Listener;
 
-use ApiPlatform\State\SerializerContextBuilderInterface;
-use ApiPlatform\State\Util\RequestAttributesExtractor;
 use ApiPlatform\Symfony\EventListener\DeserializeListener as DecoratedListener;
 use App\Entity\Library\Score;
-use App\Entity\Library\ScoreFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 readonly class DeserializeListener
 {
     public function __construct(
-        private DecoratedListener                 $decoratedListener,
-        private SerializerContextBuilderInterface $serializerContextBuilder,
-        private DenormalizerInterface             $denormalizer,
+        private DecoratedListener      $decoratedListener,
+        private ScoreMultipartListener $scoreListener
     )
     {
     }
@@ -26,37 +21,18 @@ readonly class DeserializeListener
         $request = $event->getRequest();
 
         if ($request->isMethodCacheable() || $request->isMethod(Request::METHOD_DELETE)) {
-            $this->decoratedListener->onKernelRequest($event);
             return;
         }
 
-        if (!($request->attributes->has('_api_resource_class') && $request->attributes->get('_api_resource_class') === Score::class)) {
-            $this->decoratedListener->onKernelRequest($event);
+        if ($request->isMethod(Request::METHOD_POST) && $request->attributes->has('_api_resource_class') && $request->attributes->has('data')) {
+            $class = $request->attributes->get('_api_resource_class');
+            match ($class) {
+                Score::class => $this->scoreListener->handleRequest($request),
+                default => throw new \RuntimeException('Unexpected API resource class')
+            };
         } else {
-            $this->denormalizeScore($request);
+            $this->decoratedListener->onKernelRequest($event);
         }
     }
 
-    private function denormalizeScore(Request $request): void
-    {
-        $attributes = RequestAttributesExtractor::extractAttributes($request);
-        if (empty($attributes)) {
-            return;
-        }
-
-        $context = $this->serializerContextBuilder->createFromRequest($request, false, $attributes);
-
-        $data = $request->request->all();
-        $files = $request->files->all();
-
-        $object = $this->denormalizer->denormalize($data, $attributes['resource_class'], null, $context);
-
-        foreach ($files as $uploadedFile) {
-            $file = new ScoreFile();
-            $file->setFile($uploadedFile);
-            $object->addFile($file);
-        }
-
-        $request->attributes->set('data', $object);
-    }
 }

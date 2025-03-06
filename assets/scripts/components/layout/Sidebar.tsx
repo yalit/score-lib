@@ -44,13 +44,6 @@ export default function Sidebar() {
                     <span>{trans('main.menu.setlists.label')}</span>
                 </a>
 
-                {isGranted('ROLE_ADMIN') &&
-                    <a href={generate('admin')} className="nav__menu__item">
-                        <AdjustmentsVerticalIcon className={iconClass} />
-                        <span>{trans('main.menu.admin.label')} </span>
-                    </a>
-                }
-
                 {isLogged() &&
                     <a href={generate("app_logout")} className="nav__menu__item">
                         <ArrowRightStartOnRectangleIcon className={iconClass} />

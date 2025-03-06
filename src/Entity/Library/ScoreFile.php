@@ -2,6 +2,8 @@
 
 namespace App\Entity\Library;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Repository\Library\ScoreFileRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,8 +12,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ScoreFileRepository::class)]
+#[ApiResource(operations: [
+    new Get()
+])]
 class ScoreFile
 {
     #[ORM\Id]
@@ -20,11 +24,10 @@ class ScoreFile
     #[ORM\Column]
     private ?string $id = null;
 
-    #[Vich\UploadableField('score_file', fileNameProperty: 'name', size: 'size', mimeType: 'mimeType')]
     private ?UploadedFile $file = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([Score::SCORE_READ])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]

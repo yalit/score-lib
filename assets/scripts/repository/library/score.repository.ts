@@ -9,6 +9,7 @@ import { ScoreCategory, scoreCategorySchema } from "../../model/library/scoreCat
 import { Artist, artistSchema, scoreArtistSchema } from "../../model/library/scoreArtist.interface";
 import {FormScore} from "../../pages/library/score/ScoreForm";
 import {objectToFormData} from "../../libraries/form";
+import {ScoreFile, scoreFileSchema} from "../../model/library/scoreFile";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
 
@@ -84,15 +85,21 @@ const saveScoreArtistSchema = scoreArtistSchema.merge(z.object({
     artist: saveArtistSchema
 }))
 
+const saveFileSchema = scoreFileSchema.transform((file: ScoreFile) => file['@id'] ?? file);
+
 const saveScoreSchema = scoreSchema.merge(z.object({
     id: z.string().optional(),
     categories: z.array(saveScoreCategorySchema),
     artists: z.array(saveScoreArtistSchema),
+    files: z.array(saveFileSchema),
 }))
 
 export async function createScore(score: FormScore): Promise<Score> {
     const parameters = {
         method: "POST",
+        headers: {
+            "Content-Type": "application/ld+json"
+        },
     }
 
     return saveScore(`/api/scores`, parameters, score)
@@ -100,9 +107,9 @@ export async function createScore(score: FormScore): Promise<Score> {
 
 export async function updateScore(score: FormScore): Promise<Score> {
     const parameters = {
-        method: "PATCH",
+        method: "PUT",
         headers: {
-            "Content-Type": "application/merge-patch+json"
+            "Content-Type": "application/ld+json"
         },
     }
 
@@ -111,22 +118,29 @@ export async function updateScore(score: FormScore): Promise<Score> {
 }
 
 async function saveScore(url: string, parameters, score: FormScore): Promise<Score> {
-    let formData = objectToFormData(saveScoreSchema.parse(score));
-
-    for (let i = 0; i < score.uploadedFiles.length; i++) {
-        formData.append(score.uploadedFiles[i].name, score.uploadedFiles[i]);
-    }
-
-    console.log("Form Data", formData, "Score", score);
-
     let response = await fetch(url, {
         ...parameters,
-        body: formData
+        body:JSON.stringify(saveScoreSchema.parse(score)),
     })
 
     //TODO : handle error
     
     let output = await response.json()
+
+    if (score.uploadedFiles && score.uploadedFiles.length > 0) {
+        let formData = new FormData()
+
+        for (let i = 0; i < score.uploadedFiles.length; i++) {
+            formData.append(score.uploadedFiles[i].name, score.uploadedFiles[i]);
+        }
+
+        response = await fetch(`/api/scores/${output.id}/files`, {
+            method: "POST",
+            body: formData,
+        })
+        output = await response.json()
+    }
+
     return await scoreSchema.parseAsync(output)
 }
 
