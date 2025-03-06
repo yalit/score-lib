@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ScoreFileRepository::class)]
 class ScoreFile
 {
@@ -16,9 +18,9 @@ class ScoreFile
     #[ORM\GeneratedValue('CUSTOM')]
     #[CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-    #[Groups([Score::SCORE_READ])]
     private ?string $id = null;
 
+    #[Vich\UploadableField('score_file', fileNameProperty: 'name', size: 'size', mimeType: 'mimeType')]
     private ?UploadedFile $file = null;
 
     #[ORM\Column(length: 255)]
@@ -33,10 +35,6 @@ class ScoreFile
 
     #[ORM\Column]
     private ?int $size = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups([Score::SCORE_READ])]
-    private ?string $extension = null;
 
     #[ORM\ManyToOne(targetEntity: Score::class, inversedBy: 'files')]
     private ?Score $score = null;

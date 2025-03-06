@@ -9,15 +9,16 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Controller\Library\API\APIScorePostController;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Entity\Library\Enum\ArtistType;
 use App\Library\API\Provider\LastScoresProvider;
 use App\Repository\Library\ScoreRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use DateTimeImmutable;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
@@ -36,8 +37,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Post(
+            inputFormats: ['multipart' => ['multipart/form-data']],
             normalizationContext: ["groups" => [Score::SCORE_READ]],
-            denormalizationContext: ["groups" => [Score::SCORE_WRITE]]
+            denormalizationContext: ["groups" => [Score::SCORE_WRITE]],
         ),
         new Patch(
             normalizationContext: ["groups" => [Score::SCORE_READ]],

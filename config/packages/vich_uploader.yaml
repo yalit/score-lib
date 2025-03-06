@@ -1,0 +1,11 @@
+vich_uploader:
+    db_driver: orm
+
+    metadata:
+        type: attribute
+
+    mappings:
+        score_file:
+            uri_prefix: /score/file
+            upload_destination: '%kernel.project_dir%/public/files/scores'
+            namer: Vich\UploaderBundle\Naming\OrignameNamer

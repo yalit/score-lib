@@ -65,6 +65,9 @@ front-require: ## Require a new package
 front-require-dev: ## Require a new package
 	${FRONT_EXEC} install --save-dev $(filter-out $@,$(MAKECMDGOALS))
 
+front-test: ## launch test for the scripts assets
+	${FRONT_EXEC} test
+
 front-build-dev: front-dump-routes ## Build the assets in dev mode
 	${FRONT_EXEC} run dev
 

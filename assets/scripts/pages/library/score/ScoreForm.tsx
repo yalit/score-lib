@@ -80,7 +80,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
 
     const onSubmit: SubmitHandler<FormScore> = (score: FormScore) => {
         console.log("Submit", score);
-        //saveScore(score)
+        saveScore(score)
     }
 
     return (
