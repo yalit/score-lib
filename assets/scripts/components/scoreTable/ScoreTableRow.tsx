@@ -46,7 +46,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <div className="data__table__line__item title medium">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.title.label')}</div>
                     <div className="data__table__line__item-value underline"><a
-                        href="{{ path('app_library_score_show', {id: score.id}) }}">{score.title}</a></div>
+                        href={generate('app_library_score_show', {id: score.id})}>{score.title}</a></div>
                 </div>
 
                 <div className="data__table__line__item reference medium">
@@ -87,10 +87,8 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <input type="checkbox" id={score.id + "-action-toggle"} className="peer hidden"/>
                 <div
                     className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-3 p-5 bg-white">
-                    {/*TODO : add the page for the score display*/}
-                    <a href={generate('app_library_score_show', {id: score.id})}>{trans('main.action.show.label')}</a>
-                    {/*TODO : add the page for the score edit*/}
-                    <a href="{{ path('app_library_score_edit', {id: this.score.id}) }}">{trans('main.action.edit.label')}</a>
+                    <a href={generate('app_library_score_show', {id: score.id})} >{trans('main.action.show.label')}</a>
+                    <a href={generate('app_library_score_edit', {id: score.id})} >{trans('main.action.edit.label')}</a>
                     <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer" onClick={toggleDeleteModal}>{trans('main.action.delete.label')}</label>
                 </div>
             </div>
@@ -111,7 +109,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                     <CardFooter>
                         <div className="flex justify-end items-center gap-4">
                             <button className="button secondary" onClick={toggleDeleteModal}>{trans('main.action.cancel.label')}</button>
-                            <button className="button danger" onClick={() => deleteScore(score)}>{trans('main.action.delete.label')}</button> {/*TODO : add a deletion api request */}
+                            <button className="button danger" onClick={() => deleteScore(score)}>{trans('main.action.delete.label')}</button>
                         </div>
                     </CardFooter>
                 </Card>
