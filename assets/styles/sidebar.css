@@ -1,6 +1,6 @@
 nav {
     .nav__menu__item {
-        @apply flex gap-1;
+        @apply flex gap-2 justify-center md:justify-start;
 
         span {
             @apply pr-2 hover:pl-2 hover:pr-0;
