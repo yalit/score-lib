@@ -23,7 +23,12 @@ readonly class ScoreFileFactory
         $scoreFile->setName($uploadedFileName);
         $scoreFile->setExtension($uploadedFileExtension);
 
-        $uniqueFileName = sprintf('%s_%s.%s', (Uuid::v4())->toString(), $scoreFile->getName(), $uploadedFile->guessExtension());
+        $extension = $uploadedFile->guessExtension();
+        if ($extension === 'bin') {
+            $mimeData = explode("/", $uploadedFile->getClientMimeType());
+            $extension = $mimeData[count($mimeData) - 1];
+        }
+        $uniqueFileName = sprintf('%s_%s.%s', (Uuid::v4())->toString(), $scoreFile->getName(), $extension);
         $path = $this->scoreFileUploadDir . '/' . $uniqueFileName;
 
         $scoreFile->setPath($path);

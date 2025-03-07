@@ -4,6 +4,10 @@ api_platform:
         pagination_client_items_per_page: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+    use_symfony_listeners: true
+    formats:
+        jsonld: ['application/ld+json']
+        multipart: ['multipart/form-data']
     collection:
         pagination:
             items_per_page_parameter_name: nb

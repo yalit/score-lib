@@ -27,3 +27,9 @@ services:
 
     DataFixtures\:
         resource: '../src/Doctrine/Fixtures'
+
+    App\Library\API\Listener\DeserializeListener:
+        tags:
+            - {name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest', priority: 2}
+        decorates: 'api_platform.listener.request.deserialize'
+        autoconfigure: false

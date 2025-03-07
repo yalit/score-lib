@@ -7,6 +7,7 @@ import {ReactNode, useEffect} from "react";
 import {useTranslator} from "../../../hooks/useTranslator";
 import {useDocumentTitle} from "../../../hooks/useDocumentTitle";
 import {MusicalNoteIcon} from "@heroicons/react/24/outline";
+import {ScoreFile} from "../../../model/library/scoreFile";
 
 interface ScoreDisplayProps {
     score: Score
@@ -44,7 +45,7 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.files.label')}>
                     {/*TODO : add link to download the file*/}
-                    <div>{score.files.map(file => <div key={score.id}><MusicalNoteIcon className="h-5 w-5" /> {file.name}</div>)}</div>
+                    <div>{score.files.map((file: ScoreFile) => <div key={file["@id"]}><MusicalNoteIcon className="h-5 w-5" /> {file.name}</div>)}</div>
                 </ScoreDisplayRow>
             </CardContent>
         </Card>

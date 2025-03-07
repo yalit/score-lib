@@ -3,8 +3,9 @@ import {createScore, updateScore} from "../../repository/library/score.repositor
 import useRouter from "../useRouter";
 import { useRedirect } from "../useRedirect";
 import { useMutation } from "react-query";
+import {FormScore} from "../../pages/library/score/ScoreForm";
 
-export default function useSaveScore(): (score: Score) => void {
+export default function useSaveScore(): (score: FormScore) => void {
     const {generate} = useRouter()
     const redirect = useRedirect()
 
@@ -19,7 +20,7 @@ export default function useSaveScore(): (score: Score) => void {
         mutationFn: updateScore,
         onSuccess
     })
-    return (score: Score) =>  {
+    return (score: FormScore) =>  {
         if (score.id) {
             updateMutation.mutate(score)
         } else {

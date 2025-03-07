@@ -8,7 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardHeader, CardTitle,} from "../../../shadcdn/components/ui/card";
 import {Label} from "../../../shadcdn/components/ui/label";
 import {Button} from "../../../shadcdn/components/ui/button";
-import {PlusIcon} from "@heroicons/react/24/outline";
+import {PlusIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import {MinusSquareIcon} from "lucide-react";
 import {ScoreCategory} from "../../../model/library/scoreCategory.interface";
 import {useCategories} from "../../../hooks/library/useCategories";
@@ -19,13 +19,19 @@ import {useArtists} from "../../../hooks/library/useArtists";
 import {SelectableTextChoices} from "../../../components/Form/SelectableTextChoices";
 import {useArtistTypes} from "../../../hooks/library/useArtistTypes";
 import useSaveScore from "../../../hooks/library/useSaveScore";
+import FileInput from "../../../components/Form/FileInput";
+import {ScoreFile} from "../../../model/library/scoreFile";
+import {Badge} from "../../../shadcdn/components/ui/badge";
 
 // based on : https://truecoderguru.com/blog/react-hook-form-dynamic-object-array
 
 const scoreFormSchema = scoreSchema.merge(
-    z.object({id: z.string().optional()}),
+    z.object({
+        id: z.string().optional(),
+        uploadedFiles: z.array(z.instanceof(File)).optional()
+    }),
 );
-type FormScore = z.infer<typeof scoreFormSchema>;
+export type FormScore = z.infer<typeof scoreFormSchema>;
 
 export const BlankScore: FormScore = {
     title: "",
@@ -34,6 +40,7 @@ export const BlankScore: FormScore = {
     categories: [],
     artists: [],
     files: [],
+    uploadedFiles: [],
 };
 
 export default function ScoreForm({score = null}: { score?: Score | null }) {
@@ -61,11 +68,20 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
         name: "artists",
     } as const);
 
+    const {fields: scoreFiles, remove: removeFile} = useFieldArray({control: form.control, name: "files"} as const)
+
+    const removeUploadedFile = (file: File) => {
+        if (!form.getValues('uploadedFiles')) {
+            return
+        }
+        form.setValue('uploadedFiles', form.getValues('uploadedFiles')?.filter(f => f!==file))
+    }
+
     const {categories: possibleCategories} = useCategories();
     const {artists: possibleArtists} = useArtists();
     const {types: artistTypes} = useArtistTypes();
 
-    const onSubmit: SubmitHandler<FormScore> = (score: Score) => {
+    const onSubmit: SubmitHandler<FormScore> = (score: FormScore) => {
         console.log("Submit", score);
         saveScore(score)
     }
@@ -190,12 +206,24 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                 <SelectableTextChoices control={form.control}
                                                        name={`artists.${idx}.type`}
                                                        label={trans("entity.score.fields.artists.type.label")}
-                                                       choices={artistTypes} placeholder={"Select the type of the composer"}
+                                                       choices={artistTypes}
+                                                       placeholder={"Select the type of the composer"}
                                 />
 
                             </div>
                         ))}
 
+                        <FileInput control={form.control} name={'uploadedFiles'}
+                                   label={trans('entity.score.fields.files.label')}/>
+
+                        <div className="flex gap-2 items-center">
+                            {scoreFiles.map((file: ScoreFile, fileIndex: number) => (
+                                <Badge key={file["@id"]}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeFile(fileIndex)}/></Badge>
+                            ))}
+                            {form.getValues()['uploadedFiles']?.map((file: File) => (
+                                <Badge key={String(Math.random())}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeUploadedFile(file)}/></Badge>
+                            ))}
+                        </div>
                         <Button type="submit" className="mt-4">
                             {trans("main.action.save.label")}
                         </Button>
