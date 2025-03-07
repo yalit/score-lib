@@ -53,9 +53,8 @@ export default function Sidebar() {
 
     const menuListClassname: string = useMemo<string>(() => {
         return cn(
-            "navigation items-center flex-col md:items-start font-bold gap-3 p-5 bg-inherit",
+            "navigation items-center flex-col md:items-start font-bold gap-3 p-5 bg-inherit absolute top-full z-50 inset-x-0 md:relative md:top-0",
             mobileLinksShown ? "flex" : "hidden md:flex",
-            mobileLinksShown ? "absolute top-full z-50 inset-x-0" : ""
         )
 
     }, [mobileLinksShown])
@@ -79,8 +78,7 @@ export default function Sidebar() {
             <div className="md:hidden p-5 cursor-pointer">
                 <Bars3BottomRightIcon className={iconClass} onClick={() => setMobileLinksShown(!mobileLinksShown)}/>
             </div>
-            <nav
-                className={menuListClassname}>
+            <nav className={menuListClassname}>
                 {menuItems.map(({path, icon, title, visible}: MenuItemProps) => {
                     const isDisplayed = !visible || visible();
                     return (
