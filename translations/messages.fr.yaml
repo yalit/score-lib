@@ -124,3 +124,5 @@ library:
   score:
     download_all:
       label: "Tout télécharger"
+    download:
+      label: "Télécharger"
