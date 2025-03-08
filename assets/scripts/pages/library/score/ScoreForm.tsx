@@ -8,8 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardHeader, CardTitle,} from "../../../shadcdn/components/ui/card";
 import {Label} from "../../../shadcdn/components/ui/label";
 import {Button} from "../../../shadcdn/components/ui/button";
-import {PlusIcon, XMarkIcon} from "@heroicons/react/24/outline";
-import {MinusSquareIcon} from "lucide-react";
+import {MinusSquareIcon, PlusIcon, XIcon} from "lucide-react";
 import {ScoreCategory} from "../../../model/library/scoreCategory.interface";
 import {useCategories} from "../../../hooks/library/useCategories";
 import {MultipleSelectorField} from "../../../components/Form/MultipleSelectorField";
@@ -218,10 +217,10 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
 
                         <div className="flex gap-2 items-center">
                             {scoreFiles.map((file: ScoreFile, fileIndex: number) => (
-                                <Badge key={file["@id"]}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeFile(fileIndex)}/></Badge>
+                                <Badge key={file["@id"]}>{file.name} <XIcon className="h-4 w-4" onClick={() => removeFile(fileIndex)}/></Badge>
                             ))}
                             {form.getValues()['uploadedFiles']?.map((file: File) => (
-                                <Badge key={String(Math.random())}>{file.name} <XMarkIcon className="h-4 w-4" onClick={() => removeUploadedFile(file)}/></Badge>
+                                <Badge key={String(Math.random())}>{file.name} <XIcon className="h-4 w-4" onClick={() => removeUploadedFile(file)}/></Badge>
                             ))}
                         </div>
                         <Button type="submit" className="mt-4">
