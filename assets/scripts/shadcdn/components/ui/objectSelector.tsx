@@ -1,8 +1,8 @@
 import {Command, CommandItem, CommandList} from "./command";
 import {Badge} from "./badge";
-import {XMarkIcon} from "@heroicons/react/24/outline";
 import {Command as CommandPrimitive} from "cmdk";
 import {useEffect, useState} from "react";
+import {XIcon} from "lucide-react";
 
 type ObjectSelectorProps<T> = {
     value: T|null,
@@ -44,7 +44,7 @@ export function ObjectSelector<T>({value, selectables, set, getId, getDisplay, g
                     {selected && getDisplay(selected) !== "" &&
                         <Badge>
                             <span>{getDisplay(selected)}</span>
-                            <XMarkIcon
+                            <XIcon
                                 className="h-4 w-4 cursor-pointer"
                                 onClick={() => removeValue()}
                             />
