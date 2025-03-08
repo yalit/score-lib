@@ -34,6 +34,7 @@ readonly class ScoreFileFactory
         $scoreFile->setPath($path);
         $scoreFile->setMimeType($uploadedFile->getClientMimeType());
         $scoreFile->setSize($uploadedFile->getSize());
+        $scoreFile->setExtension($extension);
 
         $uploadedFile->move($this->scoreFileUploadDir, $uniqueFileName);
         return $scoreFile;

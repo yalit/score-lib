@@ -121,3 +121,6 @@ library:
     title: "Nouvelle partition"
   edit:
     title: "Modification de la partition"
+  score:
+    download_all:
+      label: "Tout télécharger"

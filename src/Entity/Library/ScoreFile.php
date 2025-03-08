@@ -37,6 +37,10 @@ class ScoreFile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mimeType = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups([Score::SCORE_READ])]
+    private ?string $extension = null;
+
     #[ORM\Column]
     private ?int $size = null;
 
