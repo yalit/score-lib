@@ -56,7 +56,8 @@
     "twig/twig": "^2.12|^3.0",
     "vich/uploader-bundle": "^2.5",
     "willdurand/js-translation-bundle": "^7.0",
-    "yalit/twig-heroicon-bundle": "@dev"
+    "yalit/twig-heroicon-bundle": "@dev",
+    "ext-zip": "*"
   },
   "config": {
     "allow-plugins": {

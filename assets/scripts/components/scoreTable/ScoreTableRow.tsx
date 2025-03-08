@@ -6,11 +6,19 @@ import {useState} from "react";
 import Modal from "../modal/Modal";
 import Card from "../card/Card";
 import CardTitle from "../card/CardTitle";
-import {Bars3BottomRightIcon, ExclamationTriangleIcon} from "@heroicons/react/24/outline";
 import CardContent from "../card/CardContent";
 import CardFooter from "../card/CardFooter";
 import {useTranslator} from "../../hooks/useTranslator";
 import useRouter from "../../hooks/useRouter";
+import {
+    DownloadIcon,
+    EllipsisIcon,
+    EllipsisVerticalIcon,
+    EyeIcon,
+    PencilIcon,
+    SquareXIcon,
+    TriangleAlertIcon
+} from "lucide-react";
 
 interface ScoreTableRowProps {
     score: Score,
@@ -40,6 +48,15 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
 
     const toggleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
 
+    const getDownloadUrl = (score: Score): string => {
+        if (score.files.length === 1) {
+            return generate('app_library_scorefile_download', {score: score.id, scoreFile: score.files[0].name})
+        }
+        if (score.files.length >= 1) {
+            return generate('app_library_scorefile_download_all', {score: score.id})
+        }
+        return '#'
+    }
     return (
         <div className={rowClass}>
             <div className="data__table__line-content">
@@ -52,14 +69,15 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <div className="data__table__line__item reference medium">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.reference.label')}</div>
                     <div className="data__table__line__item-value">
-                        { score.reference.value }
+                        {score.reference.value}
                     </div>
                 </div>
 
                 <div className="data__table__line__item references large">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.refs.label')}</div>
                     <div className="data__table__line__item-value">
-                        {score.reference.value} {score.otherReferences.map((ref: ScoreReference) => <div key={score.id + ref.value}>{displayReference(ref)}</div>)}
+                        {score.reference.value} {score.otherReferences.map((ref: ScoreReference) => <div
+                        key={score.id + ref.value}>{displayReference(ref)}</div>)}
                     </div>
                 </div>
 
@@ -73,7 +91,8 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <div className="data__table__line__item artists large">
                     <div className="data__table__line__item-label">{trans('entity.score.fields.artists.label')}</div>
                     <div className="data__table__line__item-value">
-                        {score.artists.map((scoreArtist: ScoreArtist) => <div key={score.id + scoreArtist.artist.name + scoreArtist.type}
+                        {score.artists.map((scoreArtist: ScoreArtist) => <div
+                            key={score.id + scoreArtist.artist.name + scoreArtist.type}
                             className="">{scoreArtist.artist.name} - {trans(scoreArtist.type)}</div>)}
                     </div>
                 </div>
@@ -81,15 +100,27 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
             </div>
 
             <div className="data__table__line-actions">
-                <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800">
-                    <Bars3BottomRightIcon className="w-6 h-6" />
-                </label>
                 <input type="checkbox" id={score.id + "-action-toggle"} className="peer hidden"/>
+                <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800 peer-checked:hidden">
+                    <EllipsisIcon className="w-6 h-6"/>
+                </label>
+                <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800 hidden peer-checked:block">
+                    <EllipsisVerticalIcon className="w-6 h-6"/>
+                </label>
                 <div
-                    className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-3 p-5 bg-white">
-                    <a href={generate('app_library_score_show', {id: score.id})} >{trans('main.action.show.label')}</a>
-                    <a href={generate('app_library_score_edit', {id: score.id})} >{trans('main.action.edit.label')}</a>
-                    <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer" onClick={toggleDeleteModal}>{trans('main.action.delete.label')}</label>
+                    className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-2 p-5 bg-white">
+                    <a href={getDownloadUrl(score)}
+                       className="flex items-center gap-1"><DownloadIcon
+                        className="h-4 w-4"/> {trans('library.score.download.label')}</a>
+                    <a href={generate('app_library_score_show', {id: score.id})}
+                       className="flex items-center gap-1"><EyeIcon
+                        className="h-4 w-4"/> {trans('main.action.show.label')}</a>
+                    <a href={generate('app_library_score_edit', {id: score.id})}
+                       className="flex items-center gap-1"><PencilIcon
+                        className="h-4 w-4"/> {trans('main.action.edit.label')}</a>
+                    <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer flex items-center gap-1"
+                           onClick={toggleDeleteModal}><SquareXIcon
+                        className="h-4 w-4"/> {trans('main.action.delete.label')}</label>
                 </div>
             </div>
 
@@ -97,7 +128,7 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 <Card className="min-w-[50%">
                     <CardTitle>
                         <div className="title__title text-red-800 flex items-end gap-5 w-full leading-none">
-                            <div><ExclamationTriangleIcon className="w-5 h-5"/></div>
+                            <div><TriangleAlertIcon className="w-5 h-5"/></div>
                             <div>{trans('library.index.deleteModal.title.label')}</div>
                         </div>
                     </CardTitle>
@@ -108,8 +139,10 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                     </CardContent>
                     <CardFooter>
                         <div className="flex justify-end items-center gap-4">
-                            <button className="button secondary" onClick={toggleDeleteModal}>{trans('main.action.cancel.label')}</button>
-                            <button className="button danger" onClick={() => deleteScore(score)}>{trans('main.action.delete.label')}</button>
+                            <button className="button secondary"
+                                    onClick={toggleDeleteModal}>{trans('main.action.cancel.label')}</button>
+                            <button className="button danger"
+                                    onClick={() => deleteScore(score)}>{trans('main.action.delete.label')}</button>
                         </div>
                     </CardFooter>
                 </Card>

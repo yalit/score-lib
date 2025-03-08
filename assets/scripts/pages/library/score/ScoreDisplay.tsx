@@ -6,8 +6,8 @@ import useRouter from "../../../hooks/useRouter";
 import {ReactNode, useEffect} from "react";
 import {useTranslator} from "../../../hooks/useTranslator";
 import {useDocumentTitle} from "../../../hooks/useDocumentTitle";
-import {MusicalNoteIcon} from "@heroicons/react/24/outline";
 import {ScoreFile} from "../../../model/library/scoreFile";
+import {useDocumentIconLoader} from "../../../hooks/useDocumentIconLoader";
 
 interface ScoreDisplayProps {
     score: Score
@@ -17,6 +17,7 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
     const {generate} = useRouter()
     const {trans} = useTranslator()
     const setTitle = useDocumentTitle()
+    const {getDocumentIcon} = useDocumentIconLoader()
 
     useEffect(() => {
         setTitle(score.title)
@@ -35,17 +36,30 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                     <div>{score.reference.value}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.refs.label')}>
-                    <div>{score.otherReferences.map(ref => <div key={ref.value+"-"+(ref.information ?? "info")}>{ref.value} ({ref.information})</div>)}</div>
+                    <div>{score.otherReferences.map(ref => <div
+                        key={ref.value + "-" + (ref.information ?? "info")}>{ref.value} ({ref.information})</div>)}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.categories.label')}>
                     <div>{score.categories.map(category => <div key={category.value}>{category.value}</div>)}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.artists.label')}>
-                    <div>{score.artists.map(artist => <div key={artist.artist.name + "-" + artist.type}>{trans(artist.type)} : {artist.artist.name}</div>)}</div>
+                    <div>{score.artists.map(artist => (
+                        <div
+                            key={artist.artist.name + "-" + artist.type}>{trans(artist.type)} : {artist.artist.name}</div>
+                    ))}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.files.label')}>
-                    {/*TODO : add link to download the file*/}
-                    <div>{score.files.map((file: ScoreFile) => <div key={file["@id"]}><MusicalNoteIcon className="h-5 w-5" /> {file.name}</div>)}</div>
+                    <div>
+                        {score.files.length > 1 && (
+                            <a key="all_file_download" href={generate('app_library_scorefile_download_all', {score: score.id})}
+                               target="_blank">{trans('library.score.download_all.label')}</a>
+                        )}
+                        {score.files.map((file: ScoreFile) => <a
+                            href={generate('app_library_scorefile_download', {score: score.id, scoreFile: file.id})}
+                            target="_blank"
+                            key={file.id}
+                            className="flex items-center gap-2">{getDocumentIcon(file.extension, {className: "h-5 w-5"})} {file.name}</a>)}
+                    </div>
                 </ScoreDisplayRow>
             </CardContent>
         </Card>
