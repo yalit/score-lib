@@ -2,7 +2,7 @@ import {Command, CommandItem, CommandList,} from "./command";
 import {Command as CommandPrimitive} from "cmdk";
 import {useEffect, useState} from "react";
 import {Badge} from "./badge";
-import {XMarkIcon} from "@heroicons/react/24/outline";
+import {XIcon} from "lucide-react";
 
 type MultipleSelectorProps<T> = {
     values: T[];
@@ -69,7 +69,7 @@ export default function MultipleSelector<T>({
                     {values.map((v: T) => (
                         <Badge key={idValue(v)+String(Math.random())}>
                             <span>{displayValue(v)}</span>
-                            <XMarkIcon
+                            <XIcon
                                 className="h-4 w-4 cursor-pointer"
                                 onClick={() => removeValue(v)}
                             />
