@@ -1,5 +1,5 @@
 import {Direction, NoDirection} from "../../model/generics.interface";
-import {ChevronDownIcon, ChevronUpDownIcon, ChevronUpIcon} from "@heroicons/react/24/outline";
+import {ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon} from "lucide-react";
 
 interface SortingIconProps {
     sort: (direction: Direction) => void,
@@ -15,7 +15,7 @@ export default function SortingIcon ({sort, direction}: SortingIconProps) {
     }
 
     const icons = {
-        '': <ChevronUpDownIcon className={chevronClassName} onClick={toggleDirection} />,
+        '': <ChevronsUpDownIcon className={chevronClassName} onClick={toggleDirection} />,
         'asc': <ChevronUpIcon className={chevronClassName} onClick={toggleDirection} />,
         'desc': <ChevronDownIcon className={chevronClassName} onClick={toggleDirection} />,
     }

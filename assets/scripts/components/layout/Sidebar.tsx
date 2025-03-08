@@ -1,18 +1,11 @@
 import useRouter from "../../hooks/useRouter";
 import {useTranslator} from "../../hooks/useTranslator";
-import {SquareLibraryIcon} from "lucide-react";
-import {
-    ArrowRightStartOnRectangleIcon,
-    Bars3BottomRightIcon,
-    BuildingLibraryIcon,
-    HomeModernIcon,
-    ListBulletIcon
-} from "@heroicons/react/24/outline";
-
-import '../../../styles/sidebar.css';
+import {HouseIcon, LibraryIcon, ListIcon, LogOutIcon, MenuIcon, SquareLibraryIcon} from "lucide-react";
 import {ReactNode, useMemo, useState} from "react";
 import {cn} from "../../shadcdn/lib/utils";
 import {useSecurity} from "../../context/security/security.hooks";
+
+import '../../../styles/sidebar.css';
 
 export type MenuItemProps = {
     title: string;
@@ -34,18 +27,18 @@ export default function Sidebar() {
     const menuItems: MenuItemProps[] = [
         {
             title: trans('main.menu.home.label'),
-            icon: <HomeModernIcon className={iconClass}/>,
+            icon: <HouseIcon className={iconClass}/>,
             path: generate('app_index')
         },
         {
             title: trans('main.menu.library.label'),
-            icon: <BuildingLibraryIcon className={iconClass}/>,
+            icon: <LibraryIcon className={iconClass}/>,
             path: generate('app_library_index')
         },
-        {title: trans('main.menu.setlists.label'), icon: <ListBulletIcon className={iconClass}/>, path: "#"},
+        {title: trans('main.menu.setlists.label'), icon: <ListIcon className={iconClass}/>, path: "#"},
         {
             title: `${trans('main.menu.logout.label')} ${(user?.name)}`,
-            icon: <ArrowRightStartOnRectangleIcon className={iconClass}/>,
+            icon: <LogOutIcon className={iconClass}/>,
             path: generate("app_logout"),
             visible: isLogged
         },
@@ -76,7 +69,7 @@ export default function Sidebar() {
             </button>
 
             <div className="md:hidden p-5 cursor-pointer">
-                <Bars3BottomRightIcon className={iconClass} onClick={() => setMobileLinksShown(!mobileLinksShown)}/>
+                <MenuIcon className={iconClass} onClick={() => setMobileLinksShown(!mobileLinksShown)}/>
             </div>
             <nav className={menuListClassname}>
                 {menuItems.map(({path, icon, title, visible}: MenuItemProps) => {

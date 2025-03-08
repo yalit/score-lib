@@ -1,10 +1,5 @@
-import {
-    ChevronDoubleLeftIcon, ChevronDoubleRightIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    EllipsisHorizontalIcon
-} from "@heroicons/react/24/outline";
 import {classnames} from "../../libraries/general";
+import {ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon} from "lucide-react";
 
 interface ScoreTablePaginationProps {
     page: number;
@@ -26,12 +21,12 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                 <div className="data__table__line flex justify-center relative flex-1">
                     { page > 1 && (
                         <>
-                            <span className="cursor-pointer" onClick={() => moveToPage(1)}><ChevronDoubleLeftIcon className="h-4 w-4" /></span>
-                            <span className="cursor-pointer" onClick={() => moveToPage(page-1)}><ChevronLeftIcon className="h-4 w-4" /></span>
+                            <span className="cursor-pointer" onClick={() => moveToPage(1)}><ChevronsLeftIcon className="h-4 w-4" /></span>
+                            <span className="cursor-pointer" onClick={() => moveToPage(page-1)}><ChevronsLeftIcon className="h-4 w-4" /></span>
                         </>
                     )}
                     { page - 3 > 1 && (
-                        <span><EllipsisHorizontalIcon className="h-3 w-3" /></span>
+                        <span><EllipsisIcon className="h-3 w-3" /></span>
                     )}
 
                     <span className="flex gap-1">
@@ -46,12 +41,12 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                         ))}
                     </span>
 
-                    {page + 3 < totalPages && <span><EllipsisHorizontalIcon className="h-3 w-3" /></span>}
+                    {page + 3 < totalPages && <span><EllipsisIcon className="h-3 w-3" /></span>}
 
                     {page < totalPages && (
                         <>
                     <span className="cursor-pointer" onClick={() => moveToPage(page+1)}><ChevronRightIcon className="h-4 w-4"/></span>
-                            <span className="cursor-pointer" onClick={() => moveToPage(totalPages)}><ChevronDoubleRightIcon className="h-4 w-4" /></span>
+                            <span className="cursor-pointer" onClick={() => moveToPage(totalPages)}><ChevronsRightIcon className="h-4 w-4" /></span>
                         </>
                     )}
                 </div>
