@@ -4,9 +4,8 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\ApiResource\Library\APIArtistType;
+use App\Entity\Library\API\APIArtistType;
 use App\Entity\Library\Enum\ArtistType;
-use App\Repository\Library\ScoreRepository;
 
 final readonly class ArtistTypesProvider implements ProviderInterface
 {

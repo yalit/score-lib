@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ApiResource\Library;
+namespace App\Entity\Library\API;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
