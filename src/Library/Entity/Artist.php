@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Entity\Library;
+namespace App\Library\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
-use App\Entity\Library\Enum\ArtistType;
-use App\Repository\Library\ArtistRepository;
+use App\Library\Repository\ArtistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

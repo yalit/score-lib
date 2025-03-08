@@ -11,6 +11,9 @@ api_platform:
     collection:
         pagination:
             items_per_page_parameter_name: nb
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Library/Entity'
 
 services:
     score.order_filter:

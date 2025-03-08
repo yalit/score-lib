@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Entity\Library;
+namespace App\Library\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\QueryParameter;
 use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
-use App\Entity\Library\Enum\ArtistType;
 use App\Library\API\Processor\ScorePutProcessor;
 use App\Library\API\Provider\LastScoresProvider;
 use App\Library\API\Provider\ScorePutProvider;
-use App\Repository\Library\ScoreRepository;
+use App\Library\Entity\Enum\ArtistType;
+use App\Library\Repository\ScoreRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Controller\Library;
+namespace App\Library\Controller;
 
-use App\Entity\Library\Score;
-use App\Entity\Library\ScoreFile;
+use App\Library\Entity\Score;
+use App\Library\Entity\ScoreFile;
 use App\Library\Factory\ScoreFilesZipFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use ZipArchive;
 
 #[Route('/library/score')]
 class ScoreFileController extends AbstractController

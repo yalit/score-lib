@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Library;
+namespace App\Library\Repository;
 
-use App\Entity\Library\ScoreCategory;
+use App\Library\Entity\ScoreCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;

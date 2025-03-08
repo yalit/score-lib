@@ -4,7 +4,6 @@ namespace App\Entity\Security\Factory;
 
 use App\Entity\Security\Enum\UserRole;
 use App\Entity\Security\User;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory
 {

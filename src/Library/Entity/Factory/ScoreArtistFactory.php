@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity\Library\Factory;
+namespace App\Library\Entity\Factory;
 
-use App\Entity\Library\Artist;
-use App\Entity\Library\Enum\ArtistType;
-use App\Entity\Library\ScoreArtist;
+use App\Library\Entity\Artist;
+use App\Library\Entity\Enum\ArtistType;
+use App\Library\Entity\ScoreArtist;
 
 class ScoreArtistFactory
 {

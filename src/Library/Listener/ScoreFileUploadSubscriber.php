@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Doctrine\Subscriber;
+namespace App\Library\Listener;
 
-use App\Entity\Library\ScoreFile;
+use App\Library\Entity\ScoreFile;
 use App\Library\Factory\ScoreFileFactory;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;

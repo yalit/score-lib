@@ -3,7 +3,7 @@
 namespace App\Library\API\Listener;
 
 use ApiPlatform\Symfony\EventListener\DeserializeListener as DecoratedListener;
-use App\Entity\Library\Score;
+use App\Library\Entity\Score;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 

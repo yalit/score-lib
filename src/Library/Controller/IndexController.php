@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Library\Controller;
 
-use App\Repository\Library\ScoreRepository;
+use App\Library\Repository\ScoreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

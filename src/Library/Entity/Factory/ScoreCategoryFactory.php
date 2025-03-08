@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\Library\Factory;
+namespace App\Library\Entity\Factory;
 
-use App\Entity\Library\ScoreCategory;
+use App\Library\Entity\ScoreCategory;
 
 class ScoreCategoryFactory
 {

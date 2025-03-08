@@ -2,7 +2,7 @@
 
 namespace DataFixtures\Library;
 
-use App\Entity\Library\Artist;
+use App\Library\Entity\Artist;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

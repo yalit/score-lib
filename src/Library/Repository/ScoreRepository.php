@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Library;
+namespace App\Library\Repository;
 
-use App\Entity\Library\Score;
+use App\Library\Entity\Score;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Controller\Library;
+namespace App\Library\Controller;
 
-use App\Entity\Library\Score;
 use App\Form\Library\ScoreFormType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Library\Enum;
+namespace App\Library\Entity\Enum;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;

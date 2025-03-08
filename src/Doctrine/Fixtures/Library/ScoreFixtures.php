@@ -2,15 +2,15 @@
 
 namespace DataFixtures\Library;
 
-use App\Entity\Library\Artist;
-use App\Entity\Library\Enum\ArtistType;
-use App\Entity\Library\Factory\ScoreArtistFactory;
-use App\Entity\Library\Factory\ScoreReferenceFactory;
-use App\Entity\Library\Score;
-use App\Entity\Library\ScoreArtist;
-use App\Entity\Library\ScoreCategory;
-use App\Entity\Library\ScoreFile;
-use App\Entity\Library\ScoreReference;
+use App\Library\Entity\Artist;
+use App\Library\Entity\Enum\ArtistType;
+use App\Library\Entity\Factory\ScoreArtistFactory;
+use App\Library\Entity\Factory\ScoreReferenceFactory;
+use App\Library\Entity\Score;
+use App\Library\Entity\ScoreArtist;
+use App\Library\Entity\ScoreCategory;
+use App\Library\Entity\ScoreFile;
+use App\Library\Entity\ScoreReference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

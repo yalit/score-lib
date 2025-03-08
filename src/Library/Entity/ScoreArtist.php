@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity\Library;
+namespace App\Library\Entity;
 
-use App\Entity\Library\Enum\ArtistType;
-use App\Repository\Score\ScoreArtistRepository;
+use App\Library\Entity\Enum\ArtistType;
+use App\Library\Repository\ScoreArtistRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;

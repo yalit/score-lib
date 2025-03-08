@@ -2,9 +2,9 @@
 
 namespace App\Library\Search;
 
-use App\Entity\Library\Score;
+use App\Library\Entity\Score;
+use App\Library\Repository\ScoreRepository;
 use App\Library\Search\Enum\SearchByOrder;
-use App\Repository\Library\ScoreRepository;
 
 readonly class LibrarySearcher
 {

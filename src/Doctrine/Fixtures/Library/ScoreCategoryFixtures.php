@@ -2,7 +2,7 @@
 
 namespace DataFixtures\Library;
 
-use App\Entity\Library\ScoreCategory;
+use App\Library\Entity\ScoreCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
