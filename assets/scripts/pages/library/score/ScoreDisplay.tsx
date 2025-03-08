@@ -35,17 +35,25 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                     <div>{score.reference.value}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.refs.label')}>
-                    <div>{score.otherReferences.map(ref => <div key={ref.value+"-"+(ref.information ?? "info")}>{ref.value} ({ref.information})</div>)}</div>
+                    <div>{score.otherReferences.map(ref => <div
+                        key={ref.value + "-" + (ref.information ?? "info")}>{ref.value} ({ref.information})</div>)}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.categories.label')}>
                     <div>{score.categories.map(category => <div key={category.value}>{category.value}</div>)}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.artists.label')}>
-                    <div>{score.artists.map(artist => <div key={artist.artist.name + "-" + artist.type}>{trans(artist.type)} : {artist.artist.name}</div>)}</div>
+                    <div>{score.artists.map(artist => (
+                        <div
+                            key={artist.artist.name + "-" + artist.type}>{trans(artist.type)} : {artist.artist.name}</div>
+                    ))}</div>
                 </ScoreDisplayRow>
                 <ScoreDisplayRow title={trans('entity.score.fields.files.label')}>
-                    {/*TODO : add link to download the file*/}
-                    <div>{score.files.map((file: ScoreFile) => <div key={file["@id"]}><MusicalNoteIcon className="h-5 w-5" /> {file.name}</div>)}</div>
+                    <div>
+                        {score.files.map((file: ScoreFile) => <a
+                            href={generate('app_library_scorefile_download', {score: score.id, scoreFile: file.id})}
+                            target="_blank"
+                            key={file["@id"]} className="flex items-center gap-2"><MusicalNoteIcon className="h-5 w-5"/> {file.name}</a>)}
+                    </div>
                 </ScoreDisplayRow>
             </CardContent>
         </Card>

@@ -22,6 +22,7 @@ class ScoreFile
     #[ORM\GeneratedValue('CUSTOM')]
     #[CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    #[Groups([Score::SCORE_READ])]
     private ?string $id = null;
 
     private ?UploadedFile $file = null;

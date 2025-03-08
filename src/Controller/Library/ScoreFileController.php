@@ -13,10 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/library/score')]
 class ScoreFileController extends AbstractController
 {
-    #[Route(path: '/{score}/download/{scoreFile}', name: 'app_library_scorefile_download')]
-    public function downloadFile(
-        Score $score,
-        ScoreFile $scoreFile): Response
+    #[Route(path: '/{score}/download/{scoreFile}', name: 'app_library_scorefile_download', options: ['export' => true])]
+    public function downloadFile(Score $score, ScoreFile $scoreFile): Response
     {
         if ($scoreFile->getScore()->getId() !== $score->getId()) {
             throw new NotFoundHttpException();
