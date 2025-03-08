@@ -10,9 +10,14 @@ import {Input} from "../../shadcdn/components/ui/input";
 import {cn} from "../../shadcdn/lib/utils";
 
 type FileInputProps = {
-    control, name, label: string, description?: string, classname?: string,
+    control,
+    name,
+    label: string,
+    description?: string,
+    classname?: string,
+    acceptedFormats: string[]
 }
-export default function FileInput({control, name, label, description, classname}: FileInputProps) {
+export default function FileInput({control, name, label, description, classname, acceptedFormats = []}: FileInputProps) {
     const handleChange = (onChange, files: FileList|null) => {
         if (files) {
             onChange(Array.from(files))
@@ -26,7 +31,12 @@ export default function FileInput({control, name, label, description, classname}
                 <FormItem className={cn("mb-3", classname)}>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <Input {...field} type="file" multiple={true} onChange={(e) => handleChange(onChange, e.target.files)}/>
+                        <Input {...field}
+                               type="file"
+                               multiple={true}
+                               onChange={(e) => handleChange(onChange, e.target.files)}
+                               accept={acceptedFormats.join(',')}
+                        />
                     </FormControl>
                     {description && (
                         <FormDescription>

@@ -213,7 +213,9 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                         ))}
 
                         <FileInput control={form.control} name={'uploadedFiles'}
-                                   label={trans('entity.score.fields.files.label')}/>
+                                   label={trans('entity.score.fields.files.label')}
+                                   acceptedFormats={['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg']}
+                        />
 
                         <div className="flex gap-2 items-center">
                             {scoreFiles.map((file: ScoreFile, fileIndex: number) => (
