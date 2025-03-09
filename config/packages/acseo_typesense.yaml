@@ -25,6 +25,12 @@ acseo_typesense:
                 reference:
                     name: reference
                     type: string
+                otherreferences:
+                    name: otherreferences
+                    type: collection
+                categories:
+                    name: categories
+                    type: collection
                 createdAt:
                     name: createdAt
                     type: datetime

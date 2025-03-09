@@ -39,6 +39,6 @@ services:
         decorates: 'api_platform.listener.request.deserialize'
         autoconfigure: false
 
-    App\Library\API\Provider\SearchScoreProvider:
+    App\Library\Search\TypesenseScoreRepository:
         arguments:
             $scoreFinder: '@typesense.finder.scores'

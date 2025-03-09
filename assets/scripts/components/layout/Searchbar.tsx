@@ -36,7 +36,7 @@ export default function SearchBar() {
                     <path strokeLinecap="round" strokeLinejoin="round"
                           d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
                 </svg>
-                <label>
+                <label className="w-full">
                     <input type="text" placeholder={trans('main.searchbar.placeholder')}
                            className="p-3 leading-6 bg-inherit focus:outline-none w-full"
                            value={searchValue} onChange={e => setSearchValue(e.currentTarget.value)} // Need to debounce
@@ -44,7 +44,7 @@ export default function SearchBar() {
                 </label>
             </div>
             {queryScores.data && (
-                <div className="absolute top-full px-5 py-1 z-10 bg-white inset-x-0 shadow flex flex-col gap-2">
+                <div className="absolute top-full px-5 pb-5 z-10 bg-white inset-x-0 shadow flex flex-col gap-2">
                     {queryScores.data.map((item, i) => <SearchResultLine key={i} result={item}/>)}
                 </div>
             )}
