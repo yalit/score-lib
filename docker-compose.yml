@@ -34,6 +34,7 @@ services:
       - .:/var/www
     depends_on:
       - db
+      - search
 
   search:
     container_name: score-lib-search
@@ -44,3 +45,9 @@ services:
     volumes:
       - ./var/typesense-data:/data
     command: '--data-dir /data --api-key=xyz --enable-cors'
+
+  search-dashboard:
+    container_name: score-lib-search-dashboard
+    image: ghcr.io/bfritscher/typesense-dashboard:latest
+    ports:
+      - "8118:80"

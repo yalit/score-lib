@@ -95,6 +95,7 @@ db-drop: ## Drop the database
 
 fixtures: db-create migrate reset-cache search-init ## Load fixtures into the database
 	${CONSOLE} doctrine:fixtures:load --no-interaction --env=dev
+	make search-import
 
 migration: ## Create a new migration
 	${CONSOLE} make:migration
@@ -149,5 +150,8 @@ reset-cache: ## Reset the cache
 	rm -rf var/cache/*
 
 ## —— Search ————————————————————————————————————————————————————————————
-search-init: ## Start the Symfony server
+search-init: ## Initialize the search engine
 	${CONSOLE} typesense:create
+
+search-import: ## import the data to the search enging
+	${CONSOLE} typesense:import
