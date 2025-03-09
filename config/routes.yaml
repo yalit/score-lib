@@ -1,6 +1,13 @@
-controllers:
+library_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Library/Controller/
+        namespace: App\Library\Controller
+    type: attribute
+    options: {expose: true}
+
+security_controllers:
+    resource:
+        path: ../src/Security/Controller/
+        namespace: App\Security\Controller
     type: attribute
     options: {expose: true}

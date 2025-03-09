@@ -4,8 +4,7 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Entity\Library\API\LibraryStat;
-use App\Repository\Library\ScoreRepository;
+use App\Library\Repository\ScoreRepository;
 
 final readonly class LastScoresProvider implements ProviderInterface
 {

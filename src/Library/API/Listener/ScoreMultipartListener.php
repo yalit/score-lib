@@ -2,10 +2,8 @@
 
 namespace App\Library\API\Listener;
 
-use ApiPlatform\State\SerializerContextBuilderInterface;
-use App\Entity\Library\ScoreFile;
+use App\Library\Entity\ScoreFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 readonly class ScoreMultipartListener
 {

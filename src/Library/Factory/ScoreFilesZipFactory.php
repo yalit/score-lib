@@ -2,10 +2,9 @@
 
 namespace App\Library\Factory;
 
-use App\Entity\Library\Score;
+use App\Library\Entity\Score;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use ZipArchive;
 

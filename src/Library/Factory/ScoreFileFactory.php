@@ -2,7 +2,7 @@
 
 namespace App\Library\Factory;
 
-use App\Entity\Library\ScoreFile;
+use App\Library\Entity\ScoreFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Uid\Uuid;

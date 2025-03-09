@@ -16,11 +16,17 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            Security:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
+                dir: '%kernel.project_dir%/src/Security/Entity'
+                prefix: 'App\Security\Entity'
+                alias: App
+            Library:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Library/Entity'
+                prefix: 'App\Library\Entity'
                 alias: App
         controller_resolver:
             auto_mapping: false
