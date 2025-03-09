@@ -4,7 +4,7 @@ namespace App\Library\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Repository\ScoreFileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\CustomIdGenerator;

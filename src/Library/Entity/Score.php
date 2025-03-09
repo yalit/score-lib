@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\QueryParameter;
-use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\API\Processor\ScorePutProcessor;
 use App\Library\API\Provider\LastScoresProvider;
 use App\Library\API\Provider\ScorePutProvider;

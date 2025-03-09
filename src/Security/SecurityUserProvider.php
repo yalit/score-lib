@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Entity\Security\User;
-use App\Repository\Security\UserRepository;
+use App\Security\Entity\User;
+use App\Security\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;

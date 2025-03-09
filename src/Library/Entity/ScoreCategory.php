@@ -6,7 +6,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Repository\ScoreCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

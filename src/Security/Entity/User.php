@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity\Security;
+namespace App\Security\Entity;
 
-use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
-use App\Entity\Security\Enum\UserRole;
-use App\Repository\Security\UserRepository;
+use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Security\Entity\Enum\UserRole;
+use App\Security\Repository\UserRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;

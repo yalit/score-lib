@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Voter\Security;
+namespace App\Security\Voter;
 
-use App\Entity\Security\Enum\UserRole;
-use App\Entity\Security\User;
-use App\Voter\AbstractCrudVoter;
+use App\Infra\Voter\AbstractCrudVoter;
+use App\Security\Entity\Enum\UserRole;
+use App\Security\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**

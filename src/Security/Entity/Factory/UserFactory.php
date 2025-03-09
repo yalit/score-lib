@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity\Security\Factory;
+namespace App\Security\Entity\Factory;
 
-use App\Entity\Security\Enum\UserRole;
-use App\Entity\Security\User;
+use App\Security\Entity\Enum\UserRole;
+use App\Security\Entity\User;
 
 class UserFactory
 {

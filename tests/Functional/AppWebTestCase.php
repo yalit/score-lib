@@ -2,16 +2,9 @@
 
 namespace App\Tests\Functional;
 
-use App\Entity\Security\User;
-use App\Repository\Security\UserRepository;
-use DataFixtures\Security\SecurityUserFixtures;
+use App\Security\Fixtures\SecurityUserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class AppWebTestCase extends WebTestCase
 {

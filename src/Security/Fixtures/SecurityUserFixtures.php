@@ -1,8 +1,8 @@
 <?php
 
-namespace DataFixtures\Security;
+namespace SecurityFixtures;
 
-use App\Entity\Security\Factory\UserFactory;
+use App\Security\Entity\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

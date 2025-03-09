@@ -1,6 +1,6 @@
 <?php
 
-namespace DataFixtures\Library;
+namespace LibraryFixtures;
 
 use App\Library\Entity\Artist;
 use App\Library\Entity\Enum\ArtistType;

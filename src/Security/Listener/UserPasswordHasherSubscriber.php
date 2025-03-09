@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Doctrine\Subscriber;
+namespace App\Security\Listener;
 
-use App\Entity\Security\User;
+use App\Security\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;

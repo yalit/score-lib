@@ -2,11 +2,10 @@
 
 namespace App\Security\API\Provider;
 
-use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Entity\Security\API\CurrentUser;
-use App\Entity\Security\User;
+use App\Security\Entity\API\CurrentUser;
+use App\Security\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 

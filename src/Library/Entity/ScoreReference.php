@@ -2,7 +2,7 @@
 
 namespace App\Library\Entity;
 
-use App\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Repository\ScoreReferenceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;

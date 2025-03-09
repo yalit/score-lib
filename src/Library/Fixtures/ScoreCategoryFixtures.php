@@ -1,6 +1,6 @@
 <?php
 
-namespace DataFixtures\Library;
+namespace LibraryFixtures;
 
 use App\Library\Entity\ScoreCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;

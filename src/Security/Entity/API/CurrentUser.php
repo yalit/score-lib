@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entity\Security\API;
+namespace App\Security\Entity\API;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use App\Entity\Security\User;
 use App\Security\API\Provider\CurrentUserProvider;
+use App\Security\Entity\User;
 
 #[ApiResource(
     operations: [new Get(provider: CurrentUserProvider::class)]
