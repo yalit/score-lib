@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Entity\API;
+namespace App\Library\API\DTO;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;

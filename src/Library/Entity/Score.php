@@ -13,6 +13,7 @@ use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\API\Processor\ScorePutProcessor;
 use App\Library\API\Provider\LastScoresProvider;
 use App\Library\API\Provider\ScorePutProvider;
+use App\Library\API\Provider\SearchScoreProvider;
 use App\Library\Entity\Enum\ArtistType;
 use App\Library\Repository\ScoreRepository;
 use DateTimeImmutable;

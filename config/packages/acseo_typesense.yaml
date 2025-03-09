@@ -22,6 +22,9 @@ acseo_typesense:
                 title:
                     name: title
                     type: string
+                reference:
+                    name: reference
+                    type: string
                 createdAt:
                     name: createdAt
                     type: datetime
