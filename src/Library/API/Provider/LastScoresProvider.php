@@ -14,6 +14,9 @@ final readonly class LastScoresProvider implements ProviderInterface
 {
     public function __construct(private ScoreRepository $scoreRepository) {}
 
+    /**
+     * @return array<Score>
+     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         return $this->scoreRepository->getLatestScores(10);

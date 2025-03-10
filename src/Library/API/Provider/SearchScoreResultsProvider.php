@@ -8,6 +8,9 @@ use App\Library\API\DTO\SearchScoreResult;
 use App\Library\Search\DTO\TypesenseQueryParameters;
 use App\Library\Search\TypesenseScoreRepository;
 
+/**
+ * @implements ProviderInterface<SearchScoreResult>
+ */
 readonly class SearchScoreResultsProvider implements ProviderInterface
 {
     public function __construct(
@@ -15,9 +18,9 @@ readonly class SearchScoreResultsProvider implements ProviderInterface
     ) {}
 
     /**
-     * @return array<SearchScoreResult>
+     * @return array<SearchScoreResult>|null
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|null
     {
         $q = $context['filters']['q'] ?? null;
 

@@ -15,12 +15,18 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */   
 final readonly class ScoresProvider implements ProviderInterface
 {
+    /**
+     * @param ProviderInterface<Score> $collectionProvider
+     */
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.collection_provider')]
         private  ProviderInterface $collectionProvider,
         private TypesenseScoreRepository $tsScoreRepository,
     ) {}
 
+    /**
+     * @return array<Score>
+     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         $searchValue = $context['request']->query->get('search');
