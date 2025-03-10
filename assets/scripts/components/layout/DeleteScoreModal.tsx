@@ -8,7 +8,7 @@ import useDeleteScore from "../../hooks/library/useDeleteScore";
 interface DeleteScoreModalProps {
     score: Score;
     toggleDisplay: () => void;
-    queryToInvalidate?: string,
+    queryToInvalidate?: string|[string, any],
     onSuccess?: () => void;
 }
 
@@ -18,7 +18,7 @@ export function DeleteScoreModal({score, toggleDisplay, queryToInvalidate = "", 
 
     return (
         <Modal display={true}>
-            <Card className="min-w-[50%">
+            <Card>
                 <CardTitle>
                     <div className="title__title text-red-800 flex items-center gap-5 w-full leading-none">
                         <div><TriangleAlertIcon className="w-5 h-5"/></div>

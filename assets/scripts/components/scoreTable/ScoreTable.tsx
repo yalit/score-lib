@@ -9,7 +9,7 @@ import {AllowedScoreOrderBy, DEFAULT_NB_SCORES_PER_QUERY} from "../../repository
 
 interface ScoreTableProps {
     scores: Score[],
-    deleteScore: (score: Score) => void,
+    deleteQueryToInvalidate: string|[string, any],
     sortTable?: (field: AllowedScoreOrderBy, direction: Direction) => void,
     moveToPage?: (page: number) => void,
     changeNbPerPage?: (nbPerPage: number) => void,
@@ -20,7 +20,7 @@ interface ScoreTableProps {
 
 export default function ScoreTable({
                                        scores,
-                                       deleteScore,
+                                       deleteQueryToInvalidate,
                                        sortTable,
                                        moveToPage,
                                        page = 1,
@@ -32,13 +32,15 @@ export default function ScoreTable({
     return (
         <div className="data__table">
             <ScoreTableHeader sortColumn={sortTable}/>
-            {scores.map((score: Score, idx: number) => (
-                <ScoreTableRow key={score.id} score={score} index={idx}
-                               deleteScore={deleteScore}></ScoreTableRow>
-            ))}
+            {scores.map((score: Score, idx: number) => <ScoreTableRow key={score.id} score={score} index={idx}
+                                                                      deleteQueryInvalidate={deleteQueryToInvalidate}
+                />
+            )}
             {moveToPage && <ScoreTablePagination page={page || 1} totalItems={nbTotalItems}
                                                  itemsPerPage={itemsPerPage || DEFAULT_NB_SCORES_PER_QUERY}
-                                                 moveToPage={moveToPage} changeNbPerPage={changeNbPerPage}/>}
+                                                 moveToPage={moveToPage} changeNbPerPage={changeNbPerPage}
+            />
+            }
 
         </div>
     )

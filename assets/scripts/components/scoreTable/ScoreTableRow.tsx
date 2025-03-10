@@ -3,30 +3,18 @@ import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {classnames} from "../../libraries/general";
 import {ScoreReference} from "../../model/library/scoreReference.interface";
 import {useState} from "react";
-import Modal from "../modal/Modal";
-import Card from "../card/Card";
-import CardTitle from "../card/CardTitle";
-import CardContent from "../card/CardContent";
-import CardFooter from "../card/CardFooter";
 import {useTranslator} from "../../hooks/useTranslator";
 import useRouter from "../../hooks/useRouter";
-import {
-    DownloadIcon,
-    EllipsisIcon,
-    EllipsisVerticalIcon,
-    EyeIcon,
-    PencilIcon,
-    SquareXIcon,
-    TriangleAlertIcon
-} from "lucide-react";
+import {DownloadIcon, EllipsisIcon, EllipsisVerticalIcon, EyeIcon, PencilIcon, SquareXIcon,} from "lucide-react";
+import {DeleteScoreModal} from "../layout/DeleteScoreModal";
 
 interface ScoreTableRowProps {
     score: Score,
     index: number,
-    deleteScore: (score: Score) => void,
+    deleteQueryInvalidate: string|[string, any]
 }
 
-export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRowProps) {
+export default function ScoreTableRow({score, deleteQueryInvalidate, index}: ScoreTableRowProps) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const {trans} = useTranslator();
     const {generate} = useRouter()
@@ -101,10 +89,12 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
 
             <div className="data__table__line-actions">
                 <input type="checkbox" id={score.id + "-action-toggle"} className="peer hidden"/>
-                <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800 peer-checked:hidden">
+                <label htmlFor={score.id + "-action-toggle"}
+                       className="cursor-pointer text-slate-800 peer-checked:hidden">
                     <EllipsisIcon className="w-6 h-6"/>
                 </label>
-                <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer text-slate-800 hidden peer-checked:block">
+                <label htmlFor={score.id + "-action-toggle"}
+                       className="cursor-pointer text-slate-800 hidden peer-checked:block">
                     <EllipsisVerticalIcon className="w-6 h-6"/>
                 </label>
                 <div
@@ -124,29 +114,10 @@ export default function ScoreTableRow({score, deleteScore, index}: ScoreTableRow
                 </div>
             </div>
 
-            <Modal display={showDeleteModal}>
-                <Card className="min-w-[50%">
-                    <CardTitle>
-                        <div className="title__title text-red-800 flex items-end gap-5 w-full leading-none">
-                            <div><TriangleAlertIcon className="w-5 h-5"/></div>
-                            <div>{trans('library.index.deleteModal.title.label')}</div>
-                        </div>
-                    </CardTitle>
-                    <CardContent>
-                        <div className="w-full h-full flex justify-center items-center p-5">
-                            {trans('library.index.deleteModal.content.text', {'title': score.title})}
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <div className="flex justify-end items-center gap-4">
-                            <button className="button secondary"
-                                    onClick={toggleDeleteModal}>{trans('main.action.cancel.label')}</button>
-                            <button className="button danger"
-                                    onClick={() => deleteScore(score)}>{trans('main.action.delete.label')}</button>
-                        </div>
-                    </CardFooter>
-                </Card>
-            </Modal>
+            {showDeleteModal && <DeleteScoreModal score={score} toggleDisplay={() => setShowDeleteModal(false)}
+                                                  queryToInvalidate={deleteQueryInvalidate}
+                                                  onSuccess={() => setShowDeleteModal(false)}
+            />}
         </div>
     )
 
