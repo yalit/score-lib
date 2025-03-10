@@ -52,10 +52,10 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
                 </div>
             )}
 
-            {(changeNbPerPage && totalPages > 1) && (
+            {totalPages > 1 && (
                 <div className="w-max">
                     Nb. Per Page &nbsp;
-                    <select className="px-2 outline-none focus:outline-none bg-white focus:bg-white" value={itemsPerPage} readOnly>
+                    <select className="px-2 outline-none focus:outline-none bg-white focus:bg-white" value={itemsPerPage}>
                         {POSSIBLE_NB_PER_PAGE.map((nbPerPage: number, index: number) => (
                             <option key={index} value={nbPerPage} onClick={() => changeNbPerPage(nbPerPage)}>{nbPerPage}</option>
                         ))}
