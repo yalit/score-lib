@@ -1,12 +1,13 @@
 import {useTranslator} from "../../hooks/useTranslator";
 import {useSearchScoreResults} from "../../hooks/library/useSearchScoreResults";
 import {useQuery} from "react-query";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {SearchResult} from "../../model/library/searchResult.interface";
-import {ChevronRightIcon} from "lucide-react";
+import {ChevronRightIcon, CornerDownLeftIcon} from "lucide-react";
+import useRouter from "../../hooks/useRouter";
+import {useRedirect} from "../../hooks/useRedirect";
 
 import '../../../styles/search.css';
-import useRouter from "../../hooks/useRouter";
 
 export default function SearchBar() {
     const {generate} = useRouter()
@@ -14,7 +15,13 @@ export default function SearchBar() {
     const {search} = useSearchScoreResults()
     const [searchValue, setSearchValue] = useState<string>("");
     const [q, setQ] = useState<string>("")
+    const [focused, setFocused] = useState<boolean>(false);
+    const redirect = useRedirect()
 
+    const resultsTableUrl = useMemo<string>(() => {
+        if (q === "") return '#'
+        return generate('app_library_search', {q: q})
+    }, [q])
     const queryScores = useQuery({
         queryKey: ["searchScores", q],
         queryFn: () => {
@@ -28,6 +35,19 @@ export default function SearchBar() {
         return () => clearTimeout(timeout)
     }, [searchValue]);
 
+    useEffect(() => {
+        const handleKeyboard = (e: KeyboardEvent) => {
+            if (focused && q !== "" && e.key === "Enter") {
+                redirect(resultsTableUrl)
+            }
+        }
+        document.addEventListener("keydown", handleKeyboard)
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyboard)
+        }
+    }, [focused, resultsTableUrl, q]);
+
     return (
         <div id="search__bar" className="w-full content__header p-5 shadow bg-white relative">
             <div className="content__search w-full relative flex items-center gap-2">
@@ -40,13 +60,20 @@ export default function SearchBar() {
                 <label className="w-full">
                     <input type="text" placeholder={trans('main.searchbar.placeholder')}
                            className="p-3 leading-6 bg-inherit focus:outline-none w-full"
-                           value={searchValue} onChange={e => setSearchValue(e.currentTarget.value)} // Need to debounce
+                           value={searchValue} onChange={e => setSearchValue(e.currentTarget.value)}
+                           onFocus={() => setFocused(true)}
+                           onBlur={() => setFocused(false)}
                     />
                 </label>
             </div>
             {queryScores.data && (
                 <div className="absolute top-full px-5 pb-5 z-10 bg-white inset-x-0 shadow flex flex-col gap-2">
-                    <a href={generate('app_library_search', {q: q})} className="my-2 font-semibold">Voir les résultats en tableau</a>
+                    <a href={resultsTableUrl} className="my-2 font-semibold flex items-center gap-3">
+                        <div>Voir les résultats en tableau</div>
+                        <div className="font-normal text-gray-600 flex text-sm items-center gap-2 p-1 border rounded border-gray-300">
+                            <CornerDownLeftIcon className="h-2 w-2"/> Enter
+                        </div>
+                    </a>
                     {queryScores.data.map((item, i) => <SearchResultLine key={i} result={item}/>)}
                 </div>
             )}
