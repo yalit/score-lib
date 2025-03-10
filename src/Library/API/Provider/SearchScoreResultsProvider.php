@@ -5,6 +5,7 @@ namespace App\Library\API\Provider;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Library\API\DTO\SearchScoreResult;
+use App\Library\Search\DTO\TypesenseQueryParameters;
 use App\Library\Search\TypesenseScoreRepository;
 
 readonly class SearchScoreResultsProvider implements ProviderInterface
@@ -24,6 +25,6 @@ readonly class SearchScoreResultsProvider implements ProviderInterface
             return null;
         }
 
-        return $this->tsScoreRepository->findScoreSearchResultByAll($q);
+        return $this->tsScoreRepository->findScoreSearchResultByAll(new TypesenseQueryParameters($q));
     }
 }

@@ -1,16 +1,17 @@
 import {useTranslator} from "../../hooks/useTranslator";
-import {useSearchScores} from "../../hooks/library/useSearchScores";
+import {useSearchScoreResults} from "../../hooks/library/useSearchScoreResults";
 import {useQuery} from "react-query";
 import {useEffect, useState} from "react";
 import {SearchResult} from "../../model/library/searchResult.interface";
-import {ChevronRightIcon, EllipsisIcon} from "lucide-react";
+import {ChevronRightIcon} from "lucide-react";
 
 import '../../../styles/search.css';
 import useRouter from "../../hooks/useRouter";
 
 export default function SearchBar() {
+    const {generate} = useRouter()
     const {trans} = useTranslator();
-    const {search} = useSearchScores()
+    const {search} = useSearchScoreResults()
     const [searchValue, setSearchValue] = useState<string>("");
     const [q, setQ] = useState<string>("")
 
@@ -45,6 +46,7 @@ export default function SearchBar() {
             </div>
             {queryScores.data && (
                 <div className="absolute top-full px-5 pb-5 z-10 bg-white inset-x-0 shadow flex flex-col gap-2">
+                    <a href={generate('app_library_search', {q: q})} className="my-2 font-semibold">Voir les résultats en tableau</a>
                     {queryScores.data.map((item, i) => <SearchResultLine key={i} result={item}/>)}
                 </div>
             )}

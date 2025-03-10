@@ -13,6 +13,7 @@ use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\API\Processor\ScorePutProcessor;
 use App\Library\API\Provider\LastScoresProvider;
 use App\Library\API\Provider\ScorePutProvider;
+use App\Library\API\Provider\ScoresProvider;
 use App\Library\API\Provider\SearchScoreResultsProvider;
 use App\Library\Entity\Enum\ArtistType;
 use App\Library\Repository\ScoreRepository;
@@ -35,7 +36,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
             normalizationContext: ["groups" => [Score::SCORE_READ]],
             parameters: [
                 'order[:property]' => new QueryParameter(filter: 'score.order_filter')
-            ]
+            ],
+            provider: ScoresProvider::class
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Post(
