@@ -10,7 +10,7 @@ import {
 const initialScoreFetchData: FetchScoresParameters = {
     page: 1,
     nbPerPage: DEFAULT_NB_SCORES_PER_QUERY,
-    order: {direction: "", by: ""}
+    order: {direction: "", by: ""},
 }
 
 interface AllScoresOutput {

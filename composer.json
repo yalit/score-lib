@@ -7,6 +7,8 @@
     "php": ">=8.2",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "ext-zip": "*",
+    "acseo/typesense-bundle": "*",
     "api-platform/doctrine-orm": "^4.0",
     "api-platform/symfony": "^4.0",
     "doctrine/dbal": "^3",
@@ -56,8 +58,7 @@
     "twig/twig": "^2.12|^3.0",
     "vich/uploader-bundle": "^2.5",
     "willdurand/js-translation-bundle": "^7.0",
-    "yalit/twig-heroicon-bundle": "@dev",
-    "ext-zip": "*"
+    "yalit/twig-heroicon-bundle": "@dev"
   },
   "config": {
     "allow-plugins": {

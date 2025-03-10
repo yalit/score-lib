@@ -8,7 +8,6 @@ import {z} from "zod";
 import { ScoreCategory, scoreCategorySchema } from "../../model/library/scoreCategory.interface";
 import { Artist, artistSchema, scoreArtistSchema } from "../../model/library/scoreArtist.interface";
 import {FormScore} from "../../pages/library/score/ScoreForm";
-import {objectToFormData} from "../../libraries/form";
 import {ScoreFile, scoreFileSchema} from "../../model/library/scoreFile";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
@@ -19,9 +18,10 @@ export interface FetchScoresParameters {
     page: number;
     order: OrderBy<AllowedScoreOrderBy>;
     nbPerPage?: number;
+    search?: string;
 }
 
-const scoreCollectionOutputSchema = createCollectionOutputSchema(scoreSchema)
+export const scoreCollectionOutputSchema = createCollectionOutputSchema(scoreSchema)
 export type ScoreCollectionOutput = z.infer<typeof scoreCollectionOutputSchema>
 
 export async function fetchLastScores(): Promise<ScoreCollectionOutput> {
@@ -51,6 +51,10 @@ export async function fetchScores(
 
     if (parameters.nbPerPage) {
         fetchParams = {...fetchParams, nb: String(parameters.nbPerPage)};
+    }
+
+    if (parameters.search) {
+        fetchParams = {...fetchParams, search: parameters.search};
     }
 
     let response = await fetch(buildUrl("/api/scores", fetchParams));

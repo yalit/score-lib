@@ -6,6 +6,7 @@ import {cn} from "../../shadcdn/lib/utils";
 import {useSecurity} from "../../context/security/security.hooks";
 
 import '../../../styles/sidebar.css';
+import {SearchResult} from "../../model/library/searchResult.interface";
 
 export type MenuItemProps = {
     title: string;
@@ -75,15 +76,16 @@ export default function Sidebar() {
                 {menuItems.map(({path, icon, title, visible}: MenuItemProps) => {
                     const isDisplayed = !visible || visible();
                     return (
-                        <>{isDisplayed && (
-                            <a href={path} className="nav__menu__item" key={title}>
+                        <div key={path+title}>{isDisplayed && (
+                            <a href={path} className="nav__menu__item" key={String(Math.random())+title}>
                                 {icon && icon}
                                 <span className={cn(titleSpanClassname)}>{title}</span>
                             </a>
-                        )}</>
+                        )}</div>
                     )
                 })}
             </nav>
         </div>
     )
 }
+

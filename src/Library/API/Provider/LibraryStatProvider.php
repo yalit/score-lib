@@ -4,7 +4,7 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Library\Entity\API\LibraryStat;
+use App\Library\API\DTO\LibraryStat;
 use App\Library\Repository\ScoreRepository;
 
 final readonly class LibraryStatProvider implements ProviderInterface

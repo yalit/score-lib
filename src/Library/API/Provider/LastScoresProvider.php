@@ -6,6 +6,9 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Library\Repository\ScoreRepository;
 
+/**
+ * @implements ProviderInterface<Score>
+ */   
 final readonly class LastScoresProvider implements ProviderInterface
 {
     public function __construct(private ScoreRepository $scoreRepository) {}

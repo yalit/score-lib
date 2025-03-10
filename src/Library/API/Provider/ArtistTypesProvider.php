@@ -4,7 +4,7 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Library\Entity\API\APIArtistType;
+use App\Library\API\DTO\APIArtistType;
 use App\Library\Entity\Enum\ArtistType;
 
 final readonly class ArtistTypesProvider implements ProviderInterface

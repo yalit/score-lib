@@ -2,7 +2,6 @@
 
 namespace App\Library\Controller;
 
-use App\Form\Library\ScoreFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

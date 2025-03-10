@@ -5,10 +5,15 @@ import Card from "../../components/card/Card";
 import CardContent from "../../components/card/CardContent";
 import {Direction} from "../../model/generics.interface";
 import useDeleteScore from "../../hooks/library/useDeleteScore";
-import { AllowedScoreOrderBy } from "assets/scripts/repository/library/score.repository";
+import { AllowedScoreOrderBy } from "../../repository/library/score.repository";
+import useLibraryPathInformation from "../../hooks/library/useLibraryPathInformation";
+import {useEffect} from "react";
 
 export default function Library() {
     const {nbAllItems, scores, fetchData} = useAllScores()
+    const path = useLibraryPathInformation()
+
+    console.log("Path", path)
     const deleteScore = useDeleteScore(["allScores", fetchData])
 
     const sortTable = (field: AllowedScoreOrderBy, direction: Direction) => {
@@ -23,6 +28,12 @@ export default function Library() {
         fetchData.set({page: 1, nbPerPage})
     }
 
+    useEffect(() => {
+        if (path.action === 'search' && path.data !== undefined) {
+            fetchData.set({search: path.data})
+        }
+
+    }, [path]);
     return (
         <Layout>
             <Card>
