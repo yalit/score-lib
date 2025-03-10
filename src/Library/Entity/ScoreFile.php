@@ -23,6 +23,7 @@ class ScoreFile
     #[CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
     #[Groups([Score::SCORE_READ])]
+    /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[File(extensions: ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg'])]

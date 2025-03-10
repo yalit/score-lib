@@ -14,6 +14,7 @@ class ScoreArtist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @phpstan-ignore-next-line  */
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'artists')]

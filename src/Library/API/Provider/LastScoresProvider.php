@@ -4,6 +4,7 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Library\Entity\Score;
 use App\Library\Repository\ScoreRepository;
 
 /**
@@ -13,7 +14,7 @@ final readonly class LastScoresProvider implements ProviderInterface
 {
     public function __construct(private ScoreRepository $scoreRepository) {}
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         return $this->scoreRepository->getLatestScores(10);
     }

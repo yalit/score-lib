@@ -57,7 +57,7 @@ readonly class ScoreFileUploadSubscriber
         if (!$scoreFile->getFile()) {
             return;
         }
-        $scoreFile = $this->scoreFileFactory->createFromUploadedFile($scoreFile->getFile(), $scoreFile);
+        $this->scoreFileFactory->createFromUploadedFile($scoreFile->getFile(), $scoreFile);
         $scoreFile->setFile(null);
     }
 

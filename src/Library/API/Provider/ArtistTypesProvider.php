@@ -9,7 +9,7 @@ use App\Library\Entity\Enum\ArtistType;
 
 final readonly class ArtistTypesProvider implements ProviderInterface
 {
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         return array_map(fn(ArtistType $artistType) => new APIArtistType($artistType->value), ArtistType::cases());
     }

@@ -4,6 +4,7 @@ namespace App\Library\API\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Library\Entity\Score;
 use App\Library\Search\DTO\TypesenseQueryParameters;
 use App\Library\Search\TypesenseScoreRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -20,7 +21,7 @@ final readonly class ScoresProvider implements ProviderInterface
         private TypesenseScoreRepository $tsScoreRepository,
     ) {}
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         $searchValue = $context['request']->query->get('search');
 
