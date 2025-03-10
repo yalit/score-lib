@@ -11,7 +11,7 @@ interface ScoreTablePaginationProps {
 
 const POSSIBLE_NB_PER_PAGE = [10,20, 30, 50, 100]
 
-export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage, changeNbPerPage}: ScoreTablePaginationProps) {
+export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage, changeNbPerPage = console.log}: ScoreTablePaginationProps) {
     const totalPages = Math.ceil(totalItems / itemsPerPage)
     let pageNumbers = [...Array(Math.min(page + 4, totalPages+1)).keys()].filter(n => n >= page-3)
 
@@ -31,13 +31,13 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
 
                     <span className="flex gap-1">
                         { pageNumbers.map((pageNumber) => (
-                            <>
+                            <div key={pageNumber}>
                                 {pageNumber === page ?
                                     <span key={pageNumber}>( <span className="font-semibold underline">{page}</span>/{totalPages} )</span>
                                     : (
                                         <span key={pageNumber} className={classnames("cursor-pointer", pageNumber == page && "font-bold underline")} onClick={() => moveToPage(pageNumber)}>{pageNumber}</span>
                                     )}
-                            </>
+                            </div>
                         ))}
                     </span>
 
@@ -55,7 +55,7 @@ export function ScoreTablePagination({page, itemsPerPage, totalItems, moveToPage
             {(changeNbPerPage && totalPages > 1) && (
                 <div className="w-max">
                     Nb. Per Page &nbsp;
-                    <select className="px-2 outline-none focus:outline-none bg-white focus:bg-white" value={itemsPerPage}>
+                    <select className="px-2 outline-none focus:outline-none bg-white focus:bg-white" value={itemsPerPage} readOnly>
                         {POSSIBLE_NB_PER_PAGE.map((nbPerPage: number, index: number) => (
                             <option key={index} value={nbPerPage} onClick={() => changeNbPerPage(nbPerPage)}>{nbPerPage}</option>
                         ))}
