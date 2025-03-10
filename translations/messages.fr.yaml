@@ -116,7 +116,7 @@ library:
       title:
         label: "Suppression de la partition"
       content:
-        text: 'Voulez-vous vraiment supprimer la partition "{{title}}" ?'
+        text: 'Voulez-vous vraiment supprimer la partition "%title%" ?'
   new:
     title: "Nouvelle partition"
   edit:

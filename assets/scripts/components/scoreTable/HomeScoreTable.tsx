@@ -10,7 +10,7 @@ export function HomeScoreTable() {
 
     return (
         <Card className="mt-5">
-            <CardContent><ScoreTable scores={scores}  deleteScore={deleteScore} nbTotalItems={scores.length} /></CardContent>
+            <CardContent><ScoreTable scores={scores} deleteQueryToInvalidate={lastScoresQueryKey} nbTotalItems={scores.length} /></CardContent>
         </Card>
     )
 }

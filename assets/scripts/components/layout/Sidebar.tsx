@@ -47,8 +47,8 @@ export default function Sidebar() {
 
     const menuListClassname: string = useMemo<string>(() => {
         return cn(
-            "navigation items-center flex-col md:items-start font-bold gap-2 p-5 bg-inherit absolute top-full z-50 inset-x-0 md:relative md:top-0",
-            mobileLinksShown ? "flex" : "hidden md:flex",
+            "navigation items-center flex-col md:items-start font-bold gap-2 p-5 bg-inherit absolute top-full inset-x-0 md:relative md:top-0",
+            mobileLinksShown ? "flex z-50" : "hidden md:flex",
         )
 
     }, [mobileLinksShown])
