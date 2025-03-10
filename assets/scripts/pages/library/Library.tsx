@@ -13,7 +13,6 @@ export default function Library() {
     const {nbAllItems, scores, fetchData} = useAllScores()
     const path = useLibraryPathInformation()
 
-    console.log("Path", path)
     const deleteScore = useDeleteScore(["allScores", fetchData])
 
     const sortTable = (field: AllowedScoreOrderBy, direction: Direction) => {
