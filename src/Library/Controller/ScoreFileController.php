@@ -25,10 +25,21 @@ class ScoreFileController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function downloadFile(Score $score, ScoreFile $scoreFile): Response
     {
-        if ($scoreFile->getScore()->getId() !== $score->getId()) {
+        $scoreScoreFile = $scoreFile->getScore();
+
+        if (!$scoreScoreFile) {
+            throw new NotFoundHttpException();
+        }
+        if ($scoreScoreFile->getId() !== $score->getId()) {
             throw new NotFoundHttpException();
         }
 
-        return $this->file($scoreFile->getPath());
+        $filePath = $scoreFile->getPath();
+
+        if (!$filePath) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->file($filePath);
     }
 }
