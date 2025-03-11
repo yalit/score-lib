@@ -25,7 +25,7 @@ class AppWebTestCase extends WebTestCase
     protected function logIn(string $username): void
     {
         $this->client->request('GET', '/login');
-        $this->client->submitForm('Login', [
+        $this->client->submitForm('login', [
             '_username' => $username.'@email.com',
             '_password' => SecurityUserFixtures::PASSWORD
         ]);
