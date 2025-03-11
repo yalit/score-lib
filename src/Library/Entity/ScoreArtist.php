@@ -14,6 +14,7 @@ class ScoreArtist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @phpstan-ignore-next-line  */
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'artists')]
@@ -31,7 +32,7 @@ class ScoreArtist
 
     public function __toString(): string
     {
-        return sprintf('%s (%s)', $this->artist->getName(), $this->type->value);
+        return sprintf('%s (%s)', $this->artist?->getName() ?? "NA", $this->type->value);
     }
 
     public function getId(): ?int

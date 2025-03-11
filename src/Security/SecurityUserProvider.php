@@ -49,7 +49,11 @@ class SecurityUserProvider implements UserProviderInterface, PasswordUpgraderInt
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        $user = $this->userRepository->find($user->getId());
+        $user = $this->userRepository->find($user->getId() ?? "");
+
+        if ($user === null) {
+            throw new UserNotFoundException();
+        }
         $user->setPassword($newHashedPassword);
         $this->userRepository->save($user);
     }

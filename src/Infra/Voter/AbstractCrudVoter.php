@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * Abstract CRUD voter.
  * @template T
+ * @extends Voter<string, T>
  */
 abstract class AbstractCrudVoter extends Voter
 {

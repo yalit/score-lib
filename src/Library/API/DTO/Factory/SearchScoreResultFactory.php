@@ -7,6 +7,9 @@ use App\Library\Entity\Search\SearchMatching;
 
 class SearchScoreResultFactory
 {
+    /**
+     * @param array<string, array<string, mixed>> $result
+     */
     public static function createFromRawTypesenseResult(array $result): SearchScoreResult
     {
         $id = $result['document']['id'];

@@ -16,35 +16,14 @@ class ScoreRepository extends ServiceEntityRepository
         parent::__construct($registry, Score::class);
     }
 
+    /**
+     * @return array<Score>
+     */
     public function getLatestScores(int $nb, string $orderBy = 'createdAt', bool $ascending = false): array
     {
         return $this->createQueryBuilder('s')
             ->orderBy(sprintf('s.%s', $orderBy), $ascending ? 'ASC' : 'DESC')
             ->setMaxResults($nb)
-            ->getQuery()
-            ->getResult();
-    }
-
-
-    public function findFilteredAndOrderedScores(array $filters = [], string $orderBy = 'createdAt', bool $ascending = false, int $page = 1, int $scorePerPage = 10): array
-    {
-        $qb = $this->createQueryBuilder('s');
-
-        if (str_contains($orderBy, '.')) {
-            $parts = explode('.', $orderBy);
-            $joinTable = $parts[0];
-            $joinColumn = $parts[1];
-
-            $qb->join(sprintf('s.%s', $joinTable), $joinTable)
-                ->orderBy(sprintf('%s.%s', $joinTable, $joinColumn), $ascending ? 'ASC' : 'DESC');
-            ;
-        } else {
-            $qb->orderBy(sprintf('s.%s', $orderBy), $ascending ? 'ASC' : 'DESC');
-        }
-
-        return $qb
-            ->setFirstResult(($page - 1) * $scorePerPage)
-            ->setMaxResults($scorePerPage)
             ->getQuery()
             ->getResult();
     }

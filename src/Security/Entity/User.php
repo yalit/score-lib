@@ -22,6 +22,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[Column(type: 'string', length: 128)]
     #[GeneratedValue('CUSTOM')]
     #[CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
+    /** @phpstan-ignore-next-line */
     private ?string $id = null;
 
     #[Column(type: 'string', length: 128)]

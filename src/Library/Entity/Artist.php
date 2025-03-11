@@ -30,6 +30,7 @@ class Artist
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
@@ -49,7 +50,7 @@ class Artist
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name ?? "";
     }
 
     public function getId(): ?string
