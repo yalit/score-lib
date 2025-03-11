@@ -50,7 +50,7 @@ jobs:
 
       # —— CI ✅ ———————————————————————————————————————————————————————————
       - name: Run phpstan
-        run: ./vendor/bin/phpstan analyse -c phpstan.neon
+        run: ./vendor/bin/phpstan analyse src tests config --level 8
 
       # —— Tests ✅ ———————————————————————————————————————————————————————————
       - name: Run functional and unit tests
