@@ -20,7 +20,6 @@ class AppWebTestCase extends WebTestCase
     {
         parent::tearDown();
         self::ensureKernelShutdown();
-        unset($this->client);
     }
 
     protected function logIn(string $username): void
