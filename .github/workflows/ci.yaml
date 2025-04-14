@@ -67,6 +67,9 @@ jobs:
       - name: push assets
         run: bin/console assets:install
 
+      - name: Build assets
+        run: npm run build
+
       # —— CI ✅ ———————————————————————————————————————————————————————————
       - name: Run phpstan
         run: ./vendor/bin/phpstan analyse src tests config --level 8
