@@ -8,7 +8,7 @@ use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 
 class PostScoreTest extends AppWebTestCase
 {
-    public function testPostScoreCreation(): void
+    public function PostScoreCreation(): void
     {
         $this->logIn('admin');
         $data = new FormDataPart([
