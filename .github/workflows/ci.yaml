@@ -79,6 +79,22 @@ jobs:
       - name: Build assets
         run: npm run build
 
+      # —— Typesense ✅ ———————————————————————————————————————————————————————————
+      - name : Start Typesense
+        run: |
+          docker run -d \
+          -p 8108:8108 \
+          --name typesense \
+          -v /tmp/typesense:/data \
+          typesense/typesense:28.0 \
+          --api-key=xyz \
+          --data-dir /data \
+          --enable-cors
+
+
+      - name: Update .env.test
+        run: echo "TYPESENSE_URL=http://localhost:8108" >> .env.test & echo "TYPESENSE_KEY=xyz" >> .env.test & echo "TYPESENSE_SCORE_SEARCH_KEY=" >> .env.test
+
       # —— CI ✅ ———————————————————————————————————————————————————————————
       - name: Run phpstan
         run: ./vendor/bin/phpstan analyse src tests config --level 8
