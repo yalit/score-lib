@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 class DoctrineStringUUIDGenerator extends AbstractIdGenerator
 {
-
     public function generateId(EntityManagerInterface $em, ?object $entity): string
     {
         return (UUID::v4())->toString();

@@ -26,7 +26,7 @@ class AppWebTestCase extends WebTestCase
     {
         $this->client->request('GET', '/login');
         $this->client->submitForm('login', [
-            '_username' => $username.'@email.com',
+            '_username' => $username . '@email.com',
             '_password' => SecurityUserFixtures::PASSWORD
         ]);
         self::assertResponseRedirects();

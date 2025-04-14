@@ -23,7 +23,7 @@ readonly class ScoreFileUploadSubscriber
     {
         $entity = $args->getObject();
 
-        if(!($entity instanceof ScoreFile)) {
+        if (!($entity instanceof ScoreFile)) {
             return;
         }
 
@@ -34,7 +34,7 @@ readonly class ScoreFileUploadSubscriber
     {
         $entity = $args->getObject();
 
-        if(!($entity instanceof ScoreFile)) {
+        if (!($entity instanceof ScoreFile)) {
             return;
         }
 
@@ -45,7 +45,7 @@ readonly class ScoreFileUploadSubscriber
     {
         $entity = $args->getObject();
 
-        if(!($entity instanceof ScoreFile)) {
+        if (!($entity instanceof ScoreFile)) {
             return;
         }
 

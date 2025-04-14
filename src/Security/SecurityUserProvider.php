@@ -17,7 +17,8 @@ class SecurityUserProvider implements UserProviderInterface, PasswordUpgraderInt
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-    ) {}
+    ) {
+    }
 
     public function refreshUser(UserInterface $user): UserInterface
     {

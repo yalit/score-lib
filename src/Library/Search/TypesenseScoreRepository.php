@@ -15,7 +15,8 @@ class TypesenseScoreRepository
 
     public function __construct(
         private readonly CollectionFinder $scoreFinder,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<SearchScoreResult>

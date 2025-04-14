@@ -9,5 +9,6 @@ class TypesenseQueryParameters
         public int|null $pageNumber = null,
         public int|null $pageSize = null,
         public string|null $sortBy = null,
-    ) {}
+    ) {
+    }
 }

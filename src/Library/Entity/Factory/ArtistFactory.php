@@ -6,12 +6,12 @@ use App\Library\Entity\Artist;
 
 class ArtistFactory
 {
-  public static function create(string $name): Artist 
-  {
-    $artist = new Artist();
+    public static function create(string $name): Artist
+    {
+        $artist = new Artist();
 
-    $artist->setName($name);
+        $artist->setName($name);
 
-    return $artist;
-  }
+        return $artist;
+    }
 }

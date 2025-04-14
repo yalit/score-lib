@@ -24,5 +24,6 @@ class SearchScoreResult
         public string $id,
         public string $title,
         public array $matchings,
-    ) {}
+    ) {
+    }
 }

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * @implements ProviderInterface<Score>
- */   
+ */
 final readonly class ScoresProvider implements ProviderInterface
 {
     /**
@@ -22,7 +22,8 @@ final readonly class ScoresProvider implements ProviderInterface
         #[Autowire(service: 'api_platform.doctrine.orm.state.collection_provider')]
         private ProviderInterface $collectionProvider,
         private TypesenseScoreRepository $tsScoreRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<Score>

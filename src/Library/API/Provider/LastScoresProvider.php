@@ -9,10 +9,12 @@ use App\Library\Repository\ScoreRepository;
 
 /**
  * @implements ProviderInterface<Score>
- */   
+ */
 final readonly class LastScoresProvider implements ProviderInterface
 {
-    public function __construct(private ScoreRepository $scoreRepository) {}
+    public function __construct(private ScoreRepository $scoreRepository)
+    {
+    }
 
     /**
      * @return array<Score>

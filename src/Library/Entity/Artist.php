@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             paginationEnabled: false,
-            normalizationContext: ['groups'=> Score::SCORE_READ]
+            normalizationContext: ['groups' => Score::SCORE_READ]
         )
     ]
 )]

@@ -15,7 +15,8 @@ readonly class SearchScoreResultsProvider implements ProviderInterface
 {
     public function __construct(
         private TypesenseScoreRepository $tsScoreRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<SearchScoreResult>|null

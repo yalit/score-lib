@@ -126,7 +126,7 @@ tests-application: ## Launch the application tests
 ## —— Static analysis ————————————————————————————————————————————————————————————
 analyze: phpstan php-cs-fixer ## Launch PHPStan and PHP-CS-Fixer
 	${CONSOLE} lint:yaml config --parse-tags
-	${CONSOLE} lint:twig src/Application/templates
+	${CONSOLE} lint:twig templates
 	${CONSOLE} lint:container
 	${COMPOSER} validate
 
@@ -134,7 +134,7 @@ phpstan: ## Launch PHPStan
 	${DOCKER_EXEC} vendor/bin/phpstan analyse -c phpstan.neon
 
 php-cs-fixer: ## Launch PHP-CS-Fixer
-	${DOCKER_EXEC} ./vendor/bin/php-cs-fixer fix --verbose --config=.php-cs-fixer.config.php
+	${DOCKER_EXEC} ./vendor/bin/phpcbf
 
 ## —— Symfony ————————————————————————————————————————————————————————————
 serve: ## Start the Symfony server

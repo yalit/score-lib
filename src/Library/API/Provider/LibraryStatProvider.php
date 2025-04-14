@@ -12,7 +12,9 @@ use App\Library\Repository\ScoreRepository;
  */
 final readonly class LibraryStatProvider implements ProviderInterface
 {
-    public function __construct(private ScoreRepository $scoreRepository) {}
+    public function __construct(private ScoreRepository $scoreRepository)
+    {
+    }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object
     {

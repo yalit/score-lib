@@ -12,7 +12,8 @@ readonly class ScoreFileFactory
     public function __construct(
         private string $scoreFileUploadDir,
         private SluggerInterface $slugger,
-    ) {}
+    ) {
+    }
 
     public function createFromUploadedFile(UploadedFile $uploadedFile, ScoreFile &$scoreFile): void
     {

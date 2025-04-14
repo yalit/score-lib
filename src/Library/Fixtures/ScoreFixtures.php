@@ -96,4 +96,3 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 }
-

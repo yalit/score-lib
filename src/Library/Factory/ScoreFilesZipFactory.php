@@ -12,7 +12,7 @@ use ZipArchive;
 readonly class ScoreFilesZipFactory
 {
     public function __construct(
-        private Filesystem       $filesystem,
+        private Filesystem $filesystem,
         private SluggerInterface $slugger,
         private TranslatorInterface $translator
     ) {
@@ -31,7 +31,7 @@ readonly class ScoreFilesZipFactory
             $this->filesystem->remove($zipName);
         }
 
-        if ($zip->open($zipName, ZipArchive::CREATE) !== TRUE) {
+        if ($zip->open($zipName, ZipArchive::CREATE) !== true) {
             throw new RuntimeException('Failed to create zip archive');
         }
 
