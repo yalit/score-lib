@@ -48,6 +48,15 @@ jobs:
       - name: Install Composer dependencies
         run: composer install
 
+      - name: Setup the DB
+        run: bin/console database:create --env=test --no-interaction
+
+      - name: Migrate the DB
+        run: bin/console database:migrations:migration --env=test --no-interaction
+
+      - name: Seed DB
+        run: bin/console doctrine:fixtures:load --env=test --no-interaction
+
       # —— Node 🧙‍️ —————————————————————————————————————————————————————————
       - name: Setup node
         uses: actions/setup-node@v4
