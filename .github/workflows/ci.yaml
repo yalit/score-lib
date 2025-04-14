@@ -52,7 +52,7 @@ jobs:
         run: bin/console doctrine:database:create --env=test --no-interaction
 
       - name: Migrate the DB
-        run: bin/console database:migrations:migration --env=test --no-interaction
+        run: bin/console doctrine:migrations:migration --env=test --no-interaction
 
       - name: Seed DB
         run: bin/console doctrine:fixtures:load --env=test --no-interaction
