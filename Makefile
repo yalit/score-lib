@@ -134,7 +134,7 @@ phpstan: ## Launch PHPStan
 	${DOCKER_EXEC} vendor/bin/phpstan analyse -c phpstan.neon
 
 php-cs-fixer: ## Launch PHP-CS-Fixer
-	${DOCKER_EXEC} ci/php-cs-fixer/vendor/bin/php-cs-fixer fix --verbose --config=.php-cs-fixer.config.php
+	${DOCKER_EXEC} ./vendor/bin/php-cs-fixer fix --verbose --config=.php-cs-fixer.config.php
 
 ## —— Symfony ————————————————————————————————————————————————————————————
 serve: ## Start the Symfony server
