@@ -5,8 +5,8 @@ import {HomeScoreTable} from "../../components/scoreTable/HomeScoreTable";
 export default function Home() {
     return (
         <Layout>
-            <DashboardHeader />
-            <HomeScoreTable />
+            <DashboardHeader/>
+                <HomeScoreTable />
         </Layout>
     )
 }

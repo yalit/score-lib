@@ -10,6 +10,7 @@ import {ScoreFile} from "../../../model/library/scoreFile";
 import {useDocumentIconLoader} from "../../../hooks/useDocumentIconLoader";
 import {DeleteScoreModal} from "../../../components/layout/DeleteScoreModal";
 import {useRedirect} from "../../../hooks/useRedirect";
+import useDeleteScore from "../../../hooks/library/useDeleteScore";
 
 interface ScoreDisplayProps {
     score: Score
@@ -22,6 +23,7 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
     const {getDocumentIcon} = useDocumentIconLoader()
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const redirect = useRedirect()
+    const deleteScore = useDeleteScore('')
 
     useEffect(() => {
         setTitle(score.title)
@@ -73,7 +75,7 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                     </ScoreDisplayRow>
                 </CardContent>
             </Card>
-            {showDeleteModal && <DeleteScoreModal score={score} toggleDisplay={() => setShowDeleteModal(false)}
+            {showDeleteModal && <DeleteScoreModal score={score} toggleDisplay={() => setShowDeleteModal(false)} deleteScore={deleteScore}
                                                   onSuccess={() => redirect(generate('app_library_index'))}
             />}
         </>

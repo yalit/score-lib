@@ -1,4 +1,4 @@
-import {OrderBy} from "../../model/generics.interface";
+import {FilterBy, SortBy} from "../../model/generics.interface";
 import {
     createCollectionOutputSchema,
 } from "../collectionOutput.interface";
@@ -12,13 +12,22 @@ import {ScoreFile, scoreFileSchema} from "../../model/library/scoreFile";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
 
-export type AllowedScoreOrderBy = "title" | "reference" | "";
+export type AllowedSortBy = "title" | "reference";
+export const isAllowedToSort = (key: string): key is AllowedSortBy => {
+    return ["title", "reference"].includes(key);
+}
+
+export type AllowedFilterBy = "categories"
+export const isAllowedToFilter = (key: string): key is AllowedFilterBy => {
+    return ["categories"].includes(key);
+}
 
 export interface FetchScoresParameters {
     page: number;
-    order: OrderBy<AllowedScoreOrderBy>;
     nbPerPage?: number;
     search?: string;
+    order?: SortBy<AllowedSortBy> | null,
+    filter?: FilterBy<AllowedFilterBy> | null,
 }
 
 export const scoreCollectionOutputSchema = createCollectionOutputSchema(scoreSchema)
@@ -35,13 +44,12 @@ export async function fetchScores(
 ): Promise<ScoreCollectionOutput> {
     let fetchParams: { [k: string]: string } = {page: String(parameters.page)};
 
-    const mappedScoreOrderByParameters: { [k in AllowedScoreOrderBy]: string } = {
+    const mappedScoreOrderByParameters: { [k in AllowedSortBy]: string } = {
         title: "title",
         reference: "reference.value",
-        "": "",
     };
 
-    if (parameters.order.direction !== "" && parameters.order.by !== "") {
+    if (parameters.order) {
         const orderParamName = `order[${mappedScoreOrderByParameters[parameters.order.by]}]`;
         fetchParams = {
             ...fetchParams,

@@ -4,17 +4,18 @@ import {Card, CardContent, CardFooter, CardTitle} from "../../shadcdn/components
 import {TriangleAlertIcon} from "lucide-react";
 import {useTranslator} from "../../hooks/useTranslator";
 import useDeleteScore from "../../hooks/library/useDeleteScore";
+import {useContext} from "react";
+import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 
 interface DeleteScoreModalProps {
     score: Score;
     toggleDisplay: () => void;
-    queryToInvalidate?: string|[string, any],
+    deleteScore: (score: Score) => void;
     onSuccess?: () => void;
 }
 
-export function DeleteScoreModal({score, toggleDisplay, queryToInvalidate = "", onSuccess}: DeleteScoreModalProps) {
+export function DeleteScoreModal({score, toggleDisplay, deleteScore}: DeleteScoreModalProps) {
     const {trans} = useTranslator()
-    const deleteScore = useDeleteScore(queryToInvalidate ?? "", onSuccess)
 
     return (
         <Modal display={true}>
