@@ -6,13 +6,15 @@ use App\Library\Entity\Score;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ZipArchive;
 
 readonly class ScoreFilesZipFactory
 {
     public function __construct(
-        private Filesystem       $filesystem,
-        private SluggerInterface $slugger
+        private Filesystem $filesystem,
+        private SluggerInterface $slugger,
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -22,18 +24,23 @@ readonly class ScoreFilesZipFactory
     public function createZip(Score $score): string
     {
         $zip = new ZipArchive();
-        $zipName = sprintf('/tmp/%s.zip', $this->slugger->slug($score->getTitle())->lower());
+        $zipName = sprintf('/tmp/%s.zip', $this->slugger->slug($score->getTitle() ?? $this->translator->trans("library.score.default_title.label"))->lower());
+
 
         if ($this->filesystem->exists($zipName)) {
             $this->filesystem->remove($zipName);
         }
 
-        if ($zip->open($zipName, ZipArchive::CREATE) !== TRUE) {
+        if ($zip->open($zipName, ZipArchive::CREATE) !== true) {
             throw new RuntimeException('Failed to create zip archive');
         }
 
         foreach ($score->getFiles() as $file) {
-            $zip->addFile($file->getPath(), $file->getName() . '.' . $file->getExtension());
+            $filePath = $file->getPath();
+            if (!$filePath) {
+                continue;
+            }
+            $zip->addFile($filePath, $file->getName() . '.' . $file->getExtension());
         }
 
         $zip->close();

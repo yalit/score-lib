@@ -18,7 +18,7 @@ class PostScoreTest extends AppWebTestCase
         $this->client->request('POST', '/api/scores', [
             'headers' => $data->getPreparedHeaders()->toArray(),
             'data' => $data->bodyToString(),
-            'file' => DataPart::fromPath(__DIR__.'/Files/test_score.pdf', 'test_score.pdf')->bodyToString()
+            'file' => DataPart::fromPath(__DIR__ . '/Files/test_score.pdf', 'test_score.pdf')->bodyToString()
         ]);
     }
 }

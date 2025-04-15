@@ -32,6 +32,7 @@ class ScoreCategory
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
@@ -51,7 +52,7 @@ class ScoreCategory
 
     public function __toString(): string
     {
-        return $this->value;
+        return $this->value ?? "";
     }
 
     public function getId(): ?string

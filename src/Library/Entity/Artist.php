@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             paginationEnabled: false,
-            normalizationContext: ['groups'=> Score::SCORE_READ]
+            normalizationContext: ['groups' => Score::SCORE_READ]
         )
     ]
 )]
@@ -30,6 +30,7 @@ class Artist
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+    /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
@@ -49,7 +50,7 @@ class Artist
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name ?? "";
     }
 
     public function getId(): ?string

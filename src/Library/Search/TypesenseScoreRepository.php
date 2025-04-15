@@ -6,6 +6,7 @@ use ACSEO\TypesenseBundle\Finder\CollectionFinder;
 use ACSEO\TypesenseBundle\Finder\TypesenseQuery;
 use App\Library\API\DTO\Factory\SearchScoreResultFactory;
 use App\Library\API\DTO\SearchScoreResult;
+use App\Library\Entity\Score;
 use App\Library\Search\DTO\TypesenseQueryParameters;
 
 class TypesenseScoreRepository
@@ -13,8 +14,9 @@ class TypesenseScoreRepository
     public const DEFAULT_NB_SCORES_PER_QUERY = 5;
 
     public function __construct(
-        private CollectionFinder $scoreFinder,
-    ) {}
+        private readonly CollectionFinder $scoreFinder,
+    ) {
+    }
 
     /**
      * @return array<SearchScoreResult>

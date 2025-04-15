@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional;
 
-use App\Security\Fixtures\SecurityUserFixtures;
+use SecurityFixtures\SecurityUserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,14 +20,13 @@ class AppWebTestCase extends WebTestCase
     {
         parent::tearDown();
         self::ensureKernelShutdown();
-        unset($this->client);
     }
 
     protected function logIn(string $username): void
     {
         $this->client->request('GET', '/login');
-        $this->client->submitForm('Login', [
-            '_username' => $username.'@email.com',
+        $this->client->submitForm('login', [
+            '_username' => $username . '@email.com',
             '_password' => SecurityUserFixtures::PASSWORD
         ]);
         self::assertResponseRedirects();

@@ -6,13 +6,13 @@ use App\Library\Entity\ScoreReference;
 
 class ScoreReferenceFactory
 {
-  public static function create(string $value, ?string $information = null): ScoreReference
-  {
-    $scoreReference = new ScoreReference();
+    public static function create(string $value, ?string $information = null): ScoreReference
+    {
+        $scoreReference = new ScoreReference();
 
-    $scoreReference->setValue($value);
-    $scoreReference->setInformation($information);
+        $scoreReference->setValue($value);
+        $scoreReference->setInformation($information);
 
-    return $scoreReference;
-  }
+        return $scoreReference;
+    }
 }

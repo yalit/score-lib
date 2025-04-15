@@ -15,5 +15,6 @@ class LibraryStat
         public int $nbScores,
         public int $nbLists,
         public int $nbCreatedInLastWeek,
-    ) {}
+    ) {
+    }
 }

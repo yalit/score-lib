@@ -126,3 +126,6 @@ library:
       label: "Tout télécharger"
     download:
       label: "Télécharger"
+
+    default_title:
+      label: "Partition"

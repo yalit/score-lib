@@ -22,7 +22,7 @@ class ScoreCategoryRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('sc')
             ->andWhere('sc.value LIKE :search')
-            ->setParameter('search', '%'.$value.'%')
+            ->setParameter('search', '%' . $value . '%')
         ;
     }
 }

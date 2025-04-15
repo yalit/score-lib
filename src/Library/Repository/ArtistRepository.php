@@ -22,7 +22,7 @@ class ArtistRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('a')
             ->andWhere('a.name LIKE :search')
-            ->setParameter('search', '%'.$value.'%')
+            ->setParameter('search', '%' . $value . '%')
         ;
     }
 }

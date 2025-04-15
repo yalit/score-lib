@@ -8,13 +8,13 @@ use App\Library\Entity\ScoreArtist;
 
 class ScoreArtistFactory
 {
-  public static function create(ArtistType $artistType, Artist $artist):ScoreArtist 
-  {
-    $scoreArtist = new ScoreArtist();
+    public static function create(ArtistType $artistType, Artist $artist): ScoreArtist
+    {
+        $scoreArtist = new ScoreArtist();
 
-    $scoreArtist->setType($artistType);
-    $scoreArtist->setArtist($artist);
+        $scoreArtist->setType($artistType);
+        $scoreArtist->setArtist($artist);
 
-    return $scoreArtist;
-  }
+        return $scoreArtist;
+    }
 }

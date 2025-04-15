@@ -21,7 +21,7 @@ readonly class UserPasswordHasherSubscriber
     {
         $entity = $args->getObject();
 
-        if(!( $entity instanceof User)){
+        if (!( $entity instanceof User)) {
             return;
         }
 
@@ -32,7 +32,7 @@ readonly class UserPasswordHasherSubscriber
     {
         $entity = $args->getObject();
 
-        if(!( $entity instanceof User)){
+        if (!( $entity instanceof User)) {
             return;
         }
 

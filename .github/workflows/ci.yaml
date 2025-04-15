@@ -1,0 +1,110 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  symfony:
+    name: Symfony (PHP ${{ matrix.php-versions }})
+    # https://hub.docker.com/_/ubuntu/
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: ['8.2', '8.3', "8.4"]
+    steps:
+      # —— Setup Github actions 🐙 —————————————————————————————————————————————
+      # https://github.com/actions/checkout (official)
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # https://github.com/shivammathur/setup-php (community)
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring
+        env:
+          update: true
+
+      # —— Composer 🧙‍️ —————————————————————————————————————————————————————————
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer
+
+      - name: Install Composer dependencies
+        run: composer install
+
+      # —— Typesense ✅ ———————————————————————————————————————————————————————————
+      - name : Start Typesense
+        run: |
+          docker run -d \
+          -p 8108:8108 \
+          --name typesense \
+          -v /tmp/typesense:/data \
+          typesense/typesense:28.0 \
+          --api-key=xyz \
+          --data-dir /data \
+          --enable-cors
+
+      - name: Update .env.test
+        run: echo "TYPESENSE_URL=http://localhost:8108" >> .env.test & echo "TYPESENSE_KEY=xyz" >> .env.test & echo "TYPESENSE_SCORE_SEARCH_KEY=" >> .env.test & bin/console debug:dotenv --env=test
+
+      - name: Curl Typesense
+        run: sleep 1 && curl http://localhost:8108/health
+
+      - name: Typesense create
+        run: bin/console typesense:create --env=test
+
+      # —— DB ✅ ———————————————————————————————————————————————————————————
+      - name: Setup the DB
+        run: bin/console doctrine:database:create --env=test --no-interaction
+
+      - name: Migrate the DB
+        run: bin/console doctrine:schema:update --env=test --force --no-interaction
+
+      - name: Seed DB
+        run: bin/console doctrine:fixtures:load --env=test --no-interaction
+
+      # —— Node 🧙‍️ —————————————————————————————————————————————————————————
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install front-end dependencies
+        run: npm install
+
+      - name: push assets
+        run: bin/console assets:install
+
+      - name: Build assets
+        run: npm run build
+
+      # —— CI ✅ ———————————————————————————————————————————————————————————
+      - name: Run phpstan
+        run: ./vendor/bin/phpstan analyse src tests config --level 8
+
+      # —— Tests ✅ ———————————————————————————————————————————————————————————
+      - name: Run functional and unit tests
+        run: ./vendor/bin/phpunit tests

@@ -10,10 +10,9 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 readonly class DeserializeListener
 {
     public function __construct(
-        private DecoratedListener      $decoratedListener,
+        private DecoratedListener $decoratedListener,
         private ScoreMultipartListener $scoreListener
-    )
-    {
+    ) {
     }
 
     public function onKernelRequest(RequestEvent $event): void
@@ -34,5 +33,4 @@ readonly class DeserializeListener
             $this->decoratedListener->onKernelRequest($event);
         }
     }
-
 }

@@ -69,6 +69,7 @@ class Score
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
     #[Groups([self::SCORE_READ])]
+    /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]

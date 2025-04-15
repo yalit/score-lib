@@ -11,16 +11,16 @@ readonly class ScoreFileFactory
 {
     public function __construct(
         private string $scoreFileUploadDir,
-        private readonly SluggerInterface $slugger,
-    ) {}
+        private SluggerInterface $slugger,
+    ) {
+    }
 
-    public function createFromUploadedFile(UploadedFile $uploadedFile, ?ScoreFile &$scoreFile = null): ScoreFile
+    public function createFromUploadedFile(UploadedFile $uploadedFile, ScoreFile &$scoreFile): void
     {
-        $scoreFile = $scoreFile ?? new ScoreFile();
         $uploadedFileName =  pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($uploadedFileName);
         $uploadedFileExtension = $uploadedFile->guessExtension();
-        $scoreFile->setName($uploadedFileName);
+        $scoreFile->setName($safeFilename);
         $scoreFile->setExtension($uploadedFileExtension);
 
         $extension = $uploadedFile->guessExtension();
@@ -37,6 +37,5 @@ readonly class ScoreFileFactory
         $scoreFile->setExtension($extension);
 
         $uploadedFile->move($this->scoreFileUploadDir, $uniqueFileName);
-        return $scoreFile;
     }
 }
