@@ -85,7 +85,7 @@ entity:
 index:
   cards:
     newscores:
-      title: "Nouvelles partitions"
+      title: "Dernières partitions"
     libraryscores:
       title: "Partitions de la bibliothèque"
       icon:

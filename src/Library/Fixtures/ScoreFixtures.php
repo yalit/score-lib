@@ -11,6 +11,9 @@ use App\Library\Entity\ScoreArtist;
 use App\Library\Entity\ScoreCategory;
 use App\Library\Entity\ScoreFile;
 use App\Library\Entity\ScoreReference;
+use DateInterval;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -43,6 +46,9 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
                 ],
                 [$this->getReference(sprintf(ScoreCategoryFixtures::SCORE_CATEGORY_REFERENCE, rand(1, 10)), ScoreCategory::class)]
             );
+            // define the creation/update date to a random date in the past
+            $score->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime("now"))->sub(new DateInterval("P" . rand(1, 30) . "D")));
+            $score->setUpdatedAt($score->getCreatedAt());
             $manager->persist($score);
         }
 

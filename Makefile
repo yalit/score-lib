@@ -41,7 +41,6 @@ execute: ## Execute a command in the PHP container
 purge: ## Purge cache and logs
 	rm -rf var/cache/* var/logs/*
 
-
 ## —— Composer ————————————————————————————————————————————————————————————
 install: ## Install the project dependencies
 	${COMPOSER} install
@@ -112,16 +111,7 @@ tests-prepare: ## Prepare the test environment (database / fixtures)
 	${DOCKER_EXEC} chmod 777 var/data.db
 
 tests: ## Launch the tests
-	${DOCKER_EXEC} bin/phpunit
-
-tests-domain: ## Launch the domain tests
-	${DOCKER_EXEC} bin/phpunit --testsuite=Domain
-
-tests-infrastructure: ## Launch the infrastructure tests
-	${DOCKER_EXEC} bin/phpunit --testsuite=Infrastructure
-
-tests-application: ## Launch the application tests
-	${DOCKER_EXEC} bin/phpunit --testsuite=Application
+	${DOCKER_EXEC} bin/phpunit --testdox
 
 ## —— Static analysis ————————————————————————————————————————————————————————————
 analyze: phpstan php-cs-fixer ## Launch PHPStan and PHP-CS-Fixer
