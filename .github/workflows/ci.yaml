@@ -67,7 +67,7 @@ jobs:
         run: sleep 1 && curl http://localhost:8108/health
 
       - name: Typesense create
-        run: bin/console typesense:create
+        run: bin/console typesense:create --env=test
 
       # —— DB ✅ ———————————————————————————————————————————————————————————
       - name: Setup the DB
