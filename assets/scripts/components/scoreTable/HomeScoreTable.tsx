@@ -2,14 +2,14 @@ import {lastScoresQueryKey, useLastScores} from "../../hooks/library/useLastScor
 import ScoreTable from "./ScoreTable";
 import Card from "../card/Card";
 import CardContent from "../card/CardContent";
-import useDeleteScore from "../../hooks/library/useDeleteScore";
+import CardTitle from "../card/CardTitle";
 
 export function HomeScoreTable() {
     const {scores} = useLastScores()
-    const deleteScore = useDeleteScore(lastScoresQueryKey)
 
     return (
         <Card className="mt-5">
+            <CardTitle>Les 10 dernières partitions</CardTitle>
             <CardContent><ScoreTable scores={scores} deleteQueryToInvalidate={lastScoresQueryKey} nbTotalItems={scores.length} /></CardContent>
         </Card>
     )

@@ -26,16 +26,14 @@ final readonly class ScoresProvider implements ProviderInterface
     }
 
     /**
-     * @return array<Score>
+     * @inheritDoc
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array | null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object | array | null
     {
         $searchValue = $context['request']->query->get('search');
 
         if (!$searchValue) {
-            /** @var array<Score> | null  $scores */
-            $scores = $this->collectionProvider->provide($operation, $uriVariables, $context);
-            return $scores;
+            return $this->collectionProvider->provide($operation, $uriVariables, $context);
         }
 
         return $this->tsScoreRepository->findScoreByAll($this->getTypeSenseQueryParameters($context['request']->query));

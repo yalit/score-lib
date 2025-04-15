@@ -1,4 +1,6 @@
 {
+  "name": "yalit/score-lib",
+  "description": "A library app to manage scores",
   "type": "project",
   "license": "proprietary",
   "minimum-stability": "stable",

@@ -3,6 +3,8 @@
 namespace App\Library\Repository;
 
 use App\Library\Entity\Score;
+use DateInterval;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,6 +28,21 @@ class ScoreRepository extends ServiceEntityRepository
             ->setMaxResults($nb)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findAllScoresInLastSevenDays(): int
+    {
+        $sevenDaysAgo = (new DateTimeImmutable('now'))->sub(new DateInterval('P7D'))->setTime(0, 0);
+        /** @var int | null $nb */
+        $nb = $this->createQueryBuilder('s')
+            ->select('count(s.id) as c')
+            ->where('s.createdAt >= :sevenDaysAgo')
+            ->setParameter('sevenDaysAgo', $sevenDaysAgo)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $nb ? $nb : 0;
     }
 
     public function save(Score $score): void

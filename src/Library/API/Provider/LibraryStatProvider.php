@@ -19,7 +19,7 @@ final readonly class LibraryStatProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object
     {
         $nbScores = count($this->scoreRepository->findAll());
-
-        return new LibraryStat($nbScores, 0, 0);
+        $nbScoresInLastSevenDays = $this->scoreRepository->findAllScoresInLastSevenDays();
+        return new LibraryStat($nbScores, 0, $nbScoresInLastSevenDays);
     }
 }
