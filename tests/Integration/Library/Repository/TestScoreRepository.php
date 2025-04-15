@@ -4,7 +4,6 @@ namespace App\Tests\Integration\Library\Repository;
 
 use App\Library\Repository\ScoreRepository;
 use DateInterval;
-use DateTime;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -14,6 +13,7 @@ class TestScoreRepository extends KernelTestCase
     protected function setUp(): void
     {
         static::bootKernel();
+        // @phpstan-ignore-next-line
         $this->repository = static::getContainer()->get(ScoreRepository::class);
     }
 
@@ -27,7 +27,7 @@ class TestScoreRepository extends KernelTestCase
     public function testFindAllFromLastSevenDays(): void
     {
         $allScores = $this->repository->findAll();
-        $sevenDaysAgo = (new DateTimeImmutable('now'))->sub(new DateInterval('P7D'))->setTime(0,0);
+        $sevenDaysAgo = (new DateTimeImmutable('now'))->sub(new DateInterval('P7D'))->setTime(0, 0);
         $allScoresInLastSevenDays = array_filter($allScores, function ($score) use ($sevenDaysAgo) {
             return $score->getCreatedAt() >= $sevenDaysAgo;
         });
