@@ -61,10 +61,13 @@ jobs:
           --enable-cors
 
       - name: Update .env.test
-        run: echo "TYPESENSE_URL=http://localhost:8108" >> .env.test & echo "TYPESENSE_KEY=xyz" >> .env.test & echo "TYPESENSE_SCORE_SEARCH_KEY=" >> .env.test & bin/console debug:dotenv --env=test & bin/console typesense:create --env=test
+        run: echo "TYPESENSE_URL=http://localhost:8108" >> .env.test & echo "TYPESENSE_KEY=xyz" >> .env.test & echo "TYPESENSE_SCORE_SEARCH_KEY=" >> .env.test & bin/console debug:dotenv --env=test
 
       - name: Curl Typesense
         run: sleep 1 && curl http://localhost:8108/health
+
+      - name: Typesense create
+        run: bin/console typesense:create
 
       # —— DB ✅ ———————————————————————————————————————————————————————————
       - name: Setup the DB
