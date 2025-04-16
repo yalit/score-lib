@@ -27,7 +27,7 @@ export interface FetchScoresParameters {
     nbPerPage?: number;
     search?: string|null;
     order?: SortBy<AllowedSortBy> | null,
-    filter?: FilterBy<AllowedFilterBy> | null,
+    filter?: FilterBy<AllowedFilterBy>[] | null,
 }
 
 export const scoreCollectionOutputSchema = createCollectionOutputSchema(scoreSchema)
@@ -64,6 +64,8 @@ export async function fetchScores(
     if (parameters.search) {
         fetchParams = {...fetchParams, search: parameters.search};
     }
+
+    console.log('Filter parameters', parameters.filter);
 
     let response = await fetch(buildUrl("/api/scores", fetchParams));
     let output: any = await response.json();

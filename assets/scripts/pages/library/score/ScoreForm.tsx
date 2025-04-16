@@ -81,7 +81,6 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
     const {types: artistTypes} = useArtistTypes();
 
     const onSubmit: SubmitHandler<FormScore> = (score: FormScore) => {
-        console.log("Submit", score);
         saveScore(score)
     }
 

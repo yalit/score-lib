@@ -8,7 +8,7 @@ export type ScoreTableData = {
     scores: Score[],
     nbTotalScores: number
     currentOrder: SortBy<AllowedSortBy> | null,
-    currentFilter: FilterBy<AllowedFilterBy> | null,
+    currentFilter: FilterBy<AllowedFilterBy>[] | null,
     currentPage: number,
     nbPerPage: number,
     canSort: boolean,
@@ -17,7 +17,7 @@ export type ScoreTableData = {
 
 export type ScoreTableDataActions = {
     setCurrentOrder?: (order: SortBy<AllowedSortBy> | null) => void,
-    setCurrentFilter?: (filter: FilterBy<AllowedFilterBy> | null) => void,
+    setCurrentFilter?: (filter: FilterBy<AllowedFilterBy>[] | null) => void,
     setCurrentPage?: (page: number) => void,
     deleteScore: (score: Score) => void,
     setNbPerPage?: (page: number) => void,

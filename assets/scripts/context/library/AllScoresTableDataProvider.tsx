@@ -15,7 +15,7 @@ export const AllScoresTableDataProvider = ({searchData, children}: AllScoresTabl
     const [nbTotalScores, setNbTotalScores] = useState<number>(0);
     const deleteScore = useDeleteScore("", refreshScores)
     const [currentOrder, setCurrentOrder] = useState<SortBy<AllowedSortBy> | null>(null);
-    const [currentFilter, setCurrentFilter] = useState<FilterBy<AllowedFilterBy> | null>(null);
+    const [currentFilter, setCurrentFilter] = useState<FilterBy<AllowedFilterBy>[] | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [nbPerPage, setNbPerPage] = useState<number>(DEFAULT_NB_PER_PAGE);
 
