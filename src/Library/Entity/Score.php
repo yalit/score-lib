@@ -34,10 +34,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new GetCollection(
             normalizationContext: ["groups" => [Score::SCORE_READ]],
+            provider: ScoresProvider::class,
             parameters: [
-                'order[:property]' => new QueryParameter(filter: 'score.order_filter')
-            ],
-            provider: ScoresProvider::class
+                'order[:property]' => new QueryParameter(filter: 'score.order_filter'),
+                'categories' => new QueryParameter(filter: 'score.search_categories_filter'),
+            ]
         ),
         new Get(normalizationContext: ["groups" => [Score::SCORE_READ]]),
         new Post(

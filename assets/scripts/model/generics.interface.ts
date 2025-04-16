@@ -1,7 +1,12 @@
 export type Direction = 'asc' | 'desc'
 export type NoDirection = ''
 
-export interface OrderBy<T> {
+export interface SortBy<T> {
     direction: Direction | NoDirection,
+    by: T
+}
+
+export type FilterBy<T> = {
+    value: string,
     by: T
 }

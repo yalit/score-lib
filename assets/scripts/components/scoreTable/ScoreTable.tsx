@@ -1,47 +1,25 @@
 import {Score} from "../../model/library/score.interface";
 import {ScoreTableHeader} from "./ScoreTableHeader";
-import {Direction} from "../../model/generics.interface";
 
 import '../../../styles/scoreTable.css'
 import ScoreTableRow from "./ScoreTableRow";
 import {ScoreTablePagination} from "./ScoreTablePagination";
-import {AllowedScoreOrderBy, DEFAULT_NB_SCORES_PER_QUERY} from "../../repository/library/score.repository";
+import {useContext, useMemo} from "react";
+import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
+import {ScoreTableFilters} from "./ScoreTableFilters";
 
-interface ScoreTableProps {
-    scores: Score[],
-    deleteQueryToInvalidate: string|[string, any],
-    sortTable?: (field: AllowedScoreOrderBy, direction: Direction) => void,
-    moveToPage?: (page: number) => void,
-    changeNbPerPage?: (nbPerPage: number) => void,
-    nbTotalItems: number,
-    itemsPerPage?: number,
-    page?: number,
-}
+export default function ScoreTable() {
+    const {state} = useContext(ScoreTableDataContext)
 
-export default function ScoreTable({
-                                       scores,
-                                       deleteQueryToInvalidate,
-                                       sortTable,
-                                       moveToPage,
-                                       page = 1,
-                                       itemsPerPage = DEFAULT_NB_SCORES_PER_QUERY,
-                                       nbTotalItems,
-                                       changeNbPerPage
-                                   }: ScoreTableProps) {
-
+    const hasNavigation = useMemo<boolean>(() => state.scores.length < state.nbTotalScores, [state.scores, state.nbTotalScores])
     return (
         <div className="data__table">
-            <ScoreTableHeader sortColumn={sortTable}/>
-            {scores.map((score: Score, idx: number) => <ScoreTableRow key={score.id} score={score} index={idx}
-                                                                      deleteQueryInvalidate={deleteQueryToInvalidate}
-                />
+            <ScoreTableFilters />
+            <ScoreTableHeader />
+            {state.scores.map((score: Score, idx: number) =>
+                <ScoreTableRow key={score.id} score={score} index={idx}/>
             )}
-            {moveToPage && <ScoreTablePagination page={page || 1} totalItems={nbTotalItems}
-                                                 itemsPerPage={itemsPerPage || DEFAULT_NB_SCORES_PER_QUERY}
-                                                 moveToPage={moveToPage} changeNbPerPage={changeNbPerPage}
-            />
-            }
-
+            {hasNavigation && <ScoreTablePagination />  }
         </div>
     )
 }

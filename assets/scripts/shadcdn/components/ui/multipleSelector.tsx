@@ -1,4 +1,4 @@
-import {Command, CommandItem, CommandList,} from "./command";
+import {Command, CommandInput, CommandItem, CommandList,} from "./command";
 import {Command as CommandPrimitive} from "cmdk";
 import {useEffect, useState} from "react";
 import {Badge} from "./badge";
@@ -10,7 +10,7 @@ type MultipleSelectorProps<T> = {
     displayValue: (v: T) => string;
     idValue: (v: T) => string;
     selectables: T[];
-    getNew: (inputValue: string) => T;
+    getNew?: (inputValue: string) => T;
 };
 export default function MultipleSelector<T>({
                                                 values,
@@ -54,12 +54,11 @@ export default function MultipleSelector<T>({
         }
 
         // allow to "register" a new value by ending with a comma
-        if (inputValue.endsWith(',')) {
+        if (getNew && inputValue.endsWith(',')) {
             selectValue(getNew(inputValue.slice(0,-1)))
+            setPossibleValues([getNew(inputValue)].concat(selectables));
             return;
         }
-
-        setPossibleValues([getNew(inputValue)].concat(selectables));
     }, [inputValue]);
 
     return (
@@ -75,9 +74,10 @@ export default function MultipleSelector<T>({
                             />
                         </Badge>
                     ))}
-                    <CommandPrimitive.Input
+                    <CommandInput
                         className="flex h-10 flex-1 w-full border-b bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                        onFocus={() => setOpen(true)}
+                        onFocus={() => {console.log("Focused..."); setOpen(true)}}
+                        onClick={() => {console.log("Clicked"); setOpen(true)}}
                         onBlur={() => setOpen(false)}
                         value={inputValue}
                         onInput={(e) => setInputValue(e.currentTarget.value)}
@@ -97,7 +97,7 @@ export default function MultipleSelector<T>({
                                 disabled={alreadySelected(p)}
                                 value={displayValue(p)}
                             >
-                                {idValue(p) === '' ? (
+                                {getNew && idValue(p) === '' ? (
                                     <div className="font-italic">Add ... <span
                                         className="font-semibold">{displayValue(p)}</span></div>
                                 ) : (

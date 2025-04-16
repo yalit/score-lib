@@ -2,22 +2,24 @@ import {Score} from "../../model/library/score.interface";
 import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {classnames} from "../../libraries/general";
 import {ScoreReference} from "../../model/library/scoreReference.interface";
-import {useState} from "react";
+import {Key, useContext, useState} from "react";
 import {useTranslator} from "../../hooks/useTranslator";
 import useRouter from "../../hooks/useRouter";
 import {DownloadIcon, EllipsisIcon, EllipsisVerticalIcon, EyeIcon, PencilIcon, SquareXIcon,} from "lucide-react";
 import {DeleteScoreModal} from "../layout/DeleteScoreModal";
+import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 
 interface ScoreTableRowProps {
     score: Score,
     index: number,
-    deleteQueryInvalidate: string|[string, any]
+    key: Key
 }
 
-export default function ScoreTableRow({score, deleteQueryInvalidate, index}: ScoreTableRowProps) {
+export default function ScoreTableRow({score, index}: ScoreTableRowProps) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const {trans} = useTranslator();
     const {generate} = useRouter()
+    const {actions} = useContext(ScoreTableDataContext)
 
     const rowClass = classnames(
         "data__table__line",
@@ -114,10 +116,9 @@ export default function ScoreTableRow({score, deleteQueryInvalidate, index}: Sco
                 </div>
             </div>
 
-            {showDeleteModal && <DeleteScoreModal score={score} toggleDisplay={() => setShowDeleteModal(false)}
-                                                  queryToInvalidate={deleteQueryInvalidate}
-                                                  onSuccess={() => setShowDeleteModal(false)}
-            />}
+            {showDeleteModal &&
+                <DeleteScoreModal score={score} deleteScore={actions.deleteScore} toggleDisplay={() => setShowDeleteModal(false)} onSuccess={() => setShowDeleteModal(false)} />
+            }
         </div>
     )
 

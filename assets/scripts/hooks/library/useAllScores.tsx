@@ -1,41 +1,40 @@
 import {Score} from "../../model/library/score.interface";
-import {useQuery} from "react-query";
-import {useState} from "react";
+import {useQuery, useQueryClient} from "react-query";
+import {useMemo, useState} from "react";
 import {
-    DEFAULT_NB_SCORES_PER_QUERY,
     fetchScores,
     FetchScoresParameters
 } from "../../repository/library/score.repository";
+import {DEFAULT_NB_PER_PAGE} from "../../components/scoreTable/ScoreTablePagination";
 
 const initialScoreFetchData: FetchScoresParameters = {
     page: 1,
-    nbPerPage: DEFAULT_NB_SCORES_PER_QUERY,
-    order: {direction: "", by: ""},
+    nbPerPage: DEFAULT_NB_PER_PAGE
 }
 
 interface AllScoresOutput {
-    nbAllItems: number,
+    nbTotalScores: number,
     scores: Score[],
-    fetchData: {
-        values: FetchScoresParameters,
-        set: (value: Partial<FetchScoresParameters>) => void
-    }
+    setFetchParameters: (value: Partial<FetchScoresParameters>) => void,
+    refreshScores: () => void
 }
 
 export function useAllScores(): AllScoresOutput {
-    const [fetchData, setFetchData] = useState<FetchScoresParameters>(initialScoreFetchData);
+    const [fetchScoresParameters, setFetchScoresParameters] = useState<FetchScoresParameters>(initialScoreFetchData);
 
+    const queryClient = useQueryClient();
+    const queryKey = useMemo(() => {
+        return ['allScores', fetchScoresParameters]
+    }, [fetchScoresParameters])
     const query = useQuery({
-        queryKey: ["allScores", fetchData],
-        queryFn: async () => fetchScores(fetchData),
+        queryKey: queryKey,
+        queryFn: async () => fetchScores(fetchScoresParameters),
     })
 
     return {
-        nbAllItems: query.data?.nbItems ?? -1,
+        nbTotalScores: query.data?.nbItems ?? -1,
         scores: query.data?.data ?? [],
-        fetchData: {
-            values: fetchData,
-            set: (value) => setFetchData({...fetchData, ...value})
-        }
+        setFetchParameters: (value: Partial<FetchScoresParameters>) => setFetchScoresParameters({...fetchScoresParameters, ...value}),
+        refreshScores: () => queryClient.invalidateQueries({queryKey})
     }
 }

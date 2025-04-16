@@ -27,3 +27,8 @@ services:
         properties:
             defaultDirection: 'asc'
         tags: [ 'api_platform.filter' ]
+    score.search_categories_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments:
+            $properties: { categories: ~}
+        tags: [ 'api_platform.filter' ]

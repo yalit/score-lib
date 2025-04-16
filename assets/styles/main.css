@@ -100,79 +100,11 @@ body {
 .svg-inline--fa {
   @apply text-left;
 }
-/*
 
-
-.bubble {
-  @apply bg-gray-100 text-gray-800 rounded-sm py-1 px-2 mr-1;
+h2 {
+  @apply text-xl font-semibold text-gray-800 mb-3;
 }
 
-form {
-  @apply w-full;
-  
-  .tomselected {
-    @apply hidden;
-  }
-
-  label {
-    @apply block font-semibold text-lg mt-3;
-  }
-
-  input {
-    &[type="text"] {
-      @apply p-1 border-b border-gray-200 outline-none w-full leading-normal box-border;
-    }
-  }
-
-  textarea {
-      @apply p-2 border-b border-gray-200 !outline-none w-full;
-  }
-
-  select {
-    @apply bg-transparent border-b border-gray-200 !outline-none w-full h-[1.5rem];
-
-    option {
-      @apply leading-normal;
-    }
-  }
-
-  .ts-wrapper {
-    @apply relative;
-
-    .ts-control {
-      @apply min-h-[1.9rem] relative flex items-center gap-1 flex-wrap;
-
-      input {
-        @apply absolute inset-y-0 left-0 w-full;
-        caret-color: transparent;
-      }
-
-      .clear-button {
-        @apply absolute content-center justify-center right-1 cursor-pointer;
-      }
-
-      .item {
-        @apply flex items-center gap-1 text-sm ml-1 z-10;
-
-        a.remove {
-          @apply text-red-800 font-semibold text-base;
-        }
-      }
-    }
-
-    .ts-dropdown {
-      @apply absolute top-full bg-white z-20;
-      .ts-dropdown-content {
-          @apply p-3 border border-gray-200 border-t-0 max-h-[200px] overflow-x-hidden overflow-y-auto scroll-smooth;
-          
-          .option, .no-results, .create {
-            @apply text-sm cursor-pointer leading-tight p-1.5;
-          }
-      }
-    }
-  }
-}*/
-/*
-
-
----break---*/
+h3 {
+  @apply text-lg font-semibold text-gray-800 mb-2;
+}

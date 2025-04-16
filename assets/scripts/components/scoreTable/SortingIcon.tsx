@@ -1,12 +1,13 @@
 import {Direction, NoDirection} from "../../model/generics.interface";
 import {ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon} from "lucide-react";
+export type SortingFunction = (direction: Direction | NoDirection) => void;
 
-interface SortingIconProps {
-    sort: (direction: Direction) => void,
+export type SortInformation = {
+    sort: SortingFunction,
     direction: Direction | NoDirection,
 }
 
-export default function SortingIcon ({sort, direction}: SortingIconProps) {
+export default function SortingIcon ({sort, direction}: SortInformation) {
     const chevronClassName = "h-4 w-4 bold";
 
     const toggleDirection = () => {

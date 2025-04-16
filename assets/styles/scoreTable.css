@@ -22,6 +22,9 @@
                 .data__table__line__item-label {
                     @apply lg:hidden font-semibold;
                 }
+                .data__table__line__item-value {
+                    @apply pr-2;
+                }
             }
         }
 
