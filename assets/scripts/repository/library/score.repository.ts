@@ -25,7 +25,7 @@ export const isAllowedToFilter = (key: string): key is AllowedFilterBy => {
 export interface FetchScoresParameters {
     page: number;
     nbPerPage?: number;
-    search?: string;
+    search?: string|null;
     order?: SortBy<AllowedSortBy> | null,
     filter?: FilterBy<AllowedFilterBy> | null,
 }

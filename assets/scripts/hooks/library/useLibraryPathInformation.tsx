@@ -19,7 +19,7 @@ export default function useLibraryPathInformation(): LibraryPathInformation {
 
     const pathData = useMemo<string[]>(() => path.replace(pathPrefix, '').split('/'), [path])
 
-    const information = useMemo<LibraryPathInformation>(() => {
+    return useMemo<LibraryPathInformation>(() => {
         if (pathData.length === 1) {
             return {action: 'index'}
         }
@@ -29,6 +29,4 @@ export default function useLibraryPathInformation(): LibraryPathInformation {
             data: pathData[2]
         }
     }, [pathData])
-
-    return information
 }
