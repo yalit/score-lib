@@ -49,6 +49,10 @@ export async function fetchScores(
         reference: "reference.value",
     };
 
+    const mappedScoreFilterByParameters: { [k in AllowedFilterBy]: string } = {
+        categories: "categories"
+    };
+
     if (parameters.order) {
         const orderParamName = `order[${mappedScoreOrderByParameters[parameters.order.by]}]`;
         fetchParams = {
@@ -65,7 +69,22 @@ export async function fetchScores(
         fetchParams = {...fetchParams, search: parameters.search};
     }
 
-    console.log('Filter parameters', parameters.filter);
+    if (parameters.filter && parameters.filter.length > 0) {
+        if (parameters.filter.length === 1) {
+            const paramName = mappedScoreFilterByParameters[parameters.filter[0].by]
+            fetchParams = {...fetchParams, [paramName]: parameters.filter[0].value }
+        } else {
+            let filterParams = {}
+            parameters.filter.forEach(filter => {
+                const paramName = `${mappedScoreFilterByParameters[filter.by]}[]`;
+                if (!(paramName in filterParams)) {
+                    filterParams[paramName] = []
+                }
+                filterParams[paramName].push(filter.value);
+            })
+            fetchParams = {...fetchParams, ...filterParams};
+        }
+    }
 
     let response = await fetch(buildUrl("/api/scores", fetchParams));
     let output: any = await response.json();

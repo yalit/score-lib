@@ -26,23 +26,28 @@ export function ScoreTableFilters() {
     }
 
     const filter = () => {
-        if (!actions.setCurrentFilter) return
-
-        actions.setCurrentFilter(selectedCategories.map(c => ({value: c["@id"] ?? "", by: 'categories'})))
+        if (actions.setCurrentFilter){
+            actions.setCurrentFilter(selectedCategories.map(c => ({value: c["@id"] ?? "", by: 'categories'})))
+        }
     }
 
-    const reset = () => setSelectedCategories([]);
+    const reset = () => {
+        setSelectedCategories([])
+
+        if (actions.setCurrentFilter) actions.setCurrentFilter(null)
+
+    }
 
     return (
         <div className="data__table__filters">
-            <h3 className="flex items-center gap-5">
+            <h3 className="flex items-center gap-5 cursor-pointer" onClick={() => setOpen(!open)}>
                 <p className="flex items-center gap-1">
                     <span>Filtres</span>
                     {selectedCategories.length > 0 && !open && <Asterisk className="text-red-800 font-semibold h-3 w-3" />}
                 </p>
                 {open ?
-                    <ChevronDownIcon className="h-5 w-5 cursor-pointer" onClick={() => setOpen(!open)}/>
-                    : <ChevronRightIcon className="h-5 w-5 cursor-pointer" onClick={() => setOpen(!open)}/>
+                    <ChevronDownIcon className="h-5 w-5"/>
+                    : <ChevronRightIcon className="h-5 w-5"/>
                 }
             </h3>
 

@@ -7,6 +7,6 @@ export interface SortBy<T> {
 }
 
 export type FilterBy<T> = {
-    value: number|string,
+    value: string,
     by: T
 }
