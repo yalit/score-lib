@@ -11,8 +11,7 @@ import {Button} from "../../../shadcdn/components/ui/button";
 import {MinusSquareIcon, PlusIcon, XIcon} from "lucide-react";
 import {ScoreCategory} from "../../../model/library/scoreCategory.interface";
 import {useCategories} from "../../../hooks/library/useCategories";
-import {MultipleSelectorField} from "../../../components/Form/MultipleSelectorField";
-import {SelectableObject} from "../../../components/Form/SelectableObject";
+import {SelectorField} from "../../../components/Form/SelectorField";
 import {Artist} from "../../../model/library/scoreArtist.interface";
 import {useArtists} from "../../../hooks/library/useArtists";
 import {SelectableTextChoices} from "../../../components/Form/SelectableTextChoices";
@@ -73,7 +72,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
         if (!form.getValues('uploadedFiles')) {
             return
         }
-        form.setValue('uploadedFiles', form.getValues('uploadedFiles')?.filter(f => f!==file))
+        form.setValue('uploadedFiles', form.getValues('uploadedFiles')?.filter(f => f !== file))
     }
 
     const {categories: possibleCategories} = useCategories();
@@ -157,12 +156,12 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                             </div>
                         ))}
 
-                        <MultipleSelectorField<ScoreCategory> label={trans("entity.score.fields.categories.label")}
-                                                              control={form.control} name="categories"
-                                                              selectables={possibleCategories}
-                                                              getId={(v: ScoreCategory) => v['@id'] ?? ""}
-                                                              getDisplay={(v: ScoreCategory) => v.value}
-                                                              getNew={(value: string) => ({value})}
+                        <SelectorField<ScoreCategory> label={trans("entity.score.fields.categories.label")}
+                                                      control={form.control} name="categories"
+                                                      selectables={possibleCategories}
+                                                      getId={(v: ScoreCategory) => v['@id'] ?? ""}
+                                                      getDisplay={(v: ScoreCategory) => v.value}
+                                                      getNew={(value: string) => ({value})}
                         />
 
                         <FormItem className="flex gap-2 items-center">
@@ -180,7 +179,7 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                         {artists.map((scoreArtist, idx: number) => (
                             <div
                                 key={`score_artist_${scoreArtist.id}`}
-                                className="flex gap-5 items-center"
+                                className="flex gap-5 items-center mb-2"
                             >
                                 <Button
                                     type="button"
@@ -191,21 +190,20 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
                                 >
                                     <MinusSquareIcon/>
                                 </Button>
-                                <SelectableObject<Artist> control={form.control} name={`artists.${idx}.artist`}
-                                                          classname="w-5/12"
-                                                          label={trans('entity.artist.fields.name.label')}
-                                                          getId={(a: Artist) => a['@id'] ?? ""}
-                                                          getDisplay={(a: Artist) => a.name}
-                                                          selectables={possibleArtists}
-                                                          getNew={(name: string) => ({name})}
+                                <SelectorField<Artist> label={trans('entity.artist.fields.name.label')}
+                                                       control={form.control} name={`artists.${idx}.artist`}
+                                                       selectables={possibleArtists}
+                                                       getId={(a: Artist) => a['@id'] ?? ""}
+                                                       getDisplay={(a: Artist) => a.name}
+                                                       getNew={(name: string) => ({name})}
+                                                       inline={true}
                                 />
 
-                                {/*TODO : translate */}
                                 <SelectableTextChoices control={form.control}
                                                        name={`artists.${idx}.type`}
                                                        label={trans("entity.score.fields.artists.type.label")}
                                                        choices={artistTypes}
-                                                       placeholder={"Select the type of the composer"}
+                                                       placeholder={trans('entity.score.fiels.artists.type.selection.label')}
                                 />
 
                             </div>
@@ -218,10 +216,12 @@ export default function ScoreForm({score = null}: { score?: Score | null }) {
 
                         <div className="flex gap-2 items-center">
                             {scoreFiles.map((file: ScoreFile, fileIndex: number) => (
-                                <Badge key={file["@id"]}>{file.name} <XIcon className="h-4 w-4" onClick={() => removeFile(fileIndex)}/></Badge>
+                                <Badge key={file["@id"]}>{file.name} <XIcon className="h-4 w-4"
+                                                                            onClick={() => removeFile(fileIndex)}/></Badge>
                             ))}
                             {form.getValues()['uploadedFiles']?.map((file: File) => (
-                                <Badge key={String(Math.random())}>{file.name} <XIcon className="h-4 w-4" onClick={() => removeUploadedFile(file)}/></Badge>
+                                <Badge key={String(Math.random())}>{file.name} <XIcon className="h-4 w-4"
+                                                                                      onClick={() => removeUploadedFile(file)}/></Badge>
                             ))}
                         </div>
                         <Button type="submit" className="mt-4">

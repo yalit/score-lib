@@ -75,6 +75,8 @@ entity:
         label: "Artistes"
         type:
           label: "Type"
+          selection:
+            label: "Choisis le type de l'artiste"
       categories:
         label: "Catégories"
         value:
