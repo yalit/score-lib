@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     container_name: score-lib-db
@@ -13,6 +12,8 @@ services:
       - '4306:3306'
     volumes:
       - ./docker/mysql:/var/lib/mysql
+    networks:
+      - scorelib
 
   php:
     container_name: score-lib-php
@@ -21,8 +22,6 @@ services:
       args:
         USER_ID: ${USER_ID}
         GROUP_ID: ${GROUP_ID}
-    ports:
-      - '8080:80'
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
@@ -35,6 +34,8 @@ services:
     depends_on:
       - db
       - search
+    networks:
+      - scorelib
 
   search:
     container_name: score-lib-search
@@ -45,9 +46,17 @@ services:
     volumes:
       - ./var/typesense-data:/data
     command: '--data-dir /data --api-key=xyz --enable-cors'
+    networks:
+      - scorelib
 
   search-dashboard:
     container_name: score-lib-search-dashboard
     image: ghcr.io/bfritscher/typesense-dashboard:latest
     ports:
       - "8118:80"
+    networks:
+      - scorelib
+
+networks:
+  scorelib:
+    name: scorelib

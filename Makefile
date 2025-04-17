@@ -27,7 +27,7 @@ build: down ## Docker container up (including build)
 	${DOCKER} compose up -d --build
 
 up: down ## Docker container up (without build)
-	${DOCKER} compose up -d
+	${DOCKER} compose -f docker-compose.yml -f docker-compose-dev.yaml up -d
 
 down: ## Docker container down
 	${DOCKER} compose down
