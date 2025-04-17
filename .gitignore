@@ -47,3 +47,6 @@ phpstan.neon
 /.phpcs-cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
+
+
+docker-composer-dev.yaml
