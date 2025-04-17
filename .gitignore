@@ -49,4 +49,4 @@ phpstan.neon
 ###< squizlabs/php_codesniffer ###
 
 
-docker-composer-dev.yaml
+docker-compose-dev.yaml
