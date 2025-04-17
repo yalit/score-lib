@@ -1,0 +1,18 @@
+services:
+  php:
+    # add to a traefik management
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.scorelib.rule=Host(`scorelib.localhost`)"
+        - "traefik.http.services.scorelib.loadbalancer.server.port=80"
+        - "traefik.docker.network=web"
+    networks:
+      # name should be the one of the traefik created
+      - web
+    # or use it directly by exposing some ports
+    ports:
+      - 8080:80 # for instance
+
+networks:
+  web:
+    name: web
