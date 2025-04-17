@@ -1,7 +1,7 @@
 import {useContext, useState} from "react";
 import {ScoreCategory} from "../../model/library/scoreCategory.interface";
 import {useCategories} from "../../hooks/library/useCategories";
-import {PopoverMultipleSelect} from "../../shadcdn/components/ui/popoverMultipleSelect";
+import {PopoverSelect} from "../../shadcdn/components/ui/popoverSelect";
 import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 import {Button} from "../../shadcdn/components/ui/button";
 import {Asterisk, ChevronDownIcon, ChevronRightIcon} from "lucide-react";
@@ -54,14 +54,15 @@ export function ScoreTableFilters() {
             {open && (
                 <>
                     <div className="flex items-center gap-3">
-                        <PopoverMultipleSelect title={"Catégories"}
-                                               values={selectedCategories.map(
+                        <PopoverSelect title={"Catégories"}
+                                       selection={selectedCategories.map(
                                                    c => ({value: c["@id"] ?? "", label: c.value})
                                                )}
-                                               choices={categories.map(
+                                       choices={categories.map(
                                                    c => ({value: c["@id"] ?? "", label: c.value})
                                                )}
-                                               selectValue={selectValue}
+                                       selectValue={selectValue}
+                                       removeValue={selectValue}
                         />
                     </div>
 
