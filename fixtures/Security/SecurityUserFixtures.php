@@ -1,6 +1,6 @@
 <?php
 
-namespace SecurityFixtures;
+namespace App\Fixtures\Security;
 
 use App\Security\Entity\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;

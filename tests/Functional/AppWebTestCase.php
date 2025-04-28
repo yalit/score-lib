@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional;
 
-use SecurityFixtures\SecurityUserFixtures;
+use App\Fixtures\Security\SecurityUserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

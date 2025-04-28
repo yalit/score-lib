@@ -1,6 +1,6 @@
 <?php
 
-namespace LibraryFixtures;
+namespace App\Fixtures\Library;
 
 use App\Library\Entity\Artist;
 use Doctrine\Bundle\FixturesBundle\Fixture;

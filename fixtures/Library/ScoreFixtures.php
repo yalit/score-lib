@@ -1,6 +1,6 @@
 <?php
 
-namespace LibraryFixtures;
+namespace App\Fixtures\Library;
 
 use App\Library\Entity\Artist;
 use App\Library\Entity\Enum\ArtistType;
@@ -20,9 +20,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class ScoreFixtures extends Fixture implements DependentFixtureInterface
 {
+	public const REFERENCE_PREFIX = "score_reference_";
+	public const NB_SCORES = 100;
+
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= self::NB_SCORES; $i++) {
             $typeRandom = rand(0, 2);
             $firstArtistType = match ($typeRandom) {
                 0 => ArtistType::COMPOSER,
@@ -49,6 +52,7 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
             // define the creation/update date to a random date in the past
             $score->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime("now"))->sub(new DateInterval("P" . rand(1, 30) . "D")));
             $score->setUpdatedAt($score->getCreatedAt());
+						$this->setReference(sprintf('%s%d', self::REFERENCE_PREFIX, $i), $score);
             $manager->persist($score);
         }
 
