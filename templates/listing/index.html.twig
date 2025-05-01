@@ -1,0 +1,23 @@
+{% extends 'main.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('listing') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listing') }}
+{% endblock %}
+
+{% block title %}{{ 'library.index.title' | trans }}{% endblock %}
+
+{#
+{% block body %}
+    {{ include('includes/_card.html.twig', {
+        'card_class': "mt-6",
+        'card_title': card.getTitle("library.index.title"),
+        'card_content': _self.getContent(scores)
+    }) }}
+{% endblock %}
+#}

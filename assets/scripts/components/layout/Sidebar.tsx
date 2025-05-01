@@ -36,7 +36,7 @@ export default function Sidebar() {
             icon: <LibraryIcon className={iconClass}/>,
             path: generate('app_library_index')
         },
-        {title: trans('main.menu.setlists.label'), icon: <ListIcon className={iconClass}/>, path: "#"},
+        {title: trans('main.menu.setlists.label'), icon: <ListIcon className={iconClass}/>, path: generate('app_listing_index')},
         {
             title: `${trans('main.menu.logout.label')} ${(user?.name)}`,
             icon: <LogOutIcon className={iconClass}/>,
