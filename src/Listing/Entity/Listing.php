@@ -2,33 +2,49 @@
 
 namespace App\Listing\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Entity\ScoreArtist;
 use App\Listing\Repository\ListingRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ListingRepository::class)]
 
+#[ApiResource(
+	operations: [
+		new GetCollection(normalizationContext: ['groups' => Listing::LISTING_READ])
+	]
+)]
 class Listing
 {
+		public const LISTING_READ = "listing_read";
+
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
+		#[Groups([self::LISTING_READ])]
     /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
+		#[Groups([self::LISTING_READ])]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+		#[Groups([self::LISTING_READ])]
 		private DateTimeImmutable $date;
     /**
      * @var Collection<int, ListingScore²>
      */
     #[ORM\OneToMany(targetEntity: ListingScore::class, cascade: ['persist', 'remove'], mappedBy: 'listing')]
+		#[Groups([self::LISTING_READ])]
     private Collection $scores;
 
     public function __construct()
@@ -57,7 +73,7 @@ class Listing
         $this->name = $name;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
