@@ -12,16 +12,16 @@ export default function SortableTableHead({
   children,
   sortItem,
 }: SortableTableHeadProps) {
-  const { state: sortState, actions: sortActions } = useContext(sortContext);
+  const { state: {item, direction}, actions } = useContext(sortContext);
 
   const toggleDirection = () => {
     const newDirection =
-      sortState.direction === ""
+      direction === ""
         ? "asc"
-        : sortState.direction === "asc"
+        : direction === "asc"
           ? "desc"
           : "asc";
-    sortActions.sort(sortItem, newDirection);
+    actions.sort(sortItem, newDirection);
   };
 
   const chevronClassName = "h-4 w-4 bold";
@@ -41,10 +41,10 @@ export default function SortableTableHead({
   };
 
   const displayIcon = useMemo(() => {
-    if (sortState.item !== sortItem) return icons[""];
+    if (item !== sortItem) return icons[""];
 
-    return icons[sortState.direction];
-  }, [sortState]);
+    return icons[direction];
+  }, [item, direction]);
   return (
     <TableHead>
       <div className="flex justify-between">

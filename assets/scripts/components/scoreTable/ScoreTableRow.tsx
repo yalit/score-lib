@@ -8,6 +8,8 @@ import useRouter from "../../hooks/useRouter";
 import {DownloadIcon, EllipsisIcon, EllipsisVerticalIcon, EyeIcon, PencilIcon, SquareXIcon,} from "lucide-react";
 import {DeleteScoreModal} from "../layout/DeleteScoreModal";
 import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
+import TableAction from "../table/tableAction";
+import MenuToggler from "../table/menuToggler";
 
 interface ScoreTableRowProps {
     score: Score,
@@ -90,30 +92,14 @@ export default function ScoreTableRow({score, index}: ScoreTableRowProps) {
             </div>
 
             <div className="data__table__line-actions">
-                <input type="checkbox" id={score.id + "-action-toggle"} className="peer hidden"/>
-                <label htmlFor={score.id + "-action-toggle"}
-                       className="cursor-pointer text-slate-800 peer-checked:hidden">
-                    <EllipsisIcon className="w-6 h-6"/>
-                </label>
-                <label htmlFor={score.id + "-action-toggle"}
-                       className="cursor-pointer text-slate-800 hidden peer-checked:block">
-                    <EllipsisVerticalIcon className="w-6 h-6"/>
-                </label>
-                <div
-                    className="hidden peer-checked:flex absolute top-[75%] right-[25%] z-[100] items-start flex-col font-bold gap-2 p-5 bg-white">
-                    <a href={getDownloadUrl(score)}
-                       className="flex items-center gap-1"><DownloadIcon
-                        className="h-4 w-4"/> {trans('library.score.download.label')}</a>
-                    <a href={generate('app_library_score_show', {id: score.id})}
-                       className="flex items-center gap-1"><EyeIcon
-                        className="h-4 w-4"/> {trans('main.action.show.label')}</a>
-                    <a href={generate('app_library_score_edit', {id: score.id})}
-                       className="flex items-center gap-1"><PencilIcon
-                        className="h-4 w-4"/> {trans('main.action.edit.label')}</a>
+                <MenuToggler>
+                    <TableAction href={getDownloadUrl(score)} icon={<DownloadIcon className="h-4 w-4"/>} label={trans('library.score.download.label')} />
+                    <TableAction href={generate('app_library_score_show', {id: score.id})} variant={"show"} />
+                    <TableAction href={generate('app_library_score_edit', {id: score.id})} variant={"edit"} />
                     <label htmlFor={score.id + "-action-toggle"} className="cursor-pointer flex items-center gap-1"
                            onClick={toggleDeleteModal}><SquareXIcon
                         className="h-4 w-4"/> {trans('main.action.delete.label')}</label>
-                </div>
+                </MenuToggler>
             </div>
 
             {showDeleteModal &&
