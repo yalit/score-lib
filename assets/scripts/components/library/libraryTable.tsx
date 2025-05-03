@@ -13,21 +13,19 @@ import {DownloadIcon, EyeIcon, SquareXIcon} from "lucide-react";
 import TableAction from "../table/tableAction";
 import MenuToggler from "../table/menuToggler";
 import {ActionMenuToggleProvider} from "../../context/global/toggleContext";
-import {useAllScores} from "../../hooks/library/useAllScores";
 import {ScoreReference} from "../../model/library/scoreReference.interface";
 import {Score} from "../../model/library/score.interface";
 import useRouter from "../../hooks/useRouter";
-import {DeleteScoreModal} from "../layout/DeleteScoreModal";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {AllowedSortBy} from "../../repository/library/score.repository";
 import {LibraryTablePagination} from "./libraryTablePagination";
+import DeleteScoreAction from "./deleteScoreAction";
 
 export default function LibraryTable() {
     const {trans} = useTranslator();
     const {generate} = useRouter()
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const {state: {scores}, actions} = useContext(ScoreTableDataContext)
 
     const sortColumn = (s: string, direction: AnyDirection) => {
@@ -45,8 +43,7 @@ export default function LibraryTable() {
         return display
     }
 
-    const toggleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
-
+    const downloadable = (score: Score): boolean => score.files.length > 0
     const getDownloadUrl = (score: Score): string => {
         if (score.files.length === 1) {
             return generate('app_library_scorefile_download', {score: score.id, scoreFile: score.files[0].name})
@@ -56,6 +53,7 @@ export default function LibraryTable() {
         }
         return '#'
     }
+
     return (
         <SortProvider sortFunction={sortColumn}>
             <ActionMenuToggleProvider>
@@ -86,24 +84,17 @@ export default function LibraryTable() {
                                     className="">{scoreArtist.artist.name} - {trans(scoreArtist.type)}</div>)}</TableCell>
                                 <TableCell>
                                     <MenuToggler>
-                                        <TableAction href={getDownloadUrl(score)}
+                                        {downloadable(score) && <TableAction href={getDownloadUrl(score)}
                                                      icon={<DownloadIcon className="h-4 w-4"/>}
                                                      label={trans('library.score.download.label')}/>
+                                        }
                                         <TableAction href={generate('app_library_score_show', {id: score.id})}
                                                      variant={"show"}/>
                                         <TableAction href={generate('app_library_score_edit', {id: score.id})}
                                                      variant={"edit"}/>
-                                        <label htmlFor={score.id + "-action-toggle"}
-                                               className="cursor-pointer flex items-center gap-1"
-                                               onClick={toggleDeleteModal}><SquareXIcon
-                                            className="h-4 w-4"/> {trans('main.action.delete.label')}</label>
+                                        <DeleteScoreAction score={score} deleteScore={actions.deleteScore}/>
                                     </MenuToggler>
                                 </TableCell>
-                                {showDeleteModal &&
-                                    <DeleteScoreModal score={score} deleteScore={actions.deleteScore}
-                                                      toggleDisplay={() => setShowDeleteModal(false)}
-                                                      onSuccess={() => setShowDeleteModal(false)}/>
-                                }
                             </TableRow>
                         ))}
                         <LibraryTablePagination />
