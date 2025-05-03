@@ -1,58 +1,24 @@
-import { PropsWithChildren, useContext, useMemo } from "react";
+import {PropsWithChildren, useContext, useMemo} from "react";
 import {
-  ChevronDownIcon,
-  ChevronsUpDownIcon,
-  ChevronUpIcon,
+    ChevronDownIcon,
+    ChevronsUpDownIcon,
+    ChevronUpIcon,
 } from "lucide-react";
-import { SortableItem, sortContext } from "../../context/global/sortContext";
-import { TableHead } from "../../shadcdn/components/ui/table";
+import {SortableItem, sortContext} from "../../context/global/sortContext";
+import {TableHead} from "../../shadcdn/components/ui/table";
+import SortingIcon from "./sortingIcon";
 
 type SortableTableHeadProps = PropsWithChildren & { sortItem: SortableItem };
 export default function SortableTableHead({
-  children,
-  sortItem,
-}: SortableTableHeadProps) {
-  const { state: {item, direction}, actions } = useContext(sortContext);
-
-  const toggleDirection = () => {
-    const newDirection =
-      direction === ""
-        ? "asc"
-        : direction === "asc"
-          ? "desc"
-          : "asc";
-    actions.sort(sortItem, newDirection);
-  };
-
-  const chevronClassName = "h-4 w-4 bold";
-  const icons = {
-    "": (
-      <ChevronsUpDownIcon
-        className={chevronClassName}
-        onClick={toggleDirection}
-      />
-    ),
-    asc: (
-      <ChevronUpIcon className={chevronClassName} onClick={toggleDirection} />
-    ),
-    desc: (
-      <ChevronDownIcon className={chevronClassName} onClick={toggleDirection} />
-    ),
-  };
-
-  const displayIcon = useMemo(() => {
-    if (item !== sortItem) return icons[""];
-
-    return icons[direction];
-  }, [item, direction]);
-  return (
-    <TableHead>
-      <div className="flex justify-between">
-        <div>{children}</div>
-        <span className="mr-4 cursor-pointer" onClick={toggleDirection}>
-          {displayIcon}
-        </span>
-      </div>
-    </TableHead>
-  );
+                                              children,
+                                              sortItem,
+                                          }: SortableTableHeadProps) {
+    return (
+        <TableHead>
+            <div className="flex justify-between">
+                <div>{children}</div>
+                <SortingIcon sortItem={sortItem}/>
+            </div>
+        </TableHead>
+    );
 }

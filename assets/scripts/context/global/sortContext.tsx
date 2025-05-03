@@ -18,7 +18,7 @@ const initialState: SortState = {
   item: "",
 };
 
-type SortFunction = (item: SortableItem, direction: AnyDirection) => void;
+export type SortFunction = (item: SortableItem, direction: AnyDirection) => void;
 
 type SortActions = {
   sort: SortFunction;

@@ -12,7 +12,7 @@ export default function MenuToggler({children, classname}: PropsWithChildren & {
 
     const isOpen = useMemo(() => opened && element === id, [opened, element]);
     return (
-        <div className={"relative" + classname ? " " + classname : ""}>
+        <div className={"relative" + (classname ? " " + classname : "")}>
             <div onClick={toggle}
                  className="cursor-pointer text-slate-800 peer-checked:hidden">
                 <EllipsisIcon className="w-6 h-6"/>

@@ -1,10 +1,10 @@
 import Layout from "../../components/layout/Layout";
-import ScoreTable from "../../components/scoreTable/ScoreTable";
 import Card from "../../components/card/Card";
 import CardContent from "../../components/card/CardContent";
 import {AllScoresTableDataProvider} from "../../context/library/AllScoresTableDataProvider";
 import useLibraryPathInformation from "../../hooks/library/useLibraryPathInformation";
 import {useEffect, useState} from "react";
+import LibraryTable from "../../components/library/libraryTable";
 
 export default function Library() {
     const path = useLibraryPathInformation()
@@ -21,7 +21,7 @@ export default function Library() {
             <Card>
                 <CardContent>
                     <AllScoresTableDataProvider searchData={searchData}>
-                        <ScoreTable />
+                        <LibraryTable />
                     </AllScoresTableDataProvider>
                 </CardContent>
             </Card>

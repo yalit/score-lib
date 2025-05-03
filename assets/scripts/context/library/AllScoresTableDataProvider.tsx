@@ -4,7 +4,7 @@ import useDeleteScore from "../../hooks/library/useDeleteScore";
 import {useAllScores} from "../../hooks/library/useAllScores";
 import {FilterBy, SortBy} from "../../model/generics.interface";
 import {AllowedFilterBy, AllowedSortBy} from "../../repository/library/score.repository";
-import {DEFAULT_NB_PER_PAGE} from "../../components/scoreTable/ScoreTablePagination";
+import {DEFAULT_NB_PER_PAGE} from "../../components/library/libraryTablePagination";
 
 type AllScoresTableDataProviderProps = PropsWithChildren & {
     searchData: string|null

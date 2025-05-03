@@ -2,7 +2,7 @@ import {createContext} from 'react';
 import {Score} from "../../model/library/score.interface";
 import {FilterBy, SortBy} from "../../model/generics.interface";
 import {AllowedFilterBy, AllowedSortBy} from "../../repository/library/score.repository";
-import {DEFAULT_NB_PER_PAGE} from "../../components/scoreTable/ScoreTablePagination";
+import {DEFAULT_NB_PER_PAGE} from "../../components/library/libraryTablePagination";
 
 export type ScoreTableData = {
     scores: Score[],
