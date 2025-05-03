@@ -23,7 +23,8 @@ export const LatestScoreTableDataProvider = ({children}) => {
             currentPage: 1,
             nbTotalScores,
             canSort: false,
-            canFilter: false
+            canFilter: false,
+            needPagination: false,
         },
         actions: {deleteScore},
     }

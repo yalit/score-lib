@@ -42,7 +42,8 @@ export const AllScoresTableDataProvider = ({searchData, children}: AllScoresTabl
             currentPage,
             nbTotalScores,
             canSort: true,
-            canFilter: true
+            canFilter: true,
+            needPagination: true
         },
         actions: {deleteScore, setCurrentOrder, setCurrentFilter, setCurrentPage, setNbPerPage},
     }

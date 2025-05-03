@@ -13,6 +13,7 @@ export type ScoreTableData = {
     nbPerPage: number,
     canSort: boolean,
     canFilter: boolean,
+    needPagination: boolean,
 }
 
 export type ScoreTableDataActions = {
@@ -39,6 +40,7 @@ export const ScoreTableDataContext = createContext<ScoreTableDataContextValue>(
             nbTotalScores: 0,
             canSort: false,
             canFilter: false,
+            needPagination: true,
         },
         actions: {
             deleteScore: (score: Score) => {},

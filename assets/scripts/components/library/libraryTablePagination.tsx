@@ -13,6 +13,7 @@ export function LibraryTablePagination() {
             currentPage,
             nbPerPage,
             nbTotalScores,
+            needPagination
         }, actions
     } = useContext(ScoreTableDataContext)
 
@@ -20,8 +21,6 @@ export function LibraryTablePagination() {
     const minPageNumber = useMemo<number>(() => Math.max(currentPage - 3, 1), [currentPage])
     const maxPageNumber = useMemo<number>(() => Math.min(currentPage + 3, totalPages + 1), [currentPage, totalPages])
     const pageNumbers = useMemo<number[]>(() => [...Array(maxPageNumber).keys()].filter(n => n >= minPageNumber), [maxPageNumber, minPageNumber])
-
-    const needPagination = useMemo<boolean>(() => totalPages > 1, [totalPages])
 
     const moveToPage = (page: number) => {
         if (!actions.setCurrentPage) return

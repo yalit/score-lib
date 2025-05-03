@@ -70,6 +70,13 @@ export default function LibraryTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
+                        {scores.length === 0 &&
+                            <TableRow>
+                                <TableCell colSpan={6}>
+                                    <div className="flex items-center justify-center gap-2">Loading...</div>
+                                </TableCell>
+                            </TableRow>
+                        }
                         {scores.map((score) => (
                             <TableRow key={score.id}>
                                 <TableCell><a
