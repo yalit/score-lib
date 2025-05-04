@@ -6,7 +6,7 @@ import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext
 import {Button} from "../../shadcdn/components/ui/button";
 import {Asterisk, ChevronDownIcon, ChevronRightIcon} from "lucide-react";
 
-export function ScoreTableFilters() {
+export function LibraryFilters() {
     const [open, setOpen] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState<ScoreCategory[]>([]);
     const {categories} = useCategories()
@@ -40,6 +40,7 @@ export function ScoreTableFilters() {
 
     return (
         <div className="data__table__filters">
+            {/* TODO : translation in the whole file */}
             <h3 className="flex items-center gap-5 cursor-pointer" onClick={() => setOpen(!open)}>
                 <p className="flex items-center gap-1">
                     <span>Filtres</span>
