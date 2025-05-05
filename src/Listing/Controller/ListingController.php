@@ -9,8 +9,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/listing')]
 class ListingController extends AbstractController
 {
-    #[Route('', name: 'app_listing_index')]
+    #[Route('', name: 'app_lisiting_index')]
     public function index(): Response
+    {
+        return $this->redirectToRoute('app_listing_list');
+    }
+
+    #[Route('/list', name: 'app_listing_list')]
+    #[Route('/show/{id}', name: 'app_listing_show', options: ['expose' => true], methods: ['GET'])]
+    public function listing(): Response
     {
         return $this->render('listing/index.html.twig');
     }

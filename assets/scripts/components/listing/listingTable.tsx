@@ -17,9 +17,11 @@ import {useContext} from "react";
 import {ListingTableDataContext} from "../../context/listing/listingTableDataContext";
 import {ListingAllowedSortedby} from "../../repository/listing/listing.repository";
 import DeleteListingAction from "./deleteListingAction";
+import useRouter from "../../hooks/useRouter";
 
 export default function ListingTable() {
     const {state: {items: listings, canSort}, actions} = useContext(ListingTableDataContext)
+    const {generate} = useRouter()
 
     const sortColumn = (s: ListingAllowedSortedby, direction: AnyDirection) => {
         actions.setCurrentOrder && actions.setCurrentOrder({by: s, direction})
@@ -45,7 +47,7 @@ export default function ListingTable() {
                                 <TableCell>{listing.scores.length}</TableCell>
                                 <TableCell>
                                     <MenuToggler classname={"text-right"}>
-                                        <TableAction variant={"show"}/>
+                                        <TableAction variant={"show"} href={generate('app_listing_show', {id: listing.id})}/>
                                         <TableAction variant={"edit"}/>
                                         {actions.deleteItem && <DeleteListingAction listing={listing} deleteListing={actions.deleteItem}/>}
                                     </MenuToggler>

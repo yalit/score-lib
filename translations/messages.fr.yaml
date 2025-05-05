@@ -134,6 +134,7 @@ library:
 
 listing:
   index:
+    title: "Liste de partitions"
     deleteModal:
       title:
         label: "Suppression de la liste de partitions"

@@ -37,6 +37,14 @@ export async function fetchListings(parameters: FetchListingParameters): Promise
   return await listingCollectionOutputSchema.parseAsync(output);
 }
 
+export async function fetchListing(id: string): Promise<Listing|null> {
+  if (id === '') return null
+
+  let response  = await fetch('/api/listings/'+id)
+  let output: any = await response.json()
+  return await listingSchema.parseAsync(output)
+}
+
 export function deleteListing(listing: Listing): Promise<Response> {
   return fetch(`/api/listings/${listing.id}`, {
     method: "DELETE",

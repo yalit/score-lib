@@ -4,6 +4,7 @@ namespace App\Listing\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\QueryParameter;
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
@@ -25,7 +26,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
                 'order[:property]' => new QueryParameter(filter: 'listing.order_filter'),
             ]
         ),
-        new Delete()
+        new Delete(),
+				new Get(
+            normalizationContext: ['groups' => Listing::LISTING_READ],
+				)
     ]
 )]
 class Listing
