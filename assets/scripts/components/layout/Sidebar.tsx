@@ -15,7 +15,7 @@ export type MenuItemProps = {
 }
 
 export default function Sidebar() {
-    const [titleDisplayed, setTitleDisplayed] = useState(true);
+    const [titleDisplayed, setTitleDisplayed] = useState(false);
     const [mobileLinksShown, setMobileLinksShown] = useState(false);
 
     const {generate} = useRouter();

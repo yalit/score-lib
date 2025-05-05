@@ -4,11 +4,12 @@ namespace App\Listing\Entity;
 
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Entity\Score;
-use App\Library\Entity\ScoreArtist;
 use App\Listing\Repository\ListingScoreRepository;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
 #[ORM\Entity(repositoryClass: ListingScoreRepository::class)]
 class ListingScore
@@ -17,26 +18,26 @@ class ListingScore
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-		#[Groups([Listing::LISTING_READ])]
-    /** @phpstan-ignore-next-line  */
+    #[Groups([Listing::LISTING_READ])]
+    /** @phpstan-ignore-next-line */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-		#[Groups([Listing::LISTING_READ])]
+    #[Groups([Listing::LISTING_READ])]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Score>
-     */
     #[ORM\ManyToOne(targetEntity: Score::class)]
-		#[Groups([Listing::LISTING_READ])]
+    #[Groups([Listing::LISTING_READ])]
     private Score $score;
 
-    /**
-     * @var Collection<int, Listing>
-     */
     #[ORM\ManyToOne(targetEntity: Listing::class)]
     private Listing $listing;
+
+    #[ORM\Column(name: 'score_order', type: Types::INTEGER, length: 255)]
+    #[Groups([Listing::LISTING_READ])]
+    #[PositiveOrZero]
+    #[NotBlank]
+    private ?int $order;
 
     public function __toString(): string
     {
@@ -78,4 +79,13 @@ class ListingScore
         $this->score = $score;
     }
 
+    public function getOrder(): ?int
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?int $order): void
+    {
+        $this->order = $order;
+    }
 }

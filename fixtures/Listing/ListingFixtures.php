@@ -22,7 +22,11 @@ class ListingFixtures extends Fixture implements DependentFixtureInterface
             $scores = [];
             $nbScores = rand(1, self::NB_LISTING);
             for ($j = 0; $j < $nbScores; $j++) {
-                $scores[] = $this->getListingScore(sprintf("Listing %d - Score %d", $i, $j), $this->getReference(sprintf("%s%d",ScoreFixtures::REFERENCE_PREFIX, rand(1, ScoreFixtures::NB_SCORES)), Score::class));
+                $scores[] = $this->getListingScore(
+                    sprintf("Listing %d - Score %d", $i, $j),
+                    $this->getReference(sprintf("%s%d",ScoreFixtures::REFERENCE_PREFIX, rand(1, ScoreFixtures::NB_SCORES)), Score::class),
+                    $nbScores - $j
+                );
             }
             $score = $this->getScore(
                 sprintf("Listing %d", $i),
@@ -54,10 +58,12 @@ class ListingFixtures extends Fixture implements DependentFixtureInterface
     private function getListingScore(
         string $name,
         Score $score,
+        int $order
     ): ListingScore {
         $listingScore = new ListingScore();
         $listingScore->setScore($score);
         $listingScore->setName($name);
+        $listingScore->setOrder($order);
         return $listingScore;
     }
 

@@ -4,6 +4,7 @@ namespace App\Library\Entity;
 
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Repository\ScoreReferenceRepository;
+use App\Listing\Entity\Listing;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,7 +23,7 @@ class ScoreReference
     #[ORM\Column(length: 255)]
     #[NotBlank]
     #[NotNull]
-    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE])]
+    #[Groups([Score::SCORE_READ, Score::SCORE_WRITE, Listing::LISTING_READ])]
     private ?string $value = null;
 
     #[ORM\Column(length: 255, nullable: true)]

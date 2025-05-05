@@ -79,7 +79,7 @@ class Score
     private ?string $title = null;
 
     #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
-    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE, Listing::LISTING_READ])]
     private ScoreReference $reference;
 
     /**
