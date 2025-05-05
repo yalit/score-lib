@@ -17,6 +17,7 @@ class ListingController extends AbstractController
 
     #[Route('/list', name: 'app_listing_list')]
     #[Route('/show/{id}', name: 'app_listing_show', options: ['expose' => true], methods: ['GET'])]
+    #[Route('/edit/{id}', name: 'app_listing_edit', options: ['expose' => true], methods: ['GET'])]
     public function listing(): Response
     {
         return $this->render('listing/index.html.twig');

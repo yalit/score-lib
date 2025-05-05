@@ -12,4 +12,8 @@ export const listingScoreSchema = z.object({
   }),
 });
 
+export const isListingScore = (score: any) : score is ListingScore => {
+    return listingScoreSchema.safeParse(score).success
+}
+
 export type ListingScore = z.infer<typeof listingScoreSchema>;

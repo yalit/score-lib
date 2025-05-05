@@ -84,6 +84,20 @@ entity:
       files:
         label: "Fichiers"
 
+  listing:
+    fields:
+      name:
+        label: Nom
+      date:
+        label: Date
+      scores:
+        label: Partitions
+        fields:
+          name:
+            label: Nom
+          score:
+            label: Partition
+
 index:
   cards:
     newscores:
