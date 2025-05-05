@@ -1,4 +1,4 @@
-import {AnyDirection, SortProvider} from "../../context/global/sortContext";
+import {SortProvider} from "../../context/global/sortContext";
 import {
     Table,
     TableBody,
@@ -9,7 +9,7 @@ import {
 } from "../../shadcdn/components/ui/table";
 import SortableTableHead from "../table/sortableTableHead";
 import {useTranslator} from "../../hooks/useTranslator";
-import {DownloadIcon, EyeIcon, SquareXIcon} from "lucide-react";
+import {DownloadIcon} from "lucide-react";
 import TableAction from "../table/tableAction";
 import MenuToggler from "../table/menuToggler";
 import {ActionMenuToggleProvider} from "../../context/global/toggleContext";
@@ -17,17 +17,18 @@ import {ScoreReference} from "../../model/library/scoreReference.interface";
 import {Score} from "../../model/library/score.interface";
 import useRouter from "../../hooks/useRouter";
 import {useContext} from "react";
-import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {AllowedSortBy} from "../../repository/library/score.repository";
 import {LibraryTablePagination} from "./libraryTablePagination";
 import DeleteScoreAction from "./deleteScoreAction";
 import {LibraryFilters} from "./libraryFilters";
+import {AnyDirection} from "../../model/global/sorting.interface";
+import {LibraryTableDataContext} from "../../context/library/libraryTableDataContext";
 
 export default function LibraryTable() {
     const {trans} = useTranslator();
     const {generate} = useRouter()
-    const {state: {scores}, actions} = useContext(ScoreTableDataContext)
+    const {state: {items: scores, canSort}, actions} = useContext(LibraryTableDataContext)
 
     const sortColumn = (s: string, direction: AnyDirection) => {
         if (!actions.setCurrentOrder) {return }
@@ -62,9 +63,9 @@ export default function LibraryTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <SortableTableHead
+                            <SortableTableHead canSort={canSort}
                                 sortItem="title">{trans("entity.score.fields.title.label")}</SortableTableHead>
-                            <SortableTableHead
+                            <SortableTableHead canSort={canSort}
                                 sortItem="reference">{trans('entity.score.fields.reference.label')}</SortableTableHead>
                             <TableHead>{trans("entity.score.fields.refs.label")}</TableHead>
                             <TableHead>{trans("entity.score.fields.categories.label")}</TableHead>
@@ -101,7 +102,7 @@ export default function LibraryTable() {
                                                      variant={"show"}/>
                                         <TableAction href={generate('app_library_score_edit', {id: score.id})}
                                                      variant={"edit"}/>
-                                        <DeleteScoreAction score={score} deleteScore={actions.deleteScore}/>
+                                        {actions.deleteItem && <DeleteScoreAction score={score} deleteScore={actions.deleteItem}/>}
                                     </MenuToggler>
                                 </TableCell>
                             </TableRow>

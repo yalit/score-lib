@@ -1,16 +1,17 @@
 import {PropsWithChildren, useEffect, useState} from "react";
-import {ScoreTableDataContext} from "./scoreTableDataContext";
 import useDeleteScore from "../../hooks/library/useDeleteScore";
 import {useAllScores} from "../../hooks/library/useAllScores";
-import {FilterBy, SortBy} from "../../model/generics.interface";
 import {AllowedFilterBy, AllowedSortBy} from "../../repository/library/score.repository";
-import {DEFAULT_NB_PER_PAGE} from "../../components/library/libraryTablePagination";
+import {SortBy} from "../../model/global/sorting.interface";
+import {FilterBy} from "../../model/global/filtering.interface";
+import {DEFAULT_NB_PER_PAGE} from "../global/tableDataContext";
+import {LibraryTableDataContext} from "./libraryTableDataContext";
 
 type AllScoresTableDataProviderProps = PropsWithChildren & {
-    searchData: string|null
+    searchData: string | null
 }
 
-export const AllScoresTableDataProvider = ({searchData, children}: AllScoresTableDataProviderProps) => {
+export const LibraryTableDataProvider = ({searchData, children}: AllScoresTableDataProviderProps) => {
     const {scores, nbTotalScores: nbTotalAllScores, setFetchParameters, refreshScores} = useAllScores()
     const [nbTotalScores, setNbTotalScores] = useState<number>(0);
     const deleteScore = useDeleteScore("", refreshScores)
@@ -35,18 +36,18 @@ export const AllScoresTableDataProvider = ({searchData, children}: AllScoresTabl
 
     const value = {
         state: {
-            scores,
+            items: scores,
             currentOrder,
             currentFilter,
             nbPerPage,
             currentPage,
-            nbTotalScores,
+            nbTotalItems: nbTotalScores,
             canSort: true,
             canFilter: true,
             needPagination: true
         },
-        actions: {deleteScore, setCurrentOrder, setCurrentFilter, setCurrentPage, setNbPerPage},
+        actions: {deleteItem: deleteScore, setCurrentOrder, setCurrentFilter, setCurrentPage, setNbPerPage},
     }
 
-    return <ScoreTableDataContext.Provider value={value}>{children}</ScoreTableDataContext.Provider>
+    return <LibraryTableDataContext.Provider value={value}>{children}</LibraryTableDataContext.Provider>
 }

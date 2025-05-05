@@ -2,15 +2,15 @@ import {useContext, useState} from "react";
 import {ScoreCategory} from "../../model/library/scoreCategory.interface";
 import {useCategories} from "../../hooks/library/useCategories";
 import {PopoverSelect} from "../../shadcdn/components/ui/popoverSelect";
-import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 import {Button} from "../../shadcdn/components/ui/button";
 import {Asterisk, ChevronDownIcon, ChevronRightIcon} from "lucide-react";
+import {LibraryTableDataContext} from "../../context/library/libraryTableDataContext";
 
 export function LibraryFilters() {
     const [open, setOpen] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState<ScoreCategory[]>([]);
     const {categories} = useCategories()
-    const {actions} = useContext(ScoreTableDataContext)
+    const {actions} = useContext(LibraryTableDataContext)
 
     const isSelected = (id: string) => {
         return selectedCategories.filter(c => c["@id"] === id).length > 0

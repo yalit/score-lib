@@ -5,11 +5,11 @@ import {
     fetchScores,
     FetchScoresParameters
 } from "../../repository/library/score.repository";
-import {DEFAULT_NB_PER_PAGE} from "../../components/library/libraryTablePagination";
+import {DEFAULT_NB_PER_PAGE} from "../../context/global/tableDataContext";
 
 const initialScoreFetchData: FetchScoresParameters = {
     page: 1,
-    nbPerPage:DEFAULT_NB_PER_PAGE
+    nbPerPage: DEFAULT_NB_PER_PAGE
 }
 
 interface AllScoresOutput {

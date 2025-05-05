@@ -3,7 +3,9 @@
 namespace App\Listing\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
 use App\Library\Entity\ScoreArtist;
 use App\Listing\Repository\ListingRepository;
@@ -15,42 +17,47 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ListingRepository::class)]
-
 #[ApiResource(
-	operations: [
-		new GetCollection(normalizationContext: ['groups' => Listing::LISTING_READ])
-	]
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => Listing::LISTING_READ],
+            parameters: [
+                'order[:property]' => new QueryParameter(filter: 'listing.order_filter'),
+            ]
+        ),
+        new Delete()
+    ]
 )]
 class Listing
 {
-		public const LISTING_READ = "listing_read";
+    public const LISTING_READ = "listing_read";
 
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-		#[Groups([self::LISTING_READ])]
-    /** @phpstan-ignore-next-line  */
+    #[Groups([self::LISTING_READ])]
+    /** @phpstan-ignore-next-line */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-		#[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-		#[Groups([self::LISTING_READ])]
-		private DateTimeImmutable $date;
+    #[Groups([self::LISTING_READ])]
+    private DateTimeImmutable $date;
     /**
      * @var Collection<int, ListingScore²>
      */
     #[ORM\OneToMany(targetEntity: ListingScore::class, cascade: ['persist', 'remove'], mappedBy: 'listing')]
-		#[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ])]
     private Collection $scores;
 
     public function __construct()
     {
         $this->scores = new ArrayCollection();
-				$this->date = new DateTimeImmutable();
+        $this->date = new DateTimeImmutable();
     }
 
     public function __toString(): string
@@ -106,7 +113,7 @@ class Listing
         if ($this->scores->removeElement($score)) {
             // set the owning side to null (unless already changed)
             if ($score->getListing() === $this) {
-								$score->setListing($this);
+                $score->setListing($this);
             }
         }
 

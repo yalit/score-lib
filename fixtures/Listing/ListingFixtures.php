@@ -6,6 +6,7 @@ use App\Fixtures\Library\ScoreFixtures;
 use App\Library\Entity\Score;
 use App\Listing\Entity\Listing;
 use App\Listing\Entity\ListingScore;
+use DateInterval;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -25,7 +26,7 @@ class ListingFixtures extends Fixture implements DependentFixtureInterface
             }
             $score = $this->getScore(
                 sprintf("Listing %d", $i),
-                new DateTimeImmutable(),
+                (new DateTimeImmutable())->sub(new DateInterval(sprintf("P%dD", rand(1,10)))),
                 $scores
             );
             $manager->persist($score);

@@ -1,23 +1,22 @@
 import {classnames} from "../../libraries/general";
 import {ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, EllipsisIcon} from "lucide-react";
 import {useContext, useMemo} from "react";
-import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
 import {TableCell, TableRow} from "../../shadcdn/components/ui/table";
+import {LibraryTableDataContext} from "../../context/library/libraryTableDataContext";
 
 export const POSSIBLE_NB_PER_PAGE = [10, 20, 30, 50, 100]
-export const DEFAULT_NB_PER_PAGE = 10 //20
 
 export function LibraryTablePagination() {
     const {
         state: {
             currentPage,
             nbPerPage,
-            nbTotalScores,
+            nbTotalItems,
             needPagination
         }, actions
-    } = useContext(ScoreTableDataContext)
+    } = useContext(LibraryTableDataContext)
 
-    const totalPages = useMemo<number>(() => Math.ceil(nbTotalScores / nbPerPage), [nbTotalScores, nbPerPage])
+    const totalPages = useMemo<number>(() => Math.ceil(nbTotalItems / nbPerPage), [nbTotalItems, nbPerPage])
     const minPageNumber = useMemo<number>(() => Math.max(currentPage - 3, 1), [currentPage])
     const maxPageNumber = useMemo<number>(() => Math.min(currentPage + 3, totalPages + 1), [currentPage, totalPages])
     const pageNumbers = useMemo<number[]>(() => [...Array(maxPageNumber).keys()].filter(n => n >= minPageNumber), [maxPageNumber, minPageNumber])

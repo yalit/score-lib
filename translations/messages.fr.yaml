@@ -131,3 +131,11 @@ library:
 
     default_title:
       label: "Partition"
+
+listing:
+  index:
+    deleteModal:
+      title:
+        label: "Suppression de la liste de partitions"
+      content:
+        text: 'Voulez-vous vraiment supprimer la liste de partitions "%name%" ?'

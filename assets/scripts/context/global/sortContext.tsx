@@ -1,12 +1,5 @@
-import {
-  Direction,
-  NoDirection,
-} from "assets/scripts/model/generics.interface";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
-
-export type AnyDirection = Direction | NoDirection;
-
-export type SortableItem = string;
+import {AnyDirection, SortableItem} from "../../model/global/sorting.interface";
 
 type SortState = {
   direction: AnyDirection;

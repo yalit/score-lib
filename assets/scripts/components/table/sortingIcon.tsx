@@ -1,6 +1,7 @@
 import {ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon} from "lucide-react";
-import {AnyDirection, SortableItem, sortContext, SortFunction} from "../../context/global/sortContext";
+import {sortContext} from "../../context/global/sortContext";
 import {useContext, useMemo} from "react";
+import {SortableItem} from "../../model/global/sorting.interface";
 
 export type SortInformation = {
     sortItem: SortableItem

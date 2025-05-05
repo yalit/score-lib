@@ -1,4 +1,4 @@
-import {AnyDirection, SortProvider} from "../../context/global/sortContext";
+import {SortProvider} from "../../context/global/sortContext";
 import {useAllListings} from "../../hooks/listing/useAllListings";
 import {
     Table,
@@ -9,18 +9,20 @@ import {
     TableRow,
 } from "../../shadcdn/components/ui/table";
 import SortableTableHead from "../table/sortableTableHead";
-import {useTranslator} from "../../hooks/useTranslator";
-import {EyeIcon} from "lucide-react";
 import TableAction from "../table/tableAction";
 import MenuToggler from "../table/menuToggler";
 import {ActionMenuToggleProvider} from "../../context/global/toggleContext";
+import {AnyDirection} from "../../model/global/sorting.interface";
+import {useContext} from "react";
+import {ListingTableDataContext} from "../../context/listing/listingTableDataContext";
+import {ListingAllowedSortedby} from "../../repository/listing/listing.repository";
+import DeleteListingAction from "./deleteListingAction";
 
 export default function ListingTable() {
-    const {trans} = useTranslator();
-    const {listings} = useAllListings();
+    const {state: {items: listings, canSort}, actions} = useContext(ListingTableDataContext)
 
-    const sortColumn = (s: string, direction: AnyDirection) => {
-        console.log("Sorting", s, direction);
+    const sortColumn = (s: ListingAllowedSortedby, direction: AnyDirection) => {
+        actions.setCurrentOrder && actions.setCurrentOrder({by: s, direction})
     };
 
     return (
@@ -29,8 +31,8 @@ export default function ListingTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <SortableTableHead sortItem="name">Name</SortableTableHead>
-                            <SortableTableHead sortItem="date">Date</SortableTableHead>
+                            <SortableTableHead canSort={canSort} sortItem="name">Name</SortableTableHead>
+                            <SortableTableHead canSort={canSort} sortItem="date">Date</SortableTableHead>
                             <TableHead>Nb Items</TableHead>
                             <TableHead>Actions...</TableHead>
                         </TableRow>
@@ -45,7 +47,7 @@ export default function ListingTable() {
                                     <MenuToggler classname={"text-right"}>
                                         <TableAction variant={"show"}/>
                                         <TableAction variant={"edit"}/>
-                                        <TableAction variant={"delete"}/>
+                                        {actions.deleteItem && <DeleteListingAction listing={listing} deleteListing={actions.deleteItem}/>}
                                     </MenuToggler>
                                 </TableCell>
                             </TableRow>

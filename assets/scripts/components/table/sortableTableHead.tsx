@@ -1,20 +1,14 @@
-import {PropsWithChildren, useContext, useMemo} from "react";
-import {
-    ChevronDownIcon,
-    ChevronsUpDownIcon,
-    ChevronUpIcon,
-} from "lucide-react";
-import {SortableItem, sortContext} from "../../context/global/sortContext";
+import {PropsWithChildren} from "react";
 import {TableHead} from "../../shadcdn/components/ui/table";
 import SortingIcon from "./sortingIcon";
-import {ScoreTableDataContext} from "../../context/library/scoreTableDataContext";
+import {SortableItem} from "../../model/global/sorting.interface";
 
-type SortableTableHeadProps = PropsWithChildren & { sortItem: SortableItem };
+type SortableTableHeadProps = PropsWithChildren & { sortItem: SortableItem, canSort: boolean };
 export default function SortableTableHead({
+                                              canSort,
                                               children,
                                               sortItem,
                                           }: SortableTableHeadProps) {
-    const {state: {canSort}} = useContext(ScoreTableDataContext)
 
     return (
         <TableHead>

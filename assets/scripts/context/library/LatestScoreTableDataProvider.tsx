@@ -1,7 +1,7 @@
 import {lastScoresQueryKey, useLastScores} from "../../hooks/library/useLastScores";
 import {useEffect, useState} from "react";
-import {ScoreTableDataContext} from "./scoreTableDataContext";
 import useDeleteScore from "../../hooks/library/useDeleteScore";
+import {LibraryTableDataContext} from "./libraryTableDataContext";
 
 export const NB_LATEST_SCORES = 10
 
@@ -16,18 +16,18 @@ export const LatestScoreTableDataProvider = ({children}) => {
 
     const value = {
         state: {
-            scores,
+            items: scores,
             currentOrder: null,
             currentFilter: null,
             nbPerPage: NB_LATEST_SCORES,
             currentPage: 1,
-            nbTotalScores,
+            nbTotalItems: nbTotalScores,
             canSort: false,
             canFilter: false,
             needPagination: false,
         },
-        actions: {deleteScore},
+        actions: {deleteItem: deleteScore},
     }
 
-    return <ScoreTableDataContext.Provider value={value}>{children}</ScoreTableDataContext.Provider>
+    return <LibraryTableDataContext.Provider value={value}>{children}</LibraryTableDataContext.Provider>
 }

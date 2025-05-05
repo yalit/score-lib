@@ -33,3 +33,12 @@ services:
     arguments:
       $properties: { categories: ~ }
     tags: ["api_platform.filter"]
+
+  listing.order_filter:
+    parent: "api_platform.doctrine.orm.order_filter"
+    arguments:
+      $properties: { name: ~, date: ~ }
+      $orderParameterName: order
+    properties:
+      defaultDirection: "asc"
+    tags: ["api_platform.filter"]

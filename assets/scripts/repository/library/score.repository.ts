@@ -1,4 +1,3 @@
-import {FilterBy, SortBy} from "../../model/generics.interface";
 import {
     createCollectionOutputSchema,
 } from "../collectionOutput.interface";
@@ -9,18 +8,13 @@ import { ScoreCategory, scoreCategorySchema } from "../../model/library/scoreCat
 import { Artist, artistSchema, scoreArtistSchema } from "../../model/library/scoreArtist.interface";
 import {FormScore} from "../../pages/library/score/ScoreForm";
 import {ScoreFile, scoreFileSchema} from "../../model/library/scoreFile";
+import {SortableItem, SortBy} from "../../model/global/sorting.interface";
+import {FilterableItem, FilterBy} from "../../model/global/filtering.interface";
 
 export const DEFAULT_NB_SCORES_PER_QUERY = 20;
 
-export type AllowedSortBy = "title" | "reference";
-export const isAllowedToSort = (key: string): key is AllowedSortBy => {
-    return ["title", "reference"].includes(key);
-}
-
-export type AllowedFilterBy = "categories"
-export const isAllowedToFilter = (key: string): key is AllowedFilterBy => {
-    return ["categories"].includes(key);
-}
+export type AllowedSortBy = SortableItem & "title" | "reference";
+export type AllowedFilterBy = FilterableItem & "categories"
 
 export interface FetchScoresParameters {
     page: number;
