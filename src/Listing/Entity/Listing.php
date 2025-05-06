@@ -66,7 +66,7 @@ class Listing
     #[Context([
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d',
     ])]
-    private DateTimeImmutable $date;
+    private ?DateTimeImmutable $date;
 
     /**
      * @var Collection<int, ListingScore>
@@ -113,7 +113,7 @@ class Listing
     }
 
     /**
-     * @return Collection<int, ScoreArtist>
+     * @return Collection<int, ListingScore>
      */
     public function getScores(): Collection
     {

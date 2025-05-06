@@ -78,22 +78,22 @@ class ListingScore
         $this->name = $name;
     }
 
-    public function getListing(): ?Listing
+    public function getListing(): Listing
     {
         return $this->listing;
     }
 
-    public function setListing(?Listing $listing): void
+    public function setListing(Listing $listing): void
     {
         $this->listing = $listing;
     }
 
-    public function getScore(): ?Score
+    public function getScore(): Score
     {
         return $this->score;
     }
 
-    public function setScore(?Score $score): void
+    public function setScore(Score $score): void
     {
         $this->score = $score;
     }

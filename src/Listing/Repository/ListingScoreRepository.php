@@ -16,7 +16,7 @@ class ListingScoreRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ListingScore::class);
     }
-    
+
     public function save(ListingScore $listingScore): void
     {
         $this->getEntityManager()->persist($listingScore);

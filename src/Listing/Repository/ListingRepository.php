@@ -15,7 +15,7 @@ class ListingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Listing::class);
     }
-    
+
     public function save(Listing $listing): void
     {
         $this->getEntityManager()->persist($listing);
