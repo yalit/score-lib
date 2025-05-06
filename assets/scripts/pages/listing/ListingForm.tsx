@@ -1,6 +1,6 @@
 import {Listing, listingSchema} from "../../model/listing/listing.interface";
 import {z} from "zod";
-import {FieldError, SubmitHandler, useFieldArray, useForm} from "react-hook-form";
+import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CardContent, CardHeader, CardTitle} from "../../shadcdn/components/ui/card";
 import {Form} from "../../shadcdn/components/ui/form";
@@ -15,6 +15,9 @@ import {Button} from "../../shadcdn/components/ui/button";
 import {Input} from "../../shadcdn/components/ui/input";
 import {Score} from "../../model/library/score.interface";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../shadcdn/components/ui/select";
+import {closestCenter, DndContext, PointerSensor, useSensor, useSensors} from "@dnd-kit/core";
+import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import {CSS} from "@dnd-kit/utilities";
 
 const listingFormSchema = listingSchema.merge(
     z.object({
@@ -53,11 +56,16 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
         return scores[scores.length - 1].order
     }, [scores])
 
-    const [newScore, setNewScore] = useState<Partial<ListingScore>>({order: lastOrder + 1})
+    const [newScore, setNewScore] = useState<Partial<ListingScore>>({})
 
     const addNewScore = () => {
-        if (isListingScore(newScore)) {
-            appendScore(newScore)
+        const additionalScore = {
+            ...newScore,
+            id: String(Math.random().toString(36).substring(2, 15)),
+            order: lastOrder+1
+        }
+        if (isListingScore(additionalScore)) {
+            appendScore(additionalScore)
             setNewScore({})
         }
     }
@@ -69,13 +77,25 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
         setNewScore({...newScore, score: targetScores[0]})
     }
 
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+    );
+
+    function handDragEnd(event) {
+        const {active, over} = event
+        moveScore(active.id, over.id)
+    }
+
     const onSubmit: SubmitHandler<FormListing> = (listing: FormListing) => {
-        console.log("Saving", listing)
+        const savedListing = {
+            ...listing,
+            scores: scores.map((s,idx) => ({...s, order: idx}))
+        }
+        console.log("Saving", savedListing)
     };
 
     //TODO : translation
     //TODO : add a date picker
-    //TODO : handle re-ordering
     return (
         <>
             <CardHeader>
@@ -98,58 +118,92 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
 
                         <div className="font-bold">Partitions</div>
 
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead></TableHead>
-                                    <TableHead>Nom</TableHead>
-                                    <TableHead>Partition</TableHead>
-                                    <TableHead></TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {scores.map((score, idx) => (
-                                    <TableRow key={score.id}>
-                                        <TableCell><AlignJustifyIcon className="h-3 w-3 cursor-pointer"/></TableCell>
-                                        <TableCell>{score.name} - {score.order}</TableCell>
-                                        <TableCell>{score.score.title}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2 cursor-pointer"
-                                                 onClick={() => removeScore(idx)}>
-                                                <MinusIcon className="h-3 w-3 text-red-800"/>
-                                                {trans("main.action.delete.label")}
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                <TableRow>
-                                    <TableCell>New</TableCell>
-                                    <TableCell>
-                                        <Input value={newScore?.name ?? ''}
-                                               onChange={(e) => setNewScore({...newScore, name: e.target.value})}/>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Select onValueChange={handleNewScoreScore} value={newScore.score?.id ?? ""}>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Choisis une partition"/>
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {possibleScores.map((s: Score) => (
-                                                    <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button onClick={addNewScore} variant="secondary">Ajouter</Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
+                        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handDragEnd}>
+                            <SortableContext items={scores.map((s, idx) => idx)} strategy={verticalListSortingStrategy}>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead></TableHead>
+                                            <TableHead>Nom</TableHead>
+                                            <TableHead>Partition</TableHead>
+                                            <TableHead></TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {scores.map((score, idx) => (
+                                            <SortableListingScore score={score} idx={idx} removeScore={removeScore} key={idx}/>
+                                        ))}
+                                        <TableRow>
+                                            <TableCell>New</TableCell>
+                                            <TableCell>
+                                                <Input value={newScore?.name ?? ''}
+                                                       onChange={(e) => setNewScore({
+                                                           ...newScore,
+                                                           name: e.target.value
+                                                       })}/>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Select onValueChange={handleNewScoreScore}
+                                                        value={newScore.score?.id ?? ""}>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Choisis une partition"/>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {possibleScores.map((s: Score) => (
+                                                            <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button type="button" onClick={addNewScore} variant="secondary">Ajouter</Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </SortableContext>
+                        </DndContext>
                         <Button type="submit">Enregistrer</Button>
                     </form>
                 </Form>
             </CardContent>
         </>
+    )
+}
+
+type SortableListingScoreProps = {
+    score: ListingScore,
+    idx: number,
+    removeScore: (idx: number) => void
+}
+const SortableListingScore = ({score, idx, removeScore}: SortableListingScoreProps) => {
+    const {trans} = useTranslator()
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({id: idx});
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    return (
+        <TableRow key={score.id} ref={setNodeRef} style={style} {...attributes} {...listeners}>
+            <TableCell><AlignJustifyIcon
+                className="h-3 w-3 cursor-grab"/></TableCell>
+            <TableCell>{score.name}</TableCell>
+            <TableCell>{score.score.title}</TableCell>
+            <TableCell>
+                <div className="flex items-center gap-2 cursor-pointer"
+                     onClick={() => removeScore(idx)}>
+                    <MinusIcon className="h-3 w-3 text-red-800"/>
+                    {trans("main.action.delete.label")}
+                </div>
+            </TableCell>
+        </TableRow>
     )
 }

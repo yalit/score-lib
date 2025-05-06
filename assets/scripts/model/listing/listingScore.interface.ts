@@ -3,6 +3,7 @@ import { z } from "zod";
 export const listingScoreSchema = z.object({
   "@id": z.string().optional(),
   "@type": z.string().optional(),
+  id: z.string(),
   name: z.string(),
   order: z.number(),
   score: z.object({
