@@ -7,6 +7,7 @@ import {Score, scoreSchema} from "../../model/library/score.interface";
 import {FormScore} from "../../pages/library/score/ScoreForm";
 import {FormListing} from "../../pages/listing/ListingForm";
 import {listingScoreSchema} from "../../model/listing/listingScore.interface";
+import {format} from "date-fns";
 
 export const listingCollectionOutputSchema =
   createCollectionOutputSchema(listingSchema);
@@ -64,7 +65,7 @@ const saveListingScoreSchema = listingScoreSchema.merge(z.object({
 
 const saveListingSchema = listingSchema.merge(z.object({
   id: z.string().optional(),
-  date: z.date(),
+  date: z.date().transform(d => format(d, 'y-MM-dd')),
   scores: z.array(saveListingScoreSchema)
 }))
 
@@ -92,6 +93,7 @@ export async function updateListing(listing: FormListing): Promise<Listing> {
 }
 
 async function saveListing(url: string, parameters, listing: FormListing): Promise<Listing> {
+  console.log('saving listing', listing)
   let response = await fetch(url, {
     ...parameters,
     body:JSON.stringify(saveListingSchema.parse(listing)),

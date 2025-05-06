@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\QueryParameter;
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
-use App\Library\Entity\Score;
 use App\Library\Entity\ScoreArtist;
 use App\Listing\Repository\ListingRepository;
 use DateTimeImmutable;
@@ -18,7 +17,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Context;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 #[ORM\Entity(repositoryClass: ListingRepository::class)]
 #[ApiResource(
@@ -30,9 +31,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Delete(),
-				new Get(
+        new Get(
             normalizationContext: ['groups' => Listing::LISTING_READ],
-				),
+        ),
         new Post(
             normalizationContext: ["groups" => [Listing::LISTING_READ]],
             denormalizationContext: ["groups" => [Listing::LISTING_WRITE]],
@@ -62,9 +63,13 @@ class Listing
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
+    #[Context([
+        DateTimeNormalizer::FORMAT_KEY => 'Y-m-d',
+    ])]
     private DateTimeImmutable $date;
+
     /**
-     * @var Collection<int, ListingScore²>
+     * @var Collection<int, ListingScore>
      */
     #[ORM\OneToMany(targetEntity: ListingScore::class, mappedBy: 'listing', cascade: ['persist', 'remove'])]
     #[ORM\OrderBy(["order" => "ASC"])]

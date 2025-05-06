@@ -42,6 +42,7 @@ export const BlankListing: FormListing = {
 };
 
 export default function ListingForm({listing}: { listing: Listing | null }) {
+    //TODO : fix date handling as transformed due to timezone... :(
     const {trans} = useTranslator()
     const redirect = useRedirect()
     const {generate} = useRouter()
@@ -231,8 +232,8 @@ const SortableListingScore = ({score, idx, removeScore}: SortableListingScorePro
     };
 
     return (
-        <TableRow key={score.id} ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <TableCell><AlignJustifyIcon
+        <TableRow key={score.id} ref={setNodeRef} style={style} {...attributes}>
+            <TableCell><AlignJustifyIcon {...listeners}
                 className="h-3 w-3 cursor-grab"/></TableCell>
             <TableCell>{score.name}</TableCell>
             <TableCell>{score.score.title}</TableCell>

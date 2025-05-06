@@ -6,7 +6,10 @@ export const listingSchema = z.object({
   "@type": z.string().optional(),
   id: z.string(),
   name: z.string(),
-  date: z.string().transform((s): Date => new Date(s)),
+  date: z.string().transform((s): Date => {
+    const parts = s.split('-')
+    return new Date(+parts[0], +parts[1]-1, +parts[2]);
+  }),
   scores: z.array(listingScoreSchema),
 });
 
