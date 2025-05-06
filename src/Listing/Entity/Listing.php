@@ -71,7 +71,7 @@ class Listing
     /**
      * @var Collection<int, ListingScore>
      */
-    #[ORM\OneToMany(targetEntity: ListingScore::class, mappedBy: 'listing', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: ListingScore::class, mappedBy: 'listing', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(["order" => "ASC"])]
     #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
     private Collection $scores;
