@@ -5,8 +5,8 @@ import { scoreArtistSchema } from "./scoreArtist.interface";
 import { scoreFileSchema } from "./scoreFile";
 
 export const scoreSchema = z.object({
-  "@id": z.string().optional(),
-  "@type": z.string().optional(),
+  "@id": z.string(),
+  "@type": z.string(),
   id: z.string(),
   title: z.string().min(1),
   reference: scoreReferenceSchema,

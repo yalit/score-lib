@@ -11,6 +11,8 @@ import {ListingAllowedSortedby} from "../../repository/listing/listing.repositor
 import DeleteListingAction from "./deleteListingAction";
 import useRouter from "../../hooks/useRouter";
 import {CardContent} from "../../shadcdn/components/ui/card";
+import {PlusIcon} from "lucide-react";
+import {Button} from "../../shadcdn/components/ui/button";
 
 export default function ListingTable() {
     const {state: {items: listings, canSort}, actions} = useContext(ListingTableDataContext)
@@ -22,6 +24,11 @@ export default function ListingTable() {
 
     return (
         <CardContent>
+            <div className="flex justify-end">
+                <a href={generate('app_listing_new')}>
+                    <Button type="button" variant="outline"><PlusIcon/> Ajouter</Button>
+                </a>
+            </div>
             <SortProvider sortFunction={sortColumn}>
                 <ActionMenuToggleProvider>
                     <Table>
@@ -56,5 +63,6 @@ export default function ListingTable() {
                 </ActionMenuToggleProvider>
             </SortProvider>
         </CardContent>
-    );
+    )
+        ;
 }

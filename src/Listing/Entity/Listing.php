@@ -6,8 +6,11 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\QueryParameter;
 use App\Infra\Doctrine\Generator\DoctrineStringUUIDGenerator;
+use App\Library\Entity\Score;
 use App\Library\Entity\ScoreArtist;
 use App\Listing\Repository\ListingRepository;
 use DateTimeImmutable;
@@ -29,34 +32,43 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Delete(),
 				new Get(
             normalizationContext: ['groups' => Listing::LISTING_READ],
-				)
+				),
+        new Post(
+            normalizationContext: ["groups" => [Listing::LISTING_READ]],
+            denormalizationContext: ["groups" => [Listing::LISTING_WRITE]],
+        ),
+        new Put(
+            normalizationContext: ["groups" => [Listing::LISTING_READ]],
+            denormalizationContext: ["groups" => [Listing::LISTING_WRITE]],
+        ),
     ]
 )]
 class Listing
 {
     public const LISTING_READ = "listing_read";
+    public const LISTING_WRITE = "listing_write";
 
     #[ORM\Id]
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-    #[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
     /** @phpstan-ignore-next-line */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
     private DateTimeImmutable $date;
     /**
      * @var Collection<int, ListingScore²>
      */
     #[ORM\OneToMany(targetEntity: ListingScore::class, mappedBy: 'listing', cascade: ['persist', 'remove'])]
     #[ORM\OrderBy(["order" => "ASC"])]
-    #[Groups([self::LISTING_READ])]
+    #[Groups([self::LISTING_READ, self::LISTING_WRITE])]
     private Collection $scores;
 
     public function __construct()

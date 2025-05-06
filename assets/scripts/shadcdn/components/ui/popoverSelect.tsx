@@ -19,10 +19,11 @@ type PopoverSelectProps = {
     choices: Option[]
     selectValue: (id: string) => void
     removeValue: (id: string) => void
-    canCreate?: boolean
+    canCreate?: boolean,
+    inlineDisplay?: boolean
 }
 
-export function PopoverSelect({title, selection, choices, selectValue, removeValue, canCreate = true}: PopoverSelectProps) {
+export function PopoverSelect({title, selection, choices, selectValue, removeValue, canCreate = true, inlineDisplay= false}: PopoverSelectProps) {
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState<string>("");
 
@@ -76,8 +77,19 @@ export function PopoverSelect({title, selection, choices, selectValue, removeVal
         }
     }
 
+    const triggerText = useMemo<string>(() => {
+        if (!inlineDisplay) return title
+
+        if (!Array.isArray(selection) && selection.label !== "") {
+            return selection.label
+        } else {
+            return title
+        }
+    }, [title, selection])
+
+
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full">
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
@@ -86,7 +98,7 @@ export function PopoverSelect({title, selection, choices, selectValue, removeVal
                         aria-expanded={open}
                         className="w-[200px] justify-between border-none shadow-none hover:background-none"
                     >
-                        {title} <ChevronsUpDown className="opacity-50"/>
+                        {triggerText} <ChevronsUpDown className="opacity-50"/>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
@@ -118,12 +130,14 @@ export function PopoverSelect({title, selection, choices, selectValue, removeVal
                 </PopoverContent>
             </Popover>
 
-            <div className="flex items-center gap-2 flex-wrap">
-                {Array.isArray(selection) ?
-                    selection.map((item: Option, index: number) => selectionBadge(item, String(index)))
-                    : selectionBadge(selection)
-                }
-            </div>
+            {!inlineDisplay && (
+                <div className="flex items-center gap-2 flex-wrap">
+                    {Array.isArray(selection) ?
+                        selection.map((item: Option, index: number) => selectionBadge(item, String(index)))
+                        : selectionBadge(selection)
+                    }
+                </div>
+            )}
         </div>
     )
 }

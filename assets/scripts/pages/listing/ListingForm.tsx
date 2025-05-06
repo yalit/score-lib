@@ -3,30 +3,38 @@ import {z} from "zod";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CardContent, CardHeader, CardTitle} from "../../shadcdn/components/ui/card";
-import {Form} from "../../shadcdn/components/ui/form";
+import {Form, FormItem} from "../../shadcdn/components/ui/form";
 import TextInput from "../../components/Form/TextInput";
 import {useTranslator} from "../../hooks/useTranslator";
 import {useAllScores} from "../../hooks/library/useAllScores";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../../shadcdn/components/ui/table";
 import {AlignJustifyIcon, MinusIcon} from "lucide-react";
 import {useMemo, useState} from "react";
-import {isListingScore, ListingScore} from "../../model/listing/listingScore.interface";
+import {ListingScore, listingScoreSchema, ListingScoreScore} from "../../model/listing/listingScore.interface";
 import {Button} from "../../shadcdn/components/ui/button";
 import {Input} from "../../shadcdn/components/ui/input";
-import {Score} from "../../model/library/score.interface";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../shadcdn/components/ui/select";
 import {closestCenter, DndContext, PointerSensor, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import DatePicker from "../../components/Form/DatePicker";
+import {createListing, updateListing} from "../../repository/listing/listing.repository";
+import {useRedirect} from "../../hooks/useRedirect";
+import useRouter from "../../hooks/useRouter";
+import {PopoverSelect, Option} from "../../shadcdn/components/ui/popoverSelect";
+
+const listingScoreFormSchema = listingScoreSchema.merge(z.object({
+    id: z.string().optional()
+}))
 
 const listingFormSchema = listingSchema.merge(
     z.object({
         id: z.string().optional(),
-        date: z.date()
+        date: z.date(),
+        scores: z.array(listingScoreFormSchema)
     }),
 );
 export type FormListing = z.infer<typeof listingFormSchema>;
+export type FormListingScore = z.infer<typeof listingScoreFormSchema>;
 export const BlankListing: FormListing = {
     name: '',
     date: new Date(),
@@ -35,6 +43,8 @@ export const BlankListing: FormListing = {
 
 export default function ListingForm({listing}: { listing: Listing | null }) {
     const {trans} = useTranslator()
+    const redirect = useRedirect()
+    const {generate} = useRouter()
     const {scores: possibleScores} = useAllScores();
 
     const form = useForm<FormListing>({
@@ -57,25 +67,42 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
         return scores[scores.length - 1].order
     }, [scores])
 
-    const [newScore, setNewScore] = useState<Partial<ListingScore>>({})
+    const [newScore, setNewScore] = useState<Partial<FormListingScore>>({})
 
     const addNewScore = () => {
         const additionalScore = {
             ...newScore,
-            id: String(Math.random().toString(36).substring(2, 15)),
-            order: lastOrder+1
+            order: lastOrder + 1
         }
-        if (isListingScore(additionalScore)) {
+        const hasAllData = (s: Partial<FormListingScore>): s is FormListingScore => {
+            return additionalScore.name !== undefined && additionalScore.score !== undefined
+        }
+
+        if (hasAllData(additionalScore)) {
             appendScore(additionalScore)
             setNewScore({})
         }
     }
 
-    const handleNewScoreScore = (id: string) => {
-        const targetScores = possibleScores.filter(s => s.id === id)
-        if (targetScores.length !== 1) return
+    const getNewScoreScoreValue = (score: ListingScoreScore | null): Option => {
+        if (!score) {
+            return {value:"", label: ""}
+        }
 
-        setNewScore({...newScore, score: targetScores[0]})
+        return {value: score.id, label: score.title}
+    }
+
+    const handleNewScoreScore = (id: string | null) => {
+        if (!id) {
+            let updatedScore = {...newScore}
+            delete updatedScore["score"]
+            setNewScore(updatedScore)
+        } else {
+            const targetScores = possibleScores.filter(s => s.id === id)
+            if (targetScores.length !== 1) return
+
+            setNewScore({...newScore, score: targetScores[0]})
+        }
     }
 
     const sensors = useSensors(
@@ -90,9 +117,15 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
     const onSubmit: SubmitHandler<FormListing> = (listing: FormListing) => {
         const savedListing = {
             ...listing,
-            scores: scores.map((s,idx) => ({...s, order: idx}))
+            scores: scores.map((s, idx) => ({...s, order: idx}))
         }
-        console.log("Saving", savedListing)
+        if (savedListing.id) {
+            updateListing(savedListing)
+                .then(l => redirect(generate('app_listing_show', {id: l.id})))
+        } else {
+            createListing(savedListing)
+                .then(l => redirect(generate('app_listing_show', {id: l.id})))
+        }
     };
 
     //TODO : translation
@@ -116,7 +149,7 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
                             label={trans("entity.listing.fields.name.label")}
                         />
 
-                        <DatePicker control={form.control} name={"date"} label={"Date"} />
+                        <DatePicker control={form.control} name={"date"} label={"Date"}/>
 
                         <div className="font-bold">Partitions</div>
 
@@ -132,9 +165,6 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {scores.map((score, idx) => (
-                                            <SortableListingScore score={score} idx={idx} removeScore={removeScore} key={idx}/>
-                                        ))}
                                         <TableRow>
                                             <TableCell>New</TableCell>
                                             <TableCell>
@@ -145,22 +175,27 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
                                                        })}/>
                                             </TableCell>
                                             <TableCell>
-                                                <Select onValueChange={handleNewScoreScore}
-                                                        value={newScore.score?.id ?? ""}>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Choisis une partition"/>
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {possibleScores.map((s: Score) => (
-                                                            <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
+                                                <FormItem>
+                                                    <PopoverSelect
+                                                        title='Partition...'
+                                                        selection={getNewScoreScoreValue(newScore.score ?? null)}
+                                                        choices={possibleScores.map(getNewScoreScoreValue)}
+                                                        selectValue={handleNewScoreScore}
+                                                        canCreate={false}
+                                                        removeValue={() => handleNewScoreScore(null)}
+                                                        inlineDisplay={true}
+                                                    />
+                                                </FormItem>
                                             </TableCell>
                                             <TableCell>
-                                                <Button type="button" onClick={addNewScore} variant="secondary">Ajouter</Button>
+                                                <Button type="button" onClick={addNewScore}
+                                                        variant="secondary">Ajouter</Button>
                                             </TableCell>
                                         </TableRow>
+                                        {scores.map((score, idx) => (
+                                            <SortableListingScore score={score} idx={idx} removeScore={removeScore}
+                                                                  key={idx}/>
+                                        ))}
                                     </TableBody>
                                 </Table>
                             </SortableContext>

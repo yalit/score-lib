@@ -23,6 +23,9 @@ export default function Listing() {
         if (pathInfo.action === 'show') {
             return <ListingShow listing={listing}/>
         }
+        if (pathInfo.action === 'new') {
+            return <ListingForm listing={null}/>
+        }
         if (pathInfo.action === 'edit' && listing) {
             return <ListingForm listing={listing}/>
         }

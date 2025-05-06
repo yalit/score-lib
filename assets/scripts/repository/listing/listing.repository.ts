@@ -3,6 +3,10 @@ import { createCollectionOutputSchema } from "../collectionOutput.interface";
 import { z } from "zod";
 import { buildUrl } from "../../libraries/general";
 import {SortableItem, SortBy} from "../../model/global/sorting.interface";
+import {Score, scoreSchema} from "../../model/library/score.interface";
+import {FormScore} from "../../pages/library/score/ScoreForm";
+import {FormListing} from "../../pages/listing/ListingForm";
+import {listingScoreSchema} from "../../model/listing/listingScore.interface";
 
 export const listingCollectionOutputSchema =
   createCollectionOutputSchema(listingSchema);
@@ -51,3 +55,50 @@ export function deleteListing(listing: Listing): Promise<Response> {
   });
 }
 
+const saveListingScoreSchema = listingScoreSchema.merge(z.object({
+  id: z.string().optional(),
+  score: z.object({
+    "@id": z.string(),
+  }).transform((s: Score) => s["@id"])
+}))
+
+const saveListingSchema = listingSchema.merge(z.object({
+  id: z.string().optional(),
+  date: z.date(),
+  scores: z.array(saveListingScoreSchema)
+}))
+
+export async function createListing(listing: FormListing): Promise<Listing> {
+  const parameters = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/ld+json"
+    },
+  }
+
+  return saveListing(`/api/listings`, parameters, listing)
+}
+
+export async function updateListing(listing: FormListing): Promise<Listing> {
+  const parameters = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/ld+json"
+    },
+  }
+
+  return saveListing(`/api/listings/${listing.id}`, parameters, listing)
+
+}
+
+async function saveListing(url: string, parameters, listing: FormListing): Promise<Listing> {
+  let response = await fetch(url, {
+    ...parameters,
+    body:JSON.stringify(saveListingSchema.parse(listing)),
+  })
+
+  //TODO : handle error
+
+  let output = await response.json()
+  return await listingSchema.parseAsync(output)
+}
