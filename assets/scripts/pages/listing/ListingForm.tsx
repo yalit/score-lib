@@ -18,6 +18,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../
 import {closestCenter, DndContext, PointerSensor, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
+import DatePicker from "../../components/Form/DatePicker";
 
 const listingFormSchema = listingSchema.merge(
     z.object({
@@ -95,7 +96,6 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
     };
 
     //TODO : translation
-    //TODO : add a date picker
     return (
         <>
             <CardHeader>
@@ -115,6 +115,8 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
                             name="name"
                             label={trans("entity.listing.fields.name.label")}
                         />
+
+                        <DatePicker control={form.control} name={"date"} label={"Date"} />
 
                         <div className="font-bold">Partitions</div>
 
@@ -171,6 +173,8 @@ export default function ListingForm({listing}: { listing: Listing | null }) {
     )
 }
 
+
+// Using this as base : https://markaicode.com/build-a-drag-and-drop-sortable-list-in-react/
 type SortableListingScoreProps = {
     score: ListingScore,
     idx: number,
