@@ -17,6 +17,7 @@ use App\Library\API\Provider\ScoresProvider;
 use App\Library\API\Provider\SearchScoreResultsProvider;
 use App\Library\Entity\Enum\ArtistType;
 use App\Library\Repository\ScoreRepository;
+use App\Listing\Entity\Listing;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -69,16 +70,16 @@ class Score
     #[ORM\GeneratedValue('CUSTOM')]
     #[ORM\CustomIdGenerator(class: DoctrineStringUUIDGenerator::class)]
     #[ORM\Column]
-    #[Groups([self::SCORE_READ])]
+    #[Groups([self::SCORE_READ, Listing::LISTING_READ])]
     /** @phpstan-ignore-next-line  */
     private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE, Listing::LISTING_READ])]
     private ?string $title = null;
 
     #[ORM\OneToOne(targetEntity: ScoreReference::class, cascade: ['persist', 'remove'])]
-    #[Groups([self::SCORE_READ, self::SCORE_WRITE])]
+    #[Groups([self::SCORE_READ, self::SCORE_WRITE, Listing::LISTING_READ])]
     private ScoreReference $reference;
 
     /**

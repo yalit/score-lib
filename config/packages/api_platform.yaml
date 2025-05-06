@@ -1,34 +1,44 @@
 api_platform:
-    version: 1.0.0
-    defaults:
-        pagination_client_items_per_page: true
-        cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
-    use_symfony_listeners: true
-    formats:
-        jsonld: ['application/ld+json']
-        multipart: ['multipart/form-data']
-    collection:
-        pagination:
-            items_per_page_parameter_name: nb
-    mapping:
-        paths:
-            - '%kernel.project_dir%/src/Library/Entity'
-            - '%kernel.project_dir%/src/Library/API'
-            - '%kernel.project_dir%/src/Security/Entity'
-            - '%kernel.project_dir%/src/Security/API'
+  version: 1.0.0
+  defaults:
+    pagination_client_items_per_page: true
+    cache_headers:
+      vary: ["Content-Type", "Authorization", "Origin"]
+  use_symfony_listeners: true
+  formats:
+    jsonld: ["application/ld+json"]
+    multipart: ["multipart/form-data"]
+  collection:
+    pagination:
+      items_per_page_parameter_name: nb
+  mapping:
+    paths:
+      - "%kernel.project_dir%/src/Library/Entity"
+      - "%kernel.project_dir%/src/Library/API"
+      - "%kernel.project_dir%/src/Listing/Entity"
+      - "%kernel.project_dir%/src/Security/Entity"
+      - "%kernel.project_dir%/src/Security/API"
 
 services:
-    score.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
-        arguments:
-            $properties: { title: ~, reference.value: ~ }
-            $orderParameterName: order
-        properties:
-            defaultDirection: 'asc'
-        tags: [ 'api_platform.filter' ]
-    score.search_categories_filter:
-        parent: 'api_platform.doctrine.orm.search_filter'
-        arguments:
-            $properties: { categories: ~}
-        tags: [ 'api_platform.filter' ]
+  score.order_filter:
+    parent: "api_platform.doctrine.orm.order_filter"
+    arguments:
+      $properties: { title: ~, reference.value: ~ }
+      $orderParameterName: order
+    properties:
+      defaultDirection: "asc"
+    tags: ["api_platform.filter"]
+  score.search_categories_filter:
+    parent: "api_platform.doctrine.orm.search_filter"
+    arguments:
+      $properties: { categories: ~ }
+    tags: ["api_platform.filter"]
+
+  listing.order_filter:
+    parent: "api_platform.doctrine.orm.order_filter"
+    arguments:
+      $properties: { name: ~, date: ~ }
+      $orderParameterName: order
+    properties:
+      defaultDirection: "asc"
+    tags: ["api_platform.filter"]

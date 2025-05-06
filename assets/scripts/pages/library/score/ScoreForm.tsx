@@ -31,6 +31,8 @@ import { Badge } from "../../../shadcdn/components/ui/badge";
 const scoreFormSchema = scoreSchema.merge(
   z.object({
     id: z.string().optional(),
+    "@id": z.string().optional(),
+    "@type": z.string().optional(),
     uploadedFiles: z.array(z.instanceof(File)).optional(),
   }),
 );

@@ -6,7 +6,6 @@ import {cn} from "../../shadcdn/lib/utils";
 import {useSecurity} from "../../context/security/security.hooks";
 
 import '../../../styles/sidebar.css';
-import {SearchResult} from "../../model/library/searchResult.interface";
 
 export type MenuItemProps = {
     title: string;
@@ -16,7 +15,7 @@ export type MenuItemProps = {
 }
 
 export default function Sidebar() {
-    const [titleDisplayed, setTitleDisplayed] = useState(true);
+    const [titleDisplayed, setTitleDisplayed] = useState(false);
     const [mobileLinksShown, setMobileLinksShown] = useState(false);
 
     const {generate} = useRouter();
@@ -36,7 +35,11 @@ export default function Sidebar() {
             icon: <LibraryIcon className={iconClass}/>,
             path: generate('app_library_index')
         },
-        {title: trans('main.menu.setlists.label'), icon: <ListIcon className={iconClass}/>, path: "#"},
+        {
+            title: trans('main.menu.setlists.label'),
+            icon: <ListIcon className={iconClass}/>,
+            path: generate('app_listing_list')
+        },
         {
             title: `${trans('main.menu.logout.label')} ${(user?.name)}`,
             icon: <LogOutIcon className={iconClass}/>,
@@ -76,8 +79,8 @@ export default function Sidebar() {
                 {menuItems.map(({path, icon, title, visible}: MenuItemProps) => {
                     const isDisplayed = !visible || visible();
                     return (
-                        <div key={path+title}>{isDisplayed && (
-                            <a href={path} className="nav__menu__item" key={String(Math.random())+title}>
+                        <div key={path + title}>{isDisplayed && (
+                            <a href={path} className="nav__menu__item" key={String(Math.random()) + title}>
                                 {icon && icon}
                                 <span className={cn(titleSpanClassname)}>{title}</span>
                             </a>

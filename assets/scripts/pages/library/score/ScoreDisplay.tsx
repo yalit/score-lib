@@ -8,9 +8,9 @@ import {useTranslator} from "../../../hooks/useTranslator";
 import {useDocumentTitle} from "../../../hooks/useDocumentTitle";
 import {ScoreFile} from "../../../model/library/scoreFile";
 import {useDocumentIconLoader} from "../../../hooks/useDocumentIconLoader";
-import {DeleteScoreModal} from "../../../components/layout/DeleteScoreModal";
 import {useRedirect} from "../../../hooks/useRedirect";
 import useDeleteScore from "../../../hooks/library/useDeleteScore";
+import DeleteScoreAction from "../../../components/library/deleteScoreAction";
 
 interface ScoreDisplayProps {
     score: Score
@@ -37,8 +37,7 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                         <div>{score.title}</div>
                         <div className="text-base font-normal flex items-center gap-2">
                             <a href={generate("app_library_score_edit", {id: score.id})}>{trans("main.action.edit.label")}</a>
-                            <button onClick={() => setShowDeleteModal(true)}
-                                    className="text-red-600">{trans("main.action.delete.label")}</button>
+                            <DeleteScoreAction score={score} deleteScore={deleteScore} withIcon={false} />
                         </div>
                     </div>
                 </CardTitle>
@@ -75,9 +74,6 @@ export default function ScoreDisplay({score}: ScoreDisplayProps) {
                     </ScoreDisplayRow>
                 </CardContent>
             </Card>
-            {showDeleteModal && <DeleteScoreModal score={score} toggleDisplay={() => setShowDeleteModal(false)} deleteScore={deleteScore}
-                                                  onSuccess={() => redirect(generate('app_library_index'))}
-            />}
         </>
     )
 }

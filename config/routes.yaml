@@ -5,6 +5,13 @@ library_controllers:
     type: attribute
     options: {expose: true}
 
+listing_controllers:
+    resource:
+        path: ../src/Listing/Controller/
+        namespace: App\Listing\Controller
+    type: attribute
+    options: {expose: true}
+
 security_controllers:
     resource:
         path: ../src/Security/Controller/
