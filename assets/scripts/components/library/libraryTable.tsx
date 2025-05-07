@@ -21,7 +21,6 @@ import {ScoreArtist} from "../../model/library/scoreArtist.interface";
 import {AllowedSortBy} from "../../repository/library/score.repository";
 import {LibraryTablePagination} from "./libraryTablePagination";
 import DeleteScoreAction from "./deleteScoreAction";
-import {LibraryFilters} from "./libraryFilters";
 import {AnyDirection} from "../../model/global/sorting.interface";
 import {LibraryTableDataContext} from "../../context/library/libraryTableDataContext";
 
@@ -59,7 +58,6 @@ export default function LibraryTable() {
     return (
         <SortProvider sortFunction={sortColumn}>
             <ActionMenuToggleProvider>
-                <LibraryFilters />
                 <Table>
                     <TableHeader>
                         <TableRow>
