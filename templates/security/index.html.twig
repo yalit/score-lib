@@ -29,6 +29,7 @@
                     {% if error %}
                         <div class="mt-4 p-2 notification error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}
+                    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
                     <div class="mt-8">
                         <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
                                 type="submit" id="login">Login

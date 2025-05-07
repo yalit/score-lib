@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/listing')]
 class ListingController extends AbstractController
 {
-    #[Route('', name: 'app_lisiting_index')]
+    #[Route('', name: 'app_listing_index')]
     public function index(): Response
     {
         return $this->redirectToRoute('app_listing_list');
