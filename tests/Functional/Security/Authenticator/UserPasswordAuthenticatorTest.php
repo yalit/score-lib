@@ -21,6 +21,7 @@ class UserPasswordAuthenticatorTest extends WebTestCase
         self::assertResponseIsSuccessful();
         self::assertRouteSame('app_index');
 
+        /** @var Security $security */
         $security = static::getContainer()->get(Security::class);
         $user = $security->getUser();
 
